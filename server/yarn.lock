@@ -32,6 +32,12 @@ ajv@^4.9.1:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
 
+another-json-schema@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/another-json-schema/-/another-json-schema-2.1.0.tgz#a5b94cde6cf7588a6bff09822eb23cfb0c836ea3"
+  dependencies:
+    is-buffer "^1.1.2"
+
 ansi-regex@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-2.1.1.tgz#c3b33ab5ee360d86e0e628f0468ae7ef27d654df"
@@ -430,7 +436,7 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@^3.1.1:
+bluebird@^3.1.1, bluebird@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
 
@@ -462,6 +468,10 @@ braces@^1.8.2:
 bson@~0.4.20:
   version "0.4.23"
   resolved "https://registry.yarnpkg.com/bson/-/bson-0.4.23.tgz#e65a2e3c7507ffade4109bc7575a76e50f8da915"
+
+bson@~1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/bson/-/bson-1.0.4.tgz#93c10d39eaa5b58415cbc4052f3e53e562b0b72c"
 
 buffer-shims@^1.0.0:
   version "1.0.0"
@@ -532,7 +542,7 @@ co-body@^4.2.0:
     raw-body "~2.1.2"
     type-is "~1.6.6"
 
-co@^4.6.0:
+co@4.6.0, co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
 
@@ -629,7 +639,7 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-debug@*, debug@^2.1.1, debug@^2.1.3, debug@^2.2.0, debug@^2.6.0, debug@^2.6.1:
+debug@*, debug@2.6.3, debug@^2.1.1, debug@^2.1.3, debug@^2.2.0, debug@^2.6.0, debug@^2.6.1:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.3.tgz#0f7eb8c30965ec08c72accfa0130c8b79984141d"
   dependencies:
@@ -720,6 +730,10 @@ es6-promise@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-2.1.1.tgz#03e8f3c7297928e5478d6ab1d0643251507bdedd"
 
+es6-promise@3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-3.2.1.tgz#ec56233868032909207170c39448e24449dd1fc4"
+
 escape-html@~1.0.1, escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
@@ -797,6 +811,10 @@ form-data@~2.1.1:
     asynckit "^0.4.0"
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
+
+formidable@^1.0.17:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/formidable/-/formidable-1.1.1.tgz#96b8886f7c3c3508b932d6bd70c4d3a88f35f1a9"
 
 formstream@^1.0.0:
   version "1.1.0"
@@ -991,6 +1009,10 @@ inflation@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/inflation/-/inflation-2.0.0.tgz#8b417e47c28f925a45133d914ca1fd389107f30f"
 
+inflected@1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/inflected/-/inflected-1.1.7.tgz#c393df6e28472d0d77b3082ec3aa2091f4bc96f9"
+
 inflight@^1.0.4:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/inflight/-/inflight-1.0.6.tgz#49bd6331d7d02d0c09bc910a1075ba8165b56df9"
@@ -1026,7 +1048,7 @@ is-binary-path@^1.0.0:
   dependencies:
     binary-extensions "^1.0.0"
 
-is-buffer@^1.0.2:
+is-buffer@^1.0.2, is-buffer@^1.1.2:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.5.tgz#1f3b26ef613b214b88cbca23cc6c01d87961eecc"
 
@@ -1253,7 +1275,7 @@ koa-router@7.0.0, koa-router@^7.0.0:
     methods "^1.0.1"
     path-to-regexp "^1.1.1"
 
-koa-send@^3.1.0, koa-send@^3.2.0, koa-send@^3.3.0:
+koa-send@^3.1.0, koa-send@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/koa-send/-/koa-send-3.3.0.tgz#5a4ae245564680c6ecf6079e9275fa5173a861dc"
   dependencies:
@@ -1315,11 +1337,11 @@ koa-views@^5.0.1:
     koa-send "^3.1.0"
     mz "^2.4.0"
 
-koa2-static@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/koa2-static/-/koa2-static-1.0.1.tgz#42165b41c243f285a9d712b345a210add19d6483"
+koa2-formidable@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/koa2-formidable/-/koa2-formidable-1.0.0.tgz#b91fb1eab605b5f2d81c3034272a085358ca5d59"
   dependencies:
-    koa-send "^3.3.0"
+    formidable "^1.0.17"
 
 koa@2.0.0, koa@^2.0.0:
   version "2.0.0"
@@ -1356,7 +1378,11 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-lodash@^4.2.0:
+lodash@4.15.0:
+  version "4.15.0"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.15.0.tgz#3162391d8f0140aa22cf8f6b3c34d6b7f63d3aa9"
+
+lodash@4.17.4, lodash@^4.2.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -1436,6 +1462,21 @@ mongodb-core@1.2.31:
   dependencies:
     bson "~0.4.20"
 
+mongodb-core@2.1.9:
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-2.1.9.tgz#85aa71ee4fb716196e06b787557bf139f801daf5"
+  dependencies:
+    bson "~1.0.4"
+    require_optional "~1.0.0"
+
+mongodb@2.2.25:
+  version "2.2.25"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-2.2.25.tgz#d3b25dad00eda2bdfcbc996210ba082ac686a6b6"
+  dependencies:
+    es6-promise "3.2.1"
+    mongodb-core "2.1.9"
+    readable-stream "2.1.5"
+
 mongodb@~2.0.49:
   version "2.0.55"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-2.0.55.tgz#a09dd77259f6bba69f7dd592a011c11aa5761097"
@@ -1443,6 +1484,26 @@ mongodb@~2.0.49:
     es6-promise "2.1.1"
     mongodb-core "1.2.31"
     readable-stream "1.0.31"
+
+mongolass-plugin-populate@*:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/mongolass-plugin-populate/-/mongolass-plugin-populate-0.2.1.tgz#1fcd5bec731e2b017220d01aa72be897703cf979"
+  dependencies:
+    lodash "4.15.0"
+
+mongolass@^2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/mongolass/-/mongolass-2.4.5.tgz#123a95bc27eaf1b7118fe1f9da6fff31e28fccec"
+  dependencies:
+    another-json-schema "2.1.0"
+    bluebird "^3.5.0"
+    co "4.6.0"
+    debug "2.6.3"
+    inflected "1.1.7"
+    lodash "4.17.4"
+    mongodb "2.2.25"
+    mongolass-plugin-populate "*"
+    validator "7.0.0"
 
 ms@0.7.1:
   version "0.7.1"
@@ -1733,6 +1794,18 @@ readable-stream@1.1.x:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
+readable-stream@2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.1.5.tgz#66fa8b720e1438b364681f2ad1a63c618448c9d0"
+  dependencies:
+    buffer-shims "^1.0.0"
+    core-util-is "~1.0.0"
+    inherits "~2.0.1"
+    isarray "~1.0.0"
+    process-nextick-args "~1.0.6"
+    string_decoder "~0.10.x"
+    util-deprecate "~1.0.1"
+
 "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.2, readable-stream@^2.1.4, readable-stream@^2.2.2:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.6.tgz#8b43aed76e71483938d12a8d46c6cf1a00b1f816"
@@ -1814,6 +1887,17 @@ request@^2.81.0:
     tunnel-agent "^0.6.0"
     uuid "^3.0.0"
 
+require_optional@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/require_optional/-/require_optional-1.0.0.tgz#52a86137a849728eb60a55533617f8f914f59abf"
+  dependencies:
+    resolve-from "^2.0.0"
+    semver "^5.1.0"
+
+resolve-from@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-2.0.0.tgz#9480ab20e94ffa1d9e80a804c7ea147611966b57"
+
 resolve-path@^1.3.1:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/resolve-path/-/resolve-path-1.3.3.tgz#4d83aba6468c2b8e632a575e3f52b0fa0dbe1a5c"
@@ -1835,7 +1919,7 @@ safe-buffer@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.0.1.tgz#d263ca54696cd8a306b5ca6551e92de57918fbe7"
 
-semver@^5.0.1, semver@^5.3.0:
+semver@^5.0.1, semver@^5.1.0, semver@^5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
 
@@ -2064,6 +2148,10 @@ utility@^1.8.0:
 uuid@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
+
+validator@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-7.0.0.tgz#c74deb8063512fac35547938e6f0b1504a282fd2"
 
 vary@^1.0.0:
   version "1.1.1"

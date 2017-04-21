@@ -1,0 +1,157 @@
+/*手机表单样式*/
+
+[class*=" weui_icon_"]:before,
+[class^=weui_icon_]:before {
+    font-family: weui;
+    font-style: normal;
+    font-weight: 400;
+    speak: none;
+    display: inline-block;
+    vertical-align: middle;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+    margin-left: .2em
+}
+
+.mfui_icon_circle:before {
+    content: "\EA01"
+}
+
+.mfui_icon_download:before {
+    content: "\EA02"
+}
+
+.mfui_icon_info:before {
+    content: "\EA03"
+}
+
+.mfui_icon_safe_success:before {
+    content: "\EA04"
+}
+
+.mfui_icon_safe_warn:before {
+    content: "\EA05"
+}
+
+.mfui_icon_success:before {
+    content: "\EA06"
+}
+
+.mfui_icon_success_circle:before {
+    content: "\EA07"
+}
+
+.mfui_icon_success_no_circle:before {
+    content: "\EA08"
+}
+
+.mfui_icon_waiting:before {
+    content: "\EA09"
+}
+
+.mfui_icon_waiting_circle:before {
+    content: "\EA0A"
+}
+
+.mfui_icon_warn:before {
+    content: "\EA0B"
+}
+
+.mfui_icon_info_circle:before {
+    content: "\EA0C"
+}
+
+.mfui_icon_cancel:before {
+    content: "\EA0D"
+}
+
+.mfui_icon_search:before {
+    content: "\EA0E"
+}
+
+.mfui_icon_clear:before {
+    content: "\EA0F"
+}
+
+[class*=" weui_icon_"]:before,
+[class^=weui_icon_]:before {
+    margin: 0
+}
+
+.mfui_icon_success:before {
+    font-size: 23px;
+    color: #09bb07
+}
+
+.mfui_icon_waiting:before {
+    font-size: 23px;
+    color: #10aeff
+}
+
+.mfui_icon_warn:before {
+    font-size: 23px;
+    color: #f43530
+}
+
+.mfui_icon_info:before {
+    font-size: 23px;
+    color: #10aeff
+}
+
+.mfui_icon_success_circle:before,
+.mfui_icon_success_no_circle:before {
+    font-size: 23px;
+    color: #09bb07
+}
+
+.mfui_icon_waiting_circle:before {
+    font-size: 23px;
+    color: #10aeff
+}
+
+.mfui_icon_circle:before {
+    font-size: 23px;
+    color: #c9c9c9
+}
+
+.mfui_icon_download:before,
+.mfui_icon_info_circle:before {
+    font-size: 23px;
+    color: #09bb07
+}
+
+.mfui_icon_safe_success:before {
+    color: #09bb07
+}
+
+.mfui_icon_safe_warn:before {
+    color: #ffbe00
+}
+
+.mfui_icon_cancel:before {
+    color: #f43530;
+    font-size: 22px
+}
+
+.mfui_icon_clear:before,
+.mfui_icon_search:before {
+    color: #b2b2b2;
+    font-size: 14px
+}
+
+.mfui_icon_msg:before {
+    font-size: 104px
+}
+
+.mfui_icon_warn.mfui_icon_msg:before {
+    color: #f76260
+}
+
+.mfui_icon_safe:before {
+    font-size: 104px
+}

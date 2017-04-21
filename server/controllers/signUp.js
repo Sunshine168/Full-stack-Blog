@@ -4,21 +4,23 @@ const fs = require('fs');
 const hasher = crypto.createHash('md5');
 let UserModel = require('../models/users');
 module.exports = {
-	'GET /signUp': async(ctx, next) => {
-		await checkNotLogin(ctx, next);
-		ctx.response.body = ctx.flash.get();
+	'GET /home/register': async(ctx, next) => {
+		// await checkNotLogin(ctx, next);
+		// ctx.response.body = ctx.flash.get();
+	await ctx.render('home/register');
 	},
 	'POST /signIn': async(ctx, next) => {
 		await checkNotLogin(ctx, next);
 		ctx.response.body = ctx.flash.get();
 	},
-	'POST /signUp':async(ctx,next)=>{
+	'POST api/signUp':async(ctx,next)=>{
 		  let {body,files}=ctx.request;
       let avatar = files.avatar.path.split(path.sep).pop();
 			let {name,gender,bio,password}=files;
 		  hasher.update(password);
 			password = hasher.digest('hex');
 			let user = {
+				account:account
 				name: name,
 	      password: password,
 	      gender: gender,

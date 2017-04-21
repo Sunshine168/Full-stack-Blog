@@ -11,14 +11,15 @@ const flash = require('koa-flash-simple');
 const mongoStore = require('koa-session-mongo');
 const server = require('koa-static');
 const config = require('config-lite');
+const formidable=require('koa2-formidable')
 const app = new Koa();
 const isProduction = (process.env.NODE_ENV || 'production') === 'production';
-const formidable=require('koa2-formidable')
 
-app.use(formidable({
-	uploadDir: path.join(__dirname, 'public/img'),// 上传文件目录
-  keepExtensions: true// 保留后缀
-}))
+
+// app.use(formidable({
+// 	uploadDir: path.join(__dirname, 'public/img'),// 上传文件目录
+//   keepExtensions: true// 保留后缀
+// }))
 app.use(convert(server(__dirname + '/public/')));
 
 //通过koa-ejs中间件 也可以直接使用
@@ -76,4 +77,5 @@ app.use(async(ctx, next) => {
 		ctx.response.body = "error handle";
 	}
 });
+console.log(config.port)
 app.listen(config.port);

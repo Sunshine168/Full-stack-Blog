@@ -1,0 +1,133 @@
+/*手机按钮样式*/
+
+button.mfui_btn, input.mfui_btn {
+    width: 100%;
+    border-width: 0;
+    outline: 0;
+    -webkit-appearance: none;
+}
+
+.mfui_btn_area {
+    margin: 1.17647059em 15px .3em;
+}
+
+.mfui_btn+.mfui_btn {
+    margin-top: 15px;
+}
+
+.mfui_btn {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 14px;
+    padding-right: 14px;
+    box-sizing: border-box;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    line-height: 2.33333333;
+    border-radius: 5px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    overflow: hidden;
+}
+
+.mfui_btn_primary {
+    background-color: #04be02;
+}
+
+.mfui_btn_warn {
+    background-color: #ef4f4f;
+}
+
+.mfui_btn:after {
+    content: " ";
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid rgba(0, 0, 0, .2);
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.mfui_btn_disabled.mfui_btn_default {
+    color: #c9c9c9;
+}
+
+.mfui_btn_default {
+    background-color: #f7f7f7;
+    color: #454545;
+}
+
+.mfui_btn_disabled {
+    color: hsla(0, 0%, 100%, .6);
+}
+
+.button_sp_area {
+    width: 60%;
+    padding: 10px 0;
+    margin: 0 auto;
+    text-align: justify;
+    font-size: 0;
+}
+
+.mfui_btn_plain_primary {
+    color: #04be02;
+    border: 1px solid #04be02;
+}
+
+.mfui_btn_plain_primary:after {
+    border-width: 0;
+}
+
+button.mfui_btn_plain_primary, input.mfui_btn_plain_primary {
+    border-width: 1px;
+    background-color: transparent
+}
+
+.mfui_btn_plain_default {
+    color: #5a5a5a;
+    border: 1px solid #5a5a5a;
+}
+
+.mfui_btn_plain_default:after {
+    border-width: 0;
+}
+
+button.mfui_btn_plain_default, input.mfui_btn_plain_default {
+    border-width: 1px;
+    background-color: transparent
+}
+
+.mfui_btn_primary:not(.mfui_btn_disabled):active {
+    color: hsla(0, 0%, 100%, .4);
+    background-color: #039702;
+}
+
+.mfui_btn_warn:not(.mfui_btn_disabled):active {
+    color: hsla(0, 0%, 100%, .4);
+    background-color: #c13e3e;
+}
+
+.mfui_btn_default:not(.mfui_btn_disabled):active {
+    color: #a1a1a1;
+    background-color: #dedede;
+}
+
+.mfui_btn.mfui_btn_mini {
+    line-height: 1.9;
+    font-size: 14px;
+    padding: 0 .75em;
+    display: inline-block;
+}
+
+button.mfui_btn_inline, button.mfui_btn_mini, input.mfui_btn_inline, input.mfui_btn_mini {
+    width: auto;
+}

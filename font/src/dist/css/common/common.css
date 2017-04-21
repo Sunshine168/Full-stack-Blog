@@ -1,0 +1,32 @@
+.header{
+
+}
+.content_center{
+  text-align: center;
+}
+.header_title{
+  font-size: 40px;
+  display: inline-block;
+}
+.header_setting{
+
+}
+.loginInputForm{
+  width: 400px;
+  margin: auto;
+  /*transform: translateY(50%);*/
+}
+.form-group{
+  margin-bottom: 30px;
+}
+.flash_message{
+  margin: auto;
+  padding: 6px 10px;
+  border:1px solid rgb(210, 204, 207);
+  border-radius: 5px;
+  width: 400px;
+  margin-bottom: 30px;
+}
+.nav_action{
+  padding-right: 30px;
+}

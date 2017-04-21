@@ -1,0 +1,8 @@
+.message_detail{
+  display: inline-block;
+  vertical-align: top;
+}
+.message_detail h4{
+  color: "#ccc";
+  margin: 0;
+}
