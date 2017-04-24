@@ -1,44 +1,175 @@
 const checkLogin = require('../middlewares/check').checkLogin;
-
-
-
+const PostModel = require('../models/posts');
+const CommentModel = require('../models/comments');
 module.exports = {
 	// GET /posts 所有用户或者特定用户的文章页
 	//   eg: GET /posts?author=xxx
 	'GET /posts': async(ctx, next) => {
-		ctx.response.body = ctx.flash.get();
-	},
+		// await checkLogin(ctx, next);
+		//  let flashMessage = ctx.flash.get();
+
+		    let author = req.query.author,
+				    code   =1;
+
+      try{
+			   var posts = await	PostModel.getPosts(author);
+			}catch(e){
+				   var message = e;
+					     code = -1;
+			}
+			ctx.response.body = {
+				code:code,
+				message:message,
+				posts:posts
+			}
+}
 	// POST /posts 发表一篇文章
-	'POST /posts': async(ctx, next) => {
-		ctx.response.body = ctx.flash.get();
+	'POST /api/posts': async(ctx, next) => {
+		// await checkLogin(ctx, next);
+		 let {title,context,user_id} = ctx.request.body;
+		 let author =  ctx.session.user||user_id,
+		//  flashMessage = ctx.flash.get(),
+		 code = 1,
+		 message ="成功发表";
+		 let postModel = {
+			 author:author,
+			 title:title,
+			 content:context,
+			 pv:0
+		 }
+		 try{
+			 var result  = 	await PostModel.create(postModel),
+							post = result.ops[0];
+		}catch(e){
+				 code=-1;
+				message = "发表失败";
+		}
+		ctx.response.body={
+		 "code":code,
+		 "message":message,
+		 "post_id":post._id
+	 }
 	},
 	// GET /posts/create 发表文章页
 	'GET /posts/create': async(ctx, next) => {
-		ctx.response.body = ctx.flash.get();
+		// ctx.response.body = ctx.flash.get();
 	},
 	// GET /posts/:postId 单独一篇的文章页
-	'GET posts/:postId': async(ctx, next) => {
-		ctx.response.body = ctx.flash.get();
+	'GET /api/posts/:postId': async(ctx, next) => {
+		// ctx.response.body = ctx.flash.get();
+		let code = 1;
+		let {postId} = ctx.params;
+		console.log(ctx.params)
+		try{
+			var result  =  await Promise.all([
+				PostModel.getPostById(postId),   // 获取文章信息
+				CommentModel.getComments(postId),// 获取该文章所有留言
+				PostModel.incPv(postId)  // pv 加 1
+			])
+		   var post = result[0];
+			 if(!post){
+				 throw new Error('不能找到该文章')
+			 }else{
+				 //删除实例中的用户密码和用户账号
+				 delete  post.author.password;
+				 delete  post.author.account;
+			 }
+		}catch(e){
+			  code = -1;
+				console.log(e);
+		}
+		ctx.response.body = {
+			"code":code,
+			post:post,
+		}
+
 	},
 	// GET /posts/:postId/edit 更新文章页
 	'GET posts/:postId/edit': async(ctx, next) => {
-		ctx.response.body = ctx.flash.get();
+		// ctx.response.body = ctx.flash.get();
+
 	},
 	// POST /posts/:postId/edit 更新一篇文章
-	'POST /posts/:postId/edit': async(ctx, next) => {
-		ctx.response.body = ctx.flash.get();
+	'POST /api/posts/:postId/edit': async(ctx, next) => {
+		// ctx.response.body = ctx.flash.get();
+       let postId  =  ctx.params.postId,
+			     author  =  ctx.request.body.uid||ctx.session.user._id,
+					 {title,content}  = ctx.request.body,
+					 code = 1,
+					 message="修改成功";
+					 tre{
+						 await PostModel.updatePostById(postId, author, { title: title, content: content })
+					 }catch(e){
+						 message = e.message;
+						 code =1;
+					 }
+					 ctx.response.body = {
+						 code:code,
+						 message:message,
+					 }
+
 	},
 	// GET /posts/:postId/remove 删除一篇文章
 	'GET /posts/:postId/remove': async(ctx, next) => {
-		ctx.response.body = ctx.flash.get();
+		// ctx.response.body = ctx.flash.get();
+		let {postId} = ctx.request.params,
+		     author  = ctx.request.body.uid||ctx.session.user._id,
+				 code = 1,
+				 message = "删除成功";
+ try{
+      await PostModel.delPostById(postId, author)
+	 })
+	}catch(e){
+		message = e.message;
+		code =1;
+		}
+		ctx.response.body = {
+			code:code,
+			message:message,
+		}
 	},
 	// POST /posts/:postId/comment 创建一条留言
 	'POST /posts/:postId/comment': async(ctx, next) => {
-		ctx.response.body = ctx.flash.get();
+		// ctx.response.body = ctx.flash.get();
+		  let postId  =  ctx.params.postId,
+			    code = 1,
+					message = "创建成功",
+					user = ctx.reqeust.body.user_id||ctx.session.user._id;
+			try{
+				var result = await Promise.all([
+	      PostModel.getPostById(postId),// 获取文章信息
+	      PostModel.incPv(postId)// pv 加 1
+	      ])
+				var post = result[0];
+				if(!post){
+				throw new Error('该文章不存在');
+				}
+			}catch(e){
+          code = -1,
+					message = e;
+			}
+   ctx.response.body = {
+		 code:code,
+		 message:message,
+	 }
 	},
 	// GET /posts/:postId/comment/:commentId/remove 删除一条留言
 	'GET /posts/:postId/comment/:commentId/remove': async(ctx, next) => {
-		ctx.response.body = ctx.flash.get();
+		// ctx.response.body = ctx.flash.get();
+		let postId  =  ctx.params.postId,
+			 code = 1,
+			 message = "删除成功",
+			 user = ctx.reqeust.body.user_id||ctx.session.user._id;
+       try{
+				await CommentModel.delCommentById(commentId, author)
+			 }catch(e){
+          code=-1;
+					message=e;
+			 }
+			 ctx.response.body = {
+				code:code,
+				message:message,
+			}
 	}
 
 }

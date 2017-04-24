@@ -11,17 +11,22 @@ const flash = require('koa-flash-simple');
 const mongoStore = require('koa-session-mongo');
 const server = require('koa-static');
 const config = require('config-lite');
-const formidable=require('koa2-formidable')
+const cors = require('koa2-cors');
+const uploader =require('koa2-file-upload')
 const app = new Koa();
 const isProduction = (process.env.NODE_ENV || 'production') === 'production';
-
-
-// app.use(formidable({
-// 	uploadDir: path.join(__dirname, 'public/img'),// 上传文件目录
-//   keepExtensions: true// 保留后缀
-// }))
+app.use(bodyParser());
 app.use(convert(server(__dirname + '/public/')));
-
+app.use(uploader({
+	"url": '/api/upload',
+  "storeDir": 'img',
+  "provider": "local",
+  // "mimetypes": ['image/png','image/bmp'], // 如果没有配置,将不进行类型检查 http://www.freeformatter.com/mime-types-list.html
+  "folder": "public",
+  "urlPath": "images"
+}))
+app.use(cors());
+app.keys = [config.secretKey];
 //通过koa-ejs中间件 也可以直接使用
 // app.use(views(path.join(__dirname, './views'), {
 //         extension: 'ejs'

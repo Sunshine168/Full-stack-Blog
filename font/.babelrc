@@ -5,5 +5,8 @@
       "presets": ["react-hmre"]
     }
   },
-  "plugins": ["transform-class-properties"]
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties"
+  ]
 }

@@ -12,6 +12,29 @@ export default class LoginInput extends Component {
 				 password:""
 			 }
 		 }
+		 _signIn(){
+			 //检查数据有效性
+			 let {account,password} = this.state;
+			 fetch('http://localhost:3005/api/signIn',{
+				 method: 'POST',
+				 headers: {
+					 'Accept': 'application/json',
+					 'Content-Type': 'application/json'
+	},
+				body: JSON.stringify({
+					account: account,
+					password:password,
+				})
+			 })
+			 .then((response) => {return response.json()})
+			 .then((responseJson) => {
+				 console.log(responseJson);
+				 //处理登录结果
+			 })
+			 .catch((e)=>{
+				 console.log(e);
+			 })
+		 }
 		 render(){
 			    return<div className="loginInputForm">
 						<FlashMessage/>
@@ -31,7 +54,7 @@ export default class LoginInput extends Component {
 								placeholder="Enter Password"
 								onChange={(event)=>this.setState({password:event.target.value})}
 							/>
-							<Button bsStyle="primary" bsSize="large" block>LoginIn</Button>
+							<Button bsStyle="primary" bsSize="large" block onClick={()=>this._signIn()}>LoginIn</Button>
 						</form>
 					</div>
 		 }
