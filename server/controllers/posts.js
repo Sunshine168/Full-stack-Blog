@@ -4,13 +4,11 @@ const CommentModel = require('../models/comments');
 module.exports = {
 	// GET /posts 所有用户或者特定用户的文章页
 	//   eg: GET /posts?author=xxx
-	'GET /posts': async(ctx, next) => {
+	'GET /api/posts': async(ctx, next) => {
 		// await checkLogin(ctx, next);
 		//  let flashMessage = ctx.flash.get();
-
-		    let author = req.query.author,
+		    let author = ctx.request.query.author,
 				    code   =1;
-
       try{
 			   var posts = await	PostModel.getPosts(author);
 			}catch(e){
@@ -22,9 +20,9 @@ module.exports = {
 				message:message,
 				posts:posts
 			}
-}
+},
 	// POST /posts 发表一篇文章
-	'POST /api/posts': async(ctx, next) => {
+	'POST /api/posts':async(ctx, next) => {
 		// await checkLogin(ctx, next);
 		 let {title,context,user_id} = ctx.request.body;
 		 let author =  ctx.session.user||user_id,
@@ -49,7 +47,7 @@ module.exports = {
 		 "message":message,
 		 "post_id":post._id
 	 }
-	},
+ },
 	// GET /posts/create 发表文章页
 	'GET /posts/create': async(ctx, next) => {
 		// ctx.response.body = ctx.flash.get();
@@ -67,6 +65,7 @@ module.exports = {
 				PostModel.incPv(postId)  // pv 加 1
 			])
 		   var post = result[0];
+			 var comments = result[1];
 			 if(!post){
 				 throw new Error('不能找到该文章')
 			 }else{
@@ -81,6 +80,7 @@ module.exports = {
 		ctx.response.body = {
 			"code":code,
 			post:post,
+			comments:comments,
 		}
 
 	},
@@ -97,7 +97,7 @@ module.exports = {
 					 {title,content}  = ctx.request.body,
 					 code = 1,
 					 message="修改成功";
-					 tre{
+					 try{
 						 await PostModel.updatePostById(postId, author, { title: title, content: content })
 					 }catch(e){
 						 message = e.message;
@@ -110,15 +110,14 @@ module.exports = {
 
 	},
 	// GET /posts/:postId/remove 删除一篇文章
-	'GET /posts/:postId/remove': async(ctx, next) => {
+	'GET /api/posts/:postId/remove': async(ctx, next) => {
 		// ctx.response.body = ctx.flash.get();
-		let {postId} = ctx.request.params,
-		     author  = ctx.request.body.uid||ctx.session.user._id,
+		let {postId} = ctx.params,
+		     author  = ctx.query.user_id||ctx.session.user._id,
 				 code = 1,
 				 message = "删除成功";
  try{
-      await PostModel.delPostById(postId, author)
-	 })
+      await PostModel.delPostById(postId, author);
 	}catch(e){
 		message = e.message;
 		code =1;
@@ -129,21 +128,21 @@ module.exports = {
 		}
 	},
 	// POST /posts/:postId/comment 创建一条留言
-	'POST /posts/:postId/comment': async(ctx, next) => {
+	'POST /api/posts/:postId/comment': async(ctx, next) => {
 		// ctx.response.body = ctx.flash.get();
 		  let postId  =  ctx.params.postId,
 			    code = 1,
 					message = "创建成功",
-					user = ctx.reqeust.body.user_id||ctx.session.user._id;
+					author = ctx.request.body.user_id||ctx.session.user._id,
+					content = ctx.request.body.content;
+					let comment = {
+						author:author,
+						postId:postId,
+						content:content
+					}
 			try{
-				var result = await Promise.all([
-	      PostModel.getPostById(postId),// 获取文章信息
-	      PostModel.incPv(postId)// pv 加 1
-	      ])
-				var post = result[0];
-				if(!post){
-				throw new Error('该文章不存在');
-				}
+				var result =  await CommentModel.create(comment);
+				console.log(result);
 			}catch(e){
           code = -1,
 					message = e;
@@ -151,6 +150,7 @@ module.exports = {
    ctx.response.body = {
 		 code:code,
 		 message:message,
+		 commentId:result.ops[0]._id
 	 }
 	},
 	// GET /posts/:postId/comment/:commentId/remove 删除一条留言
@@ -159,7 +159,7 @@ module.exports = {
 		let postId  =  ctx.params.postId,
 			 code = 1,
 			 message = "删除成功",
-			 user = ctx.reqeust.body.user_id||ctx.session.user._id;
+			 author = ctx.query.user_id||ctx.session.user._id;
        try{
 				await CommentModel.delCommentById(commentId, author)
 			 }catch(e){

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import LoginInput from '../../plugins/components/home/Login';
 import {Header} from '../../plugins/components/common/Header';
 import CommonStyle from '../../css/common/style.css';
-class LoginScreen extends Component {
+exports default class LoginScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {};

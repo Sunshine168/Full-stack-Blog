@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import RegisterInput from '../../plugins/components/home/Register';
 import {Header} from '../../plugins/components/common/Header';
 import CommonStyle from '../../css/common/style.css';
-class RegisterScreen extends Component {
+exports default class RegisterScreen extends Component {
 	constructor(props) {
 		super(props);
 
