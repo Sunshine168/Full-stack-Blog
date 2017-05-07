@@ -2,18 +2,29 @@ import React, {
 	Component
 } from 'react';
 import {FormGroup,ControlLabel,FormControl,HelpBlock,Button} from 'react-bootstrap';
-import {FlashMessage} from './MyComponent';
 import PropTypes from 'prop-types'
+import {Redirect} from'react-router-dom';
 export default class LoginInput extends Component  {
 	static propTypes=({
 		login:PropTypes.object,
-		loginIn:PropTypes.func
+		loginIn:PropTypes.func,
+		showFlashMessage:PropTypes.func,
+		removeFlashMessage:PropTypes.func,
 	})
      constructor(props){
 			 super(props);
 			 this.state = {
 				 account:"",
 				 password:""
+			 }
+		 }
+		 componentDidMount(){
+			 if(this.props.login.user){
+				 console.log(this.props.showFlashMessage)
+				 this.props.showFlashMessage({
+					 msgType:"danger",
+					 msg:"已经登录",
+				 })
 			 }
 		 }
 		 _signIn(){
@@ -34,7 +45,16 @@ export default class LoginInput extends Component  {
 			 .then((responseJson) => {
 				 //处理登录结果
 				 if(responseJson.code==1){
-					 this.props.loginIn(responseJson.user);
+					 this.props.loginIn(responseJson.user);//更新用户状态
+					 this.props.showFlashMessage({
+						 msg:"登录成功",
+						 msgType:"success",
+					 })
+				 }else{
+					 this.props.showFlashMessage({
+						msg:responseJson.message,
+						msgType:"danger",
+					})
 				 }
 			 })
 			 .catch((e)=>{
@@ -42,27 +62,33 @@ export default class LoginInput extends Component  {
 			 })
 		 }
 		 render(){
-			    return<div className="loginInputForm">
-						<FlashMessage/>
-						<form>
-							<FieldGroup
-								id="formControlsEmail"
-								type="email"
-								label="Email address"
-								placeholder="Enter email"
-								ref={(input)=>this.email=input}
-								onChange={(event)=>this.setState({account:event.target.value})}
-							/>
-							<FieldGroup
-								id="formControlsPassword"
-								label="Password"
-								type="password"
-								placeholder="Enter Password"
-								onChange={(event)=>this.setState({password:event.target.value})}
-							/>
-							<Button bsStyle="primary" bsSize="large" block onClick={()=>this._signIn()}>LoginIn</Button>
+			 let loginStatus = this.props.login.user;
+			    return (loginStatus?
+						<Redirect
+							to={{
+								 pathname: '/personal/index',
+								state: { from: this.props.location }
+							}}/>
+							:<div className="loginInputForm">
+								<form>
+									<FieldGroup
+										id="formControlsEmail"
+										type="email"
+										label="Email address"
+										placeholder="Enter email"
+										ref={(input)=>this.email=input}
+										onChange={(event)=>this.setState({account:event.target.value})}
+									/>
+									<FieldGroup
+										id="formControlsPassword"
+										label="Password"
+										type="password"
+										placeholder="Enter Password"
+										onChange={(event)=>this.setState({password:event.target.value})}
+									/>
+									<Button bsStyle="primary" bsSize="large" block onClick={()=>this._signIn()}>LoginIn</Button>
 						</form>
-					</div>
+					</div>)
 		 }
 }
 

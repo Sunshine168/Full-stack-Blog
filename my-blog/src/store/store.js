@@ -1,9 +1,10 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
-import {login,comment} from '../reducer/index'
+import {login,comment,flashMessage} from '../reducer/index'
 const reducer = combineReducers({
   login,
-  comment
+  comment,
+  flashMessage
 })
 const store = createStore(reducer,{},applyMiddleware(thunk))
 

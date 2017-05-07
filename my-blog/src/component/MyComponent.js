@@ -3,19 +3,13 @@ import React, {
 } from 'react';
 import {Panel} from 'react-bootstrap';
 export  const FlashMessage = (props)=>{
-  if(props.success){
+	   let flashMessage =props.flashMessage;
     return(
-     <Panel header={props.success} bsStyle="success">
-			 {props.success}
+			flashMessage.show?
+     <Panel header={flashMessage.msg} bsStyle={flashMessage.type}>
+			 {flashMessage.msg}
      </Panel>
+		 :null
 	 )
-  }
-	if(props.fail){
-		return(
-			<Panel header={props.fail} bsStyle="danger">
 
-			</Panel>
-		)
-	}
-  return null;
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Login from '../component/Login';
 import '../css/login.css';
-import { loginIn } from '../reducer/index';
+import { loginIn,showFlashMessage,removeFlashMessage } from '../reducer/index';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom'
 const mapStateToProps = (state)=>{
@@ -14,6 +14,12 @@ const mapDispatchToProps = (dispatch)=>{
 	return {
 		loginIn:(user)=>{
 			dispatch(loginIn(user));
+		},
+		showFlashMessage:(message)=>{
+			dispatch(showFlashMessage(message))
+		},
+		removeFlashMessage:()=>{
+			dispatch(removeFlashMessage());
 		}
 	}
 }

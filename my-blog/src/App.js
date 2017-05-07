@@ -10,7 +10,8 @@ import logo from './logo.svg';
 import Header from './containers/Header';
 import Login from './containers/Login';
 import Register from './containers/Register';
-import ArticleList from './component/ArticleList'
+// import ArticleList from './component/ArticleList'
+import FlashMessage from './containers/FlashMessage'
 import './css/common.css';
 const fakeAuth = {
   isAuthenticated: false,
@@ -28,6 +29,7 @@ const App = () => (
   <Router>
     <div className="container">
       <Header/>
+      <FlashMessage/>
       <Route exact path="/" component={TestScreen}/>
       <Route path="/login" component={Login}/>
       <Route path="/register" component={Register}/>

@@ -39,6 +39,12 @@ action  type of ARTICLES
  const DELETE_ARTICLE = 'DELETE_ARTICLE'
 
 
+/*
+action type of FLASHMESSAGE
+ */
+const SHOW_FLASHMESSAGE = " SHOW_FLASHMESSAGE"
+const REMOVE_FLASHMESSAGE ="REMOVE_FLASHMESSAGE"
+
 //reducer for COMMENTS
 export const comment = (state,action)=>{
   if(!state){
@@ -140,6 +146,29 @@ export const register = (state,action)=>{
   }
 }
 
+//reducer for flashMessage
+export const flashMessage  = (state,action)=>{
+  if(!state){
+    state = {show:false}
+  }
+  switch(action.type){
+    case SHOW_FLASHMESSAGE:
+    return {
+      type:action.flashMessage.msgType,
+      msg:action.flashMessage.msg,
+      show:true
+    }
+    case REMOVE_FLASHMESSAGE:
+    return {
+      ...state,
+      show:!state.show
+    }
+    default:
+    return state;
+  }
+}
+
+
 // COMMENTS action  creators
 export const initComments = (comments)=>{
   return {type:INIT_COMMNETS,comments}
@@ -147,7 +176,7 @@ export const initComments = (comments)=>{
 export const addComment = (comment)=>{
   return {type:ADD_COMMENT,comment}
 }
-export const deleteComent = (comment)=>{
+export const deleteComment = (comment)=>{
   return {type:DELETE_COMMENT,comment}
 }
 export const loginIn = (user)=>{
@@ -156,3 +185,9 @@ export const loginIn = (user)=>{
 export const loginOut = ()=>{
   return {type:LOGIN_OUT}
 }
+export const showFlashMessage = (flashMessage)=>{
+  return {type:SHOW_FLASHMESSAGE,flashMessage}
+}
+export const removeFlashMessage=(
+    {type:REMOVE_FLASHMESSAGE}
+)
