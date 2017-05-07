@@ -7,7 +7,7 @@ import {
   withRouter
 } from 'react-router-dom'
 import logo from './logo.svg';
-import {Header} from './component/Header';
+import Header from './containers/Header';
 import Login from './containers/Login';
 import Register from './containers/Register';
 import ArticleList from './component/ArticleList'

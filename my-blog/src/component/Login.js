@@ -1,9 +1,14 @@
 import React, {
 	Component
 } from 'react';
-import {FormGroup,ControlLabel,FormControl,HelpBlock,Button,Panel} from 'react-bootstrap';
+import {FormGroup,ControlLabel,FormControl,HelpBlock,Button} from 'react-bootstrap';
 import {FlashMessage} from './MyComponent';
-export default class LoginInput extends Component {
+import PropTypes from 'prop-types'
+export default class LoginInput extends Component  {
+	static propTypes=({
+		login:PropTypes.object,
+		loginIn:PropTypes.func
+	})
      constructor(props){
 			 super(props);
 			 this.state = {
@@ -27,8 +32,10 @@ export default class LoginInput extends Component {
 			 })
 			 .then((response) => {return response.json()})
 			 .then((responseJson) => {
-				 console.log(responseJson);
 				 //处理登录结果
+				 if(responseJson.code==1){
+					 this.props.loginIn(responseJson.user);
+				 }
 			 })
 			 .catch((e)=>{
 				 console.log(e);

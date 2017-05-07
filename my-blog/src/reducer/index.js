@@ -150,3 +150,9 @@ export const addComment = (comment)=>{
 export const deleteComent = (comment)=>{
   return {type:DELETE_COMMENT,comment}
 }
+export const loginIn = (user)=>{
+  return {type:LOGIN_IN,user}
+}
+export const loginOut = ()=>{
+  return {type:LOGIN_OUT}
+}

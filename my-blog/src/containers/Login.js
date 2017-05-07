@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
-import {Header} from '../component/Header';
 import Login from '../component/Login';
 import '../css/login.css';
-export default class LoginScreen extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-	}
-	render() {
-		return (
-			<div className="container">
-				<Login/>
-			</div>
-		)
+import { loginIn } from '../reducer/index';
+import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom'
+const mapStateToProps = (state)=>{
+	  console.log(state)
+	return {
+		login:state.login
 	}
 }
+const mapDispatchToProps = (dispatch)=>{
+	return {
+		loginIn:(user)=>{
+			dispatch(loginIn(user));
+		}
+	}
+}
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Login));

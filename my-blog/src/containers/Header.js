@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import {connect} from 'redux-redux';
-import {Header} from './component/Header';
-
+import {connect} from 'react-redux';
+import {Header} from '../component/Header';
+import { withRouter } from 'react-router-dom';
+import {loginOut} from '../reducer/index';
 const mapStateToProps = (state)=>{
   return {
-    user:state.user
+    login:state.login
   }
 }
-
-@component
-class HeaderScreen {
-  render (){
-    return <Header/>
+const mapDispatchToProps= (dispatch)=>{
+  return{
+    loginOut:()=>{dispatch(loginOut())},
   }
 }
-export default connect(mapStateToProps)(Header)
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Header));
