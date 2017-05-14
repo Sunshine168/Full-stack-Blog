@@ -6,50 +6,16 @@ import {
   Redirect,
   withRouter
 } from 'react-router-dom'
+import {StyleRoot} from 'radium';
+import {connect} from 'react-redux';
 import logo from './logo.svg';
 import Header from './containers/Header';
 import Login from './containers/Login';
 import Register from './containers/Register';
-// import ArticleList from './component/ArticleList'
+import ArticleList from './containers/ArticleList'
 import FlashMessage from './containers/FlashMessage'
+import PostArticle from './containers/PostArticle'
 import './css/common.css';
-const fakeAuth = {
-  isAuthenticated: false,
-  user:"",
-  authenticate(cb) {
-    this.isAuthenticated = true
-    setTimeout(cb, 100) // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false
-    setTimeout(cb, 100)
-  }
-}
-const App = () => (
-  <Router>
-    <div className="container">
-      <Header/>
-      <FlashMessage/>
-      <Route exact path="/" component={TestScreen}/>
-      <Route path="/login" component={Login}/>
-      <Route path="/register" component={Register}/>
-    </div>
-  </Router>
-)
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    fakeAuth.isAuthenticated ? (
-      <Component {...props}/>
-    ) : (
-      <Redirect to={{
-        pathname: '/login',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
-)
-
 const TestScreen = ()=>(
   <div className="App">
     <div className="App-header">
@@ -61,4 +27,57 @@ const TestScreen = ()=>(
     </p>
   </div>
 )
-export default App;
+
+const mapStateToProps = (state)=>{
+  return {
+    login:state.login
+  }
+}
+const PrivateRoute = ({ component: Component,auth, ...rest }) => (
+  <Route {...rest} render={props => (
+    auth.user ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
+
+class App extends Component {
+   constructor(props){
+     super(props);
+
+   }
+   render(){
+     let auth = this.props.login
+     return (
+       <StyleRoot>
+         <Router>
+           <div className="container">
+             <Header/>
+             <FlashMessage/>
+             <Route exact path="/" component={TestScreen}/>
+             <Route path="/login" component={Login}/>
+             <Route path="/loginOut" component={Login}/>
+             <Route path="/register" component={Register}/>
+             <PrivateRoute
+               path="/personal/index"
+               component={ArticleList}
+               auth ={auth}
+             />
+             <PrivateRoute
+               path="/postArticle"
+               component={PostArticle}
+               auth ={auth}
+             />
+           </div>
+         </Router>
+       </StyleRoot>)
+   }
+
+}
+
+export default connect(mapStateToProps)(App);

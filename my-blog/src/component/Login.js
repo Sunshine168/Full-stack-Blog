@@ -4,6 +4,7 @@ import React, {
 import {FormGroup,ControlLabel,FormControl,HelpBlock,Button} from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import {Redirect} from'react-router-dom';
+import {login} from '../service/fetch';
 export default class LoginInput extends Component  {
 	static propTypes=({
 		login:PropTypes.object,
@@ -27,39 +28,26 @@ export default class LoginInput extends Component  {
 				 })
 			 }
 		 }
-		 _signIn(){
+		async _signIn(){
 			 //检查数据有效性
 			 let {account,password} = this.state;
-			 fetch('http://localhost:3005/api/signIn',{
-				 method: 'POST',
-				 headers: {
-					 'Accept': 'application/json',
-					 'Content-Type': 'application/json'
-	},
-				body: JSON.stringify({
-					account: account,
-					password:password,
+        let result =await login({
+					account,
+					password
 				})
-			 })
-			 .then((response) => {return response.json()})
-			 .then((responseJson) => {
 				 //处理登录结果
-				 if(responseJson.code==1){
-					 this.props.loginIn(responseJson.user);//更新用户状态
+				 if(result.code==1){
+					 this.props.loginIn(result.user);//更新用户状态
 					 this.props.showFlashMessage({
 						 msg:"登录成功",
 						 msgType:"success",
 					 })
 				 }else{
 					 this.props.showFlashMessage({
-						msg:responseJson.message,
+						msg:result.message,
 						msgType:"danger",
 					})
 				 }
-			 })
-			 .catch((e)=>{
-				 console.log(e);
-			 })
 		 }
 		 render(){
 			 let loginStatus = this.props.login.user;

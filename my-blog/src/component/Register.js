@@ -2,7 +2,6 @@ import React, {
 	Component
 } from 'react';
 import {FormGroup,ControlLabel,FormControl,HelpBlock,Button} from 'react-bootstrap';
-import {FlashMessage} from './MyComponent';
 export default class RegisterInput extends Component {
      constructor(props){
 			 super(props);
@@ -13,7 +12,6 @@ export default class RegisterInput extends Component {
 		 }
 		 render(){
 			    return<div className="loginInputForm">
-						<FlashMessage/>
 						<form>
 							<FieldGroup
 								id="formControlsEmail"

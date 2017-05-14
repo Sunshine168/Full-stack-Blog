@@ -1,9 +1,20 @@
 import React, {
 	Component
 } from 'react';
-import {Header} from '../common/Header';
-import {SplitButton,MenuItem,FormGroup,ControlLabel,FormControl,Button} from'react-bootstrap';
-import Style from '../../../css/article/style.css';
+import {SplitButton,MenuItem,FormGroup,ControlLabel,FormControl,Button,HelpBlock} from'react-bootstrap';
+//考虑成型用draft.js作为文章输入
+/*
+params of article
+title
+context
+visitCount
+messageCount
+tiem
+ - - -
+logic parmas
+isCurrent
+只有在当前用户的用户页面才有操作的显示项
+ */
 export const Article = (props)=>{
   return (<div className="article_container">
     <img className="author_logo"/>
@@ -11,19 +22,20 @@ export const Article = (props)=>{
 			<h3 className="article_title">
 	      {props.title}
 	    </h3>
-	    <section className="article_context">
-				{props.context}
-	    </section>
+	    <div className="article_context">
+				<div dangerouslySetInnerHTML={{__html:props.context}}></div>
+	    </div>
 			<ArticleFoot
-				isLogin={props.isLogin}
-				visit={props.visit}
-				message={props.message}
+				isCurrent={props.isCurrent}
+				visit={props.visitCount}
+				message={props.messageCount}
 				time = {props.time}
 			/>
 		</div>
   </div>)
 }
 const ArticleFoot = (props)=>{
+	let {post} = props;
   return (<div className="article_foot">
     <div className="foot_left">
       <a href="#" className="foot_item">
@@ -34,10 +46,14 @@ const ArticleFoot = (props)=>{
       <a href="#" className="foot_item">
         浏览({props.visit})
       </a>
-      <a href="#" className="foot_item">
-        留言({props.message})
-      </a>
-			{props.isLogin?(<a href="#" className="foot_item">
+      {
+				props.message?
+					<a href="#" className="foot_item">
+						留言({props.message})
+					</a>
+        :null
+			}
+			{props.isCurrent?(
 				<SplitButton bsStyle="link" title="操作"  className="foot_dropDown" id="article-action" pullRight={true}>
 					<MenuItem eventKey="1">编辑</MenuItem>
 					<MenuItem divider />
@@ -45,7 +61,7 @@ const ArticleFoot = (props)=>{
 
 
 				</SplitButton>
-			</a>):null}
+			):null}
     </div>
 	</div>)
 }
@@ -59,7 +75,7 @@ function FieldGroup({ id, label, help, ...props }) {
     </FormGroup>
   );
 }
-export defualt class PostArticle  extends Component{
+export default class PostArticle  extends Component{
 	constructor(props){
 		super(props);
 		this.state={
@@ -68,6 +84,7 @@ export defualt class PostArticle  extends Component{
 		}
 	}
 	render(){
+    let {title,context}  = this.state;
 		return (<div className="article_container">
 	    <img className="author_logo"/>
 			<div className="article_wrap">
@@ -78,7 +95,7 @@ export defualt class PostArticle  extends Component{
 						type="text"
 						label="标题"
 						placeholder="Enter text"
-						value={props.title}
+						value={title}
 						onChange={(title)=>this.setState(title)}
 					/>
 					<FormGroup controlId="formControlsTextarea">
@@ -86,16 +103,15 @@ export defualt class PostArticle  extends Component{
 						<FormControl componentClass="textarea" placeholder="textarea"
 							onChange={(context)=>this.setState(context)}
 							style={{ height: 200 }}
-							value={props.context}/>
+							value={context}/>
 					</FormGroup>
 		    </section>
-				<Button onclick={()=>this._postArticle()}>发表</Button>
+				<Button onClick={()=>this._postArticle()}>发表</Button>
 			</div>
 	  </div>)
 	}
 	//发表文章的网络请求
   _postArticle(){
-		_signIn(){
 			//检查数据有效性
 			let {title,context} = this.state;
 			fetch('http://localhost:3005/api/posts',{
@@ -120,4 +136,3 @@ export defualt class PostArticle  extends Component{
 			})
 		}
 	}
-}

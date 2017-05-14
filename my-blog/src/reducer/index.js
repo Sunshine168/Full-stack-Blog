@@ -100,13 +100,13 @@ export const article = (state,action)=>{
      state = {articles:[]}
   }
   switch(action.type){
-    case INIT_COMMNETS:
+    case INIT_ARTICLES:
     return {articles:action.articles}
-    case ADD_COMMENT:
+    case ADD_ARTICLE:
     return {
       articles:[...state.articles,action.article]
     }
-    case DELETE_COMMENT:
+    case DELETE_ARTICLE:
     return {
       articles:[
         ...state.articles.slice(0,action.postIndex),
@@ -170,6 +170,7 @@ export const flashMessage  = (state,action)=>{
 
 
 // COMMENTS action  creators
+// for COMMENTS
 export const initComments = (comments)=>{
   return {type:INIT_COMMNETS,comments}
 }
@@ -179,15 +180,24 @@ export const addComment = (comment)=>{
 export const deleteComment = (comment)=>{
   return {type:DELETE_COMMENT,comment}
 }
+
+// for LOGIN
 export const loginIn = (user)=>{
   return {type:LOGIN_IN,user}
 }
 export const loginOut = ()=>{
   return {type:LOGIN_OUT}
 }
+
+// for flashMessage
 export const showFlashMessage = (flashMessage)=>{
   return {type:SHOW_FLASHMESSAGE,flashMessage}
 }
-export const removeFlashMessage=(
+export const removeFlashMessage = (
     {type:REMOVE_FLASHMESSAGE}
 )
+
+// for article
+export const initArticles = (articles)=>{
+  return {type:INIT_ARTICLES,articles}
+}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {Header} from '../component/Header';
 import { withRouter } from 'react-router-dom';
-import {loginOut} from '../reducer/index';
+import {loginOut,showFlashMessage,removeFlashMessage} from '../reducer/index';
 const mapStateToProps = (state)=>{
   return {
     login:state.login
@@ -11,6 +11,12 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps= (dispatch)=>{
   return{
     loginOut:()=>{dispatch(loginOut())},
+    showFlashMessage:(message)=>{
+      dispatch(showFlashMessage(message))
+    },
+    removeFlashMessage:()=>{
+      dispatch(removeFlashMessage());
+    }
   }
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Header));
