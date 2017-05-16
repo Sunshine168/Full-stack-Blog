@@ -3,10 +3,36 @@ import React, {
 } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import PropTypes from 'prop-types'
-import {Navbar,Nav,NavDropdown,NavItem,MenuItem,PageHeader} from'react-bootstrap';
+import {Navbar,Nav,NavDropdown,NavItem,MenuItem,PageHeader,Popover,OverlayTrigger} from'react-bootstrap';
+import CopyToClipboard from 'react-copy-to-clipboard';
 const afterLoginAction = [{title:"个人主页",evenKey:"2",href:"/personal/index"},{title:"发表文章",evenKey:"2.1",href:"/postArticle"},{title:"退出登录",evenKey:"2.2",href:"/loginOut"}]
 const beforeLoginAction = [{title:"登录",evenKey:"3",href:"/login"},{title:"注册",evenKey:"3.1",href:"/register"}]
+
+/*
+目前设计的导航栏耦合性还是非常高。。
+ */
+ const popoverClick = (
+   <Popover id="popover-trigger-click" title="分享你的blog">
+     <strong>你的博客链接已经复制到粘贴板上</strong>
+   </Popover>
+ );
+
 const NavbarInstance = (props)=>{
+	let {login} = props,url="";
+	let  actionsList=login.user?afterLoginAction:beforeLoginAction;
+	//获取当期blog的方法
+		const getBlogUrl = (id)=>{
+			//获取主机名
+			let hostname = window.location.hostname;
+			//判断开发模式
+			if (process.env.NODE_ENV == 'production') {
+          url=`localhost/article/${id}`;
+      }else{
+				let port = location.port;
+				url=`localhost:${port}/article/${id}`
+			}
+			return url;
+		}
              return(
              <div>
                <Navbar>
@@ -15,9 +41,30 @@ const NavbarInstance = (props)=>{
                      <a href="#">BLOG</a>
                    </Navbar.Brand>
                  </Navbar.Header>
+								 {login.user?
+									 <CopyToClipboard
+										 text={getBlogUrl(login.user._id)}>
+										 <OverlayTrigger trigger="click"
+											 rootClose
+											 placement="bottom"
+											 overlay={popoverClick}>
+											 <Nav
+												 pullRight
+												 className="nav_action"
+											 >
+												 <NavItem
+													 eventKey={0}
+													 href="#">
+													 分享
+												 </NavItem>
+											 </Nav>
+										 </OverlayTrigger>
+									 </CopyToClipboard>
+									 :null
+								 }
                  <Nav pullRight className="nav_action">
                    <NavDropdown  eventKey={3} title="操作" id="basic-nav-dropdown" onSelect={eventKey=>props.dropDownEvent(eventKey)}>
-                     {props.actionsList.map(item => (
+                     {actionsList.map(item => (
 											 <LinkContainer to={item.href} key={item.evenKey}>
 												 <NavItem key={item.evenKey} eventKey={item.evenKey}>{item.title}</NavItem>
 											 </LinkContainer>
@@ -47,6 +94,7 @@ static propTypes={
 }
 constructor(props){
   super(props);
+	console.log(props);
   this.state={
       blogTitle :"MyBolg",
       blogIntroduce:"introduce"
@@ -67,7 +115,8 @@ render(){
 	let {login} = this.props;
   return(
      <div>
-       <NavbarInstance actionsList={login.user?afterLoginAction:beforeLoginAction}
+       <NavbarInstance
+				 login={login}
 				 dropDownEvent= {(key)=>this.dropDownHandler(key)}
 			 />
 

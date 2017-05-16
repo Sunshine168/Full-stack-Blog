@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 import {fadeIn,fadeOut} from 'react-animations';
 import Radium from 'radium';
 /*
-目前构思是通过定时器在10s后使flashmessage消失
+目前构思是通过定时器在5s后使flashmessage消失
+目前这个组件还有bug
  */
 
 /*
@@ -25,7 +26,6 @@ import Radium from 'radium';
  }
 
 
-@Radium
 export default class FlashMessage extends Component{
 	static propTypes=({
 		flashMessage:PropTypes.object,
@@ -36,46 +36,36 @@ export default class FlashMessage extends Component{
 		super(props);
 		this.state={
 			show:props.flashMessage.show,
+			removeTimer:null,
 		}
 	}
-	componentDidMount(){
-
-	}
-	async componentDidUpdate(nextProps,nextState){
-		if(this.props.flashMessage.show){
-			setTimeout(()=>{
-					this.props.removeFlashMessage();
-			},5000);
-		}
-		if(this.state.show)
-		{
-			return true;
-		}else{
-			return false;
-		}
-
-	}
-  componentWillReceiveProps(nextProps){
-		this.setState({
-			show:nextProps.flashMessage.show,
-		})
-	}
+ componentDidUpdate(){
+	 if(this.props.flashMessage.show){
+		 if(this.removeTimer){
+			  clearTimeout(this.removeTimer)
+		 }
+		 this.removeTimer = setTimeout(()=>{
+	 if(this.props.flashMessage.show){
+		 this.props.removeFlashMessage();
+	 }
+    },5000);
+	 }
+ }
 	render(){
   let {flashMessage} = this.props,
 	    flashStyle =  flashMessage.show?styles.fadeIn:styles.fadeOut;
-   console.log(this.state.show);
 	return (
 		<div className="flashMessage_container">
-			{this.state.show?
-				<div
-					style={
+			{flashMessage.show?
+			<div
+				style={
 						flashStyle
-					}>
-					<Panel
-						header={flashMessage.msg} bsStyle={flashMessage.type}>
-					</Panel>
-				</div>
-				:
+				}>
+				<Panel
+					header={flashMessage.msg} bsStyle={flashMessage.type}>
+				</Panel>
+			</div>
+			:
 				null
 			}
 				</div>

@@ -17,17 +17,17 @@ module.exports = {
 		let {account,password}=ctx.request.body;
     let user = await UserModel.getUserByAccount(account);
 		password = crypto.createHash('md5').update(password).digest('hex');
-		if(password!==user.password){
-        code="-1";
-				message="用户或密码错误";
+		if(user&&(password==user.password)){
+			delete user.password;
+		 ctx.session.user = user ;
 		}else{
-			  delete user.password;
-			  ctx.session.user = user ;
+				code="-1";
+				message="用户或密码错误";
 		}
 		ctx.response.body={
 			"code":code,
 			"message":message,
-			"username":user.username,
+			"user":user,
 		}
 	}
 }

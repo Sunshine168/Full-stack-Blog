@@ -20,14 +20,14 @@ export default class RegisterInput extends Component {
 								placeholder="Enter email"
 								ref={(input)=>this.email=input}
 								onChange={(event)=>this.setState({account:event.target.value})}
-       />
+							/>
 							<FieldGroup
 								id="formControlsPassword"
 								label="Password"
 								type="password"
 								placeholder="Enter Password"
 								onChange={(event)=>this.setState({password:event.target.value})}
-       />
+							/>
               <FieldGroup
                 id="formControlsPassword"
                 label="confirmPassword"
@@ -36,7 +36,6 @@ export default class RegisterInput extends Component {
                 onChange={(event)=>this.setState({confirmPassword:event.target.value})}
               />
               <FormGroup>
-
                 <ControlLabel>性别</ControlLabel>
                 <FormControl componentClass="select" placeholder="性别"
                   onChange={(event)=>this.setState({sex:event.target.value})}>

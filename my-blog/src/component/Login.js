@@ -20,13 +20,7 @@ export default class LoginInput extends Component  {
 			 }
 		 }
 		 componentDidMount(){
-			 if(this.props.login.user){
-				 console.log(this.props.showFlashMessage)
-				 this.props.showFlashMessage({
-					 msgType:"danger",
-					 msg:"已经登录",
-				 })
-			 }
+
 		 }
 		async _signIn(){
 			 //检查数据有效性
@@ -43,21 +37,29 @@ export default class LoginInput extends Component  {
 						 msgType:"success",
 					 })
 				 }else{
-					 this.props.showFlashMessage({
+					 this.props.showFlashMessage({//返回失败信息
 						msg:result.message,
 						msgType:"danger",
 					})
 				 }
 		 }
+		componentWillUpdate(nextProps,nextState){
+				 if(nextProps.login.user){
+					 let pathname ='/personal/index',
+					 redirectState = { from: this.props.location };
+					 this.props.redirect(pathname,redirectState)
+				 }
+				//  if(this.props.login.user){
+				// 	this.props.showFlashMessage({
+				// 		msgType:"danger",
+				// 		msg:"已经登录",
+				// 	})
+				// }
+		}
 		 render(){
 			 let loginStatus = this.props.login.user;
-			    return (loginStatus?
-						<Redirect
-							to={{
-								 pathname: '/personal/index',
-								state: { from: this.props.location }
-							}}/>
-							:<div className="loginInputForm">
+			    return (
+            <div className="loginInputForm">
 								<form>
 									<FieldGroup
 										id="formControlsEmail"

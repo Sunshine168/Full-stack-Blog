@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import ArticleList from '../component/ArticleList'
-import { initArticles,showFlashMessage,removeFlashMessage } from '../reducer/index';
+import { initArticles,deleteArticle,showFlashMessage,removeFlashMessage } from '../reducer/index';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom'
 const mapStateToProps = (state)=>{
   return {
-    article:state.article
+    article:state.article,
+    login:state.login,
   }
 }
 const mapDispatchToProps = (dispatch)=>{
   return {
     initArticles:(article)=>{
       dispatch(initArticles(article));
+    },
+    deleteArticle:(article)=>{
+      dispatch(deleteArticle(article));
     }
   }
 }

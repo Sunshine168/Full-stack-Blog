@@ -15,6 +15,7 @@ import Register from './containers/Register';
 import ArticleList from './containers/ArticleList'
 import FlashMessage from './containers/FlashMessage'
 import PostArticle from './containers/PostArticle'
+import Article from './containers/Article'
 import './css/common.css';
 const TestScreen = ()=>(
   <div className="App">
@@ -28,23 +29,38 @@ const TestScreen = ()=>(
   </div>
 )
 
+
+//auth 处理需要登录的路由
+const PrivateRoute = ({ component: Component,auth, ...rest }) => {
+return (  <Route {...rest} render={props => (
+  auth.user ? (
+    <Component {...props}/>
+  ) : (
+    <Redirect to={{
+        pathname: '/login',
+      state: { from: props.location }
+    }}/>
+  )
+)}/>)
+}
+
+
+
+const UserIndex = ({ match })=>(
+  <Route
+    path={`${match.url}/:userId`}
+    component={ArticleList}/>
+)
+//编辑文章
+const EditArticle = ({ match }) => (
+    <Route path={`${match.url}/:articleId`} component={PostArticle}/>
+)
+
 const mapStateToProps = (state)=>{
   return {
     login:state.login
   }
 }
-const PrivateRoute = ({ component: Component,auth, ...rest }) => (
-  <Route {...rest} render={props => (
-    auth.user ? (
-      <Component {...props}/>
-    ) : (
-      <Redirect to={{
-        pathname: '/login',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
-)
 
 class App extends Component {
    constructor(props){
@@ -63,6 +79,11 @@ class App extends Component {
              <Route path="/login" component={Login}/>
              <Route path="/loginOut" component={Login}/>
              <Route path="/register" component={Register}/>
+             <Route path="/user" component={UserIndex}/>
+             <PrivateRoute path="/article/edit"
+               component={EditArticle}
+               auth ={auth}
+             />
              <PrivateRoute
                path="/personal/index"
                component={ArticleList}

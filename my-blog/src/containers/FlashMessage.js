@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import FlashMessage from '../component/FlashMessage';
 import {showFlashMessage,removeFlashMessage} from '../reducer/index';
+import Radium from 'radium';
 const mapStateToProps = (state)=>{
   return {
     flashMessage:state.flashMessage
@@ -19,4 +20,4 @@ const mapDispatchToProps = (dispatch)=>{
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(FlashMessage);
+export default connect(mapStateToProps,mapDispatchToProps)(Radium(FlashMessage));

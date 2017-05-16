@@ -28,12 +28,18 @@ Post.plugin('contentToHtml', {
   afterFind: function (posts) {
     return posts.map(function (post) {
       post.content = marked(post.content);
+      //按照模型匹配数据会将用户信息暴露,删除重要信息
+      delete post.author.account;
+      delete post.author.password;
       return post;
     });
   },
   afterFindOne: function (post) {
     if (post) {
       post.content = marked(post.content);
+      //按照模型匹配数据会将用户信息暴露,删除重要信息 
+      delete post.author.account;
+      delete post.author.password;
     }
     return post;
   }

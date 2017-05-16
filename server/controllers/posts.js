@@ -3,7 +3,7 @@ const PostModel = require('../models/posts');
 const CommentModel = require('../models/comments');
 module.exports = {
 	// GET /posts 所有用户或者特定用户的文章页
-	//   eg: GET /posts?author=xxx
+	//   eg: GET /api/posts?author=xxx
 	'GET /api/posts': async(ctx, next) => {
 		// await checkLogin(ctx, next);
 		//  let flashMessage = ctx.flash.get();
@@ -48,11 +48,7 @@ module.exports = {
 		 "post_id":post._id
 	 }
  },
-	// GET /posts/create 发表文章页
-	'GET /posts/create': async(ctx, next) => {
-		// ctx.response.body = ctx.flash.get();
-	},
-	// GET /posts/:postId 单独一篇的文章页
+	// GET /api/posts/:postId 单独一篇的文章页
 	'GET /api/posts/:postId': async(ctx, next) => {
 		// ctx.response.body = ctx.flash.get();
 		let code = 1;
@@ -68,10 +64,6 @@ module.exports = {
 			 var comments = result[1];
 			 if(!post){
 				 throw new Error('不能找到该文章')
-			 }else{
-				 //删除实例中的用户密码和用户账号
-				 delete  post.author.password;
-				 delete  post.author.account;
 			 }
 		}catch(e){
 			  code = -1;
@@ -84,24 +76,44 @@ module.exports = {
 		}
 
 	},
+	// GET /api/posts/edit/:postId 单独一篇的文章页
+	'GET /api/posts/edit/:postId': async(ctx, next) => {
+		// ctx.response.body = ctx.flash.get();
+		let code = 1;
+		let {postId} = ctx.params;
+		console.log(postId)
+		try{
+			var post = await PostModel.getRawPostById(postId);   // 获取原生文章信息
+			 if(!post){
+				 throw new Error('不能找到该文章')
+			 }
+		}catch(e){
+				code = -1;
+		}
+		ctx.response.body = {
+			"code":code,
+			post:post,
+		}
+
+	},
 	// GET /posts/:postId/edit 更新文章页
-	'GET posts/:postId/edit': async(ctx, next) => {
+	'GET /api/posts/:postId/edit': async(ctx, next) => {
 		// ctx.response.body = ctx.flash.get();
 
 	},
 	// POST /posts/:postId/edit 更新一篇文章
 	'POST /api/posts/:postId/edit': async(ctx, next) => {
-		// ctx.response.body = ctx.flash.get();
        let postId  =  ctx.params.postId,
-			     author  =  ctx.request.body.uid||ctx.session.user._id,
-					 {title,content}  = ctx.request.body,
+			     author  =  ctx.request.body.user_id||ctx.session.user._id,
+					 {title,context}  = ctx.request.body,
 					 code = 1,
 					 message="修改成功";
 					 try{
-						 await PostModel.updatePostById(postId, author, { title: title, content: content })
+						 await PostModel.updatePostById(postId, author, { title: title, content: context })
 					 }catch(e){
 						 message = e.message;
-						 code =1;
+						 code =-1;
+						 console.log(e);
 					 }
 					 ctx.response.body = {
 						 code:code,

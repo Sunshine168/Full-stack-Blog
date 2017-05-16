@@ -15,8 +15,9 @@ const cors = require('koa2-cors');
 const uploader =require('koa2-file-upload')
 const app = new Koa();
 const isProduction = (process.env.NODE_ENV || 'production') === 'production';
+app.use(cors());
 app.use(bodyParser());
-app.use(convert(server(__dirname + '/public/')));
+app.use(convert(server(path.join(__dirname, 'build'))));
 app.use(uploader({
 	"url": '/api/upload',
   "storeDir": 'img',
@@ -25,14 +26,14 @@ app.use(uploader({
   "folder": "public",
   "urlPath": "images"
 }))
-app.use(cors());
+
 app.keys = [config.secretKey];
 //通过koa-ejs中间件 也可以直接使用
 // app.use(views(path.join(__dirname, './views'), {
 //         extension: 'ejs'
 //     }))
 render(app, {
-	root: path.join(__dirname, 'views'),
+	root: path.join(__dirname, 'build'),
 	layout: false,
 	viewExt: 'html',
 	cache: false,
@@ -51,6 +52,7 @@ app.use(convert(session({
 		db: 'myBlog-session'
 	})
 })));
+
 app.use(flash());
 app.use(async(ctx, next) => {
 	try {
@@ -59,6 +61,12 @@ app.use(async(ctx, next) => {
 		ctx.status = err.status || 500;
 		ctx.body = err.message;
 		ctx.app.emit('error', err, ctx);
+	}
+})
+app.use(async(ctx,next)=>{
+	await next();
+	if (ctx.response.status == 404) {
+		ctx.response.redirect('/');
 	}
 })
 
@@ -77,10 +85,6 @@ app.use(async(ctx, next) => {
 // add controller:
 app.use(controller());
 
-app.use(async(ctx, next) => {
-	if (ctx.response.status == 500) {
-		ctx.response.body = "error handle";
-	}
-});
-console.log(config.port)
+
+
 app.listen(config.port);

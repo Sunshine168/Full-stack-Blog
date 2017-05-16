@@ -40,6 +40,7 @@
   width: 500px;
   border:1px solid #c6c6c6;
   box-shadow: 10px 10px 5px #888888;
+  margin-bottom: 40px;
 }
 .foot_left{
   display: inline-block;
@@ -48,9 +49,11 @@
   display: inline-block;
   float: right;
 }
-.foot_dropDown{
-  padding: 0;
-  display: none;
+.foot_dropDown.btn.btn-link{
+  color:#999;
+}
+foot_btn{
+  float: right;
 }
 .dropdown-menu{
   width: 50px;

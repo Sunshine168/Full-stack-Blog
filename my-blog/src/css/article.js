@@ -55,7 +55,8 @@ export default StyleSheet.create({
         "verticalAlign": "top",
         "width": 500,
         "border": "1px solid #c6c6c6",
-        "boxShadow": "10px 10px 5px #888888"
+        "boxShadow": "10px 10px 5px #888888",
+        "marginBottom": 40
     },
     "foot_left": {
         "display": "inline-block"
@@ -64,12 +65,11 @@ export default StyleSheet.create({
         "display": "inline-block",
         "float": "right"
     },
-    "foot_dropDown": {
-        "paddingTop": 0,
-        "paddingRight": 0,
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "display": "none"
+    "foot_dropDownbtnbtn-link": {
+        "color": "#999"
+    },
+    "foot_btn": {
+        "float": "right"
     },
     "dropdown-menu": {
         "width": 50

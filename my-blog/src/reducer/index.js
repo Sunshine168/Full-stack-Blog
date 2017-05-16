@@ -4,6 +4,8 @@
 后续使用异步数据流,请求数据的时候通过进度条反馈
 */
 
+//-------action-------//
+
 /*
 action type of LOGIN
  */
@@ -42,8 +44,10 @@ action  type of ARTICLES
 /*
 action type of FLASHMESSAGE
  */
-const SHOW_FLASHMESSAGE = " SHOW_FLASHMESSAGE"
+const SHOW_FLASHMESSAGE = "SHOW_FLASHMESSAGE"
 const REMOVE_FLASHMESSAGE ="REMOVE_FLASHMESSAGE"
+
+
 
 //reducer for COMMENTS
 export const comment = (state,action)=>{
@@ -70,29 +74,6 @@ export const comment = (state,action)=>{
 }
 
 
-//reducer for POSTS
-export const post = (state,action)=>{
-  if(!state){
-     state = {posts:[]}
-  }
-  switch(action.type){
-    case INIT_COMMNETS:
-    return {posts:action.posts}
-    case ADD_COMMENT:
-    return {
-      posts:[...state.posts,action.post]
-    }
-    case DELETE_COMMENT:
-    return {
-      posts:[
-        ...state.posts.slice(0,action.postIndex),
-        ...state.posts.slice(action.postIndex+1)
-      ]
-    }
-    default:
-    return state;
-  }
-}
 
 //reducer for ARTICLES
 export const article = (state,action)=>{
@@ -109,14 +90,15 @@ export const article = (state,action)=>{
     case DELETE_ARTICLE:
     return {
       articles:[
-        ...state.articles.slice(0,action.postIndex),
-        ...state.articles.slice(action.postIndex+1)
+        ...state.articles.slice(0,action.articleIndex),
+        ...state.articles.slice(action.articleIndex+1)
       ]
     }
     default:
     return state;
   }
 }
+
 
 //reducer for LOGIN
 export const login = (state,action)=>{
@@ -169,7 +151,9 @@ export const flashMessage  = (state,action)=>{
 }
 
 
-// COMMENTS action  creators
+
+// -------action  creators----------
+
 // for COMMENTS
 export const initComments = (comments)=>{
   return {type:INIT_COMMNETS,comments}
@@ -200,4 +184,8 @@ export const removeFlashMessage = (
 // for article
 export const initArticles = (articles)=>{
   return {type:INIT_ARTICLES,articles}
+}
+
+export const deleteArticle = (articleIndex)=>{
+  return {type:DELETE_ARTICLE,articleIndex}
 }
