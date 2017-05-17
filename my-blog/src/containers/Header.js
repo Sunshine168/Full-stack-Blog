@@ -3,11 +3,9 @@ import {connect} from 'react-redux';
 import {Header} from '../component/Header';
 import { withRouter } from 'react-router-dom';
 import {loginOut,showFlashMessage,removeFlashMessage} from '../reducer/index';
-const mapStateToProps = (state)=>{
-  return {
-    login:state.login
-  }
-}
+const mapStateToProps = (state)=>(
+  state.login
+)
 const mapDispatchToProps= (dispatch)=>{
   return{
     loginOut:()=>{dispatch(loginOut())},

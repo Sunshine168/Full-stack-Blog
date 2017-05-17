@@ -21,11 +21,13 @@
   margin-bottom: 50px;
   text-align: center;
 }
+.author_intro{
+}
 .article_context{
   padding: 5px;
 }
 .author_logo{
-  display: inline-block;
+  margin: 0 auto;
   width: 40px;
   height: 40px;
   background-color: rgb(109, 129, 210);

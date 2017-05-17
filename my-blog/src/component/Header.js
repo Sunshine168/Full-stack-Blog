@@ -18,8 +18,8 @@ const beforeLoginAction = [{title:"登录",evenKey:"3",href:"/login"},{title:"�
  );
 
 const NavbarInstance = (props)=>{
-	let {login} = props,url="";
-	let  actionsList=login.user?afterLoginAction:beforeLoginAction;
+	let {user} = props,url="";
+	let  actionsList=user?afterLoginAction:beforeLoginAction;
 	//获取当期blog的方法
 		const getBlogUrl = (id)=>{
 			//获取主机名
@@ -41,9 +41,9 @@ const NavbarInstance = (props)=>{
                      <a href="#">BLOG</a>
                    </Navbar.Brand>
                  </Navbar.Header>
-								 {login.user?
+								 {user?
 									 <CopyToClipboard
-										 text={getBlogUrl(login.user._id)}>
+										 text={getBlogUrl(user._id)}>
 										 <OverlayTrigger trigger="click"
 											 rootClose
 											 placement="bottom"
@@ -87,14 +87,13 @@ const NavHeader = (props)=>{
 
 export class Header extends Component{
 static propTypes={
-	login:PropTypes.object,
+	user:PropTypes.object,
 	loginOut:PropTypes.func,
 	showFlashMessage:PropTypes.func,
 	removeFlashMessage:PropTypes.func,
 }
 constructor(props){
   super(props);
-	console.log(props);
   this.state={
       blogTitle :"MyBolg",
       blogIntroduce:"introduce"
@@ -112,11 +111,11 @@ this.props.showFlashMessage({
 
 }
 render(){
-	let {login} = this.props;
+	let {user} = this.props;
   return(
      <div>
        <NavbarInstance
-				 login={login}
+				 user={user}
 				 dropDownEvent= {(key)=>this.dropDownHandler(key)}
 			 />
 

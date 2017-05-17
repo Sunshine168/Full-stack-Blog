@@ -7,10 +7,11 @@ import {Redirect} from'react-router-dom';
 import {login} from '../service/fetch';
 export default class LoginInput extends Component  {
 	static propTypes=({
-		login:PropTypes.object,
+		user:PropTypes.object,
 		loginIn:PropTypes.func,
 		showFlashMessage:PropTypes.func,
 		removeFlashMessage:PropTypes.func,
+		redirect:PropTypes.func,
 	})
      constructor(props){
 			 super(props);
@@ -44,7 +45,7 @@ export default class LoginInput extends Component  {
 				 }
 		 }
 		componentWillUpdate(nextProps,nextState){
-				 if(nextProps.login.user){
+				 if(nextProps.user){
 					 let pathname ='/personal/index',
 					 redirectState = { from: this.props.location };
 					 this.props.redirect(pathname,redirectState)
@@ -57,7 +58,7 @@ export default class LoginInput extends Component  {
 				// }
 		}
 		 render(){
-			 let loginStatus = this.props.login.user;
+			 let loginStatus = this.props.user;
 			    return (
             <div className="loginInputForm">
 								<form>

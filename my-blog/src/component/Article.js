@@ -1,72 +1,26 @@
 import React, {
 	Component
 } from 'react';
-import {SplitButton,MenuItem,FormGroup,ControlLabel,FormControl,Button,HelpBlock} from'react-bootstrap';
+import {FormGroup,ControlLabel,FormControl,Button,HelpBlock} from'react-bootstrap';
 import {addPost,fetchEditPost,updatePost} from '../service/fetch';
+import ArticleFoot from './ArticleFoot';
 import PropTypes from 'prop-types'
 //考虑成型用draft.js作为文章输入
-/*
-params of article
-title
-context
-visitCount
-messageCount
-tiem
- - - -
-logic parmas
-isCurrent
-只有在当前用户的用户页面才有操作的显示项
- */
-export const Article = (props)=>{
-  return (<div className="article_container">
-    <img className="author_logo"/>
-		<div className="article_wrap">
+ const Article = (props)=>{
+		let {article} = props;
+	return (
+		<div>
 			<h3 className="article_title">
-	      {props.title}
-	    </h3>
-	    <div className="article_context">
-				<div dangerouslySetInnerHTML={{__html:props.context}}></div>
-	    </div>
-			<ArticleFoot
-				isCurrent={props.isCurrent}
-				visit={props.visitCount}
-				message={props.messageCount}
-				time = {props.time}
-			/>
-		</div>
-  </div>)
+				{article.title}
+			</h3>
+			<div className="article_context">
+				<div dangerouslySetInnerHTML={{__html:article.content}}></div>
+			</div>
+
+		</div>)
 }
-const ArticleFoot = (props)=>{
-	let {post} = props;
-  return (<div className="article_foot">
-    <div className="foot_left">
-      <a href="#" className="foot_item">
-        {props.time}
-      </a>
-    </div>
-    <div className="foot_right">
-      <a href="#" className="foot_item">
-        浏览({props.visit})
-      </a>
-      {
-				props.message?
-					<a href="#" className="foot_item">
-						留言({props.message})
-					</a>
-        :null
-			}
-			{props.isCurrent?(
-				<SplitButton bsStyle="link" title="操作"  className="foot_dropDown" id="article-action" pullRight={true}>
-					<MenuItem eventKey="1">编辑</MenuItem>
-					<MenuItem divider />
-					<MenuItem eventKey="2">删除</MenuItem>
 
 
-				</SplitButton>
-			):null}
-    </div>
-	</div>)
-}
 //返回表单元素组
 function FieldGroup({ id, label, help, ...props }) {
   return (
@@ -81,7 +35,7 @@ function FieldGroup({ id, label, help, ...props }) {
 mode 1 代表发表文章
 mode 2 代表编辑文章
  */
-export default class PostArticle  extends Component{
+ class PostArticle  extends Component{
 	static propTypes=({
 		showFlashMessage:PropTypes.func,
 		removeFlashMessage:PropTypes.func,
@@ -219,3 +173,4 @@ async  componentDidMount(){
 	 }
 }
 }
+export default Article;

@@ -5,11 +5,9 @@ import { loginIn,showFlashMessage,removeFlashMessage } from '../reducer/index';
 import redirect from '../hight-order-component/redirect';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom'
-const mapStateToProps = (state)=>{
-	return {
-		login:state.login
-	}
-}
+const mapStateToProps = (state)=>(
+	state.login
+)
 const mapDispatchToProps = (dispatch)=>{
 	return {
 		loginIn:(user)=>{

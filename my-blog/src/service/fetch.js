@@ -26,6 +26,31 @@ export const fetchPosts = async(id)=>{
     }
   }
 }
+/*
+/api/posts/
+ */
+export const fetchPost = async(postId)=>{
+  let url = DOMAIN+`/api/posts/${postId}`;
+  try{
+    var result = await fetch(url,{
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+  }
+    })
+  }catch(e){
+    console.log(e);
+  }
+  if(result){
+    return result.json();
+  }else{
+    return {
+       code:-2,
+       msg:"未知错误"
+    }
+  }
+}
 
 /*
 删除博文
@@ -83,7 +108,7 @@ export const deletePost = async(postId)=>{
       }
     }
  }
- // GET /posts/:postId 单独一篇的文章页
+ // GET api/posts/edit/:postId  获取编辑文章的信息
  export const fetchEditPost = async(postId)=>{
    let url = DOMAIN+`/api/posts/edit/${postId}`;
    try{

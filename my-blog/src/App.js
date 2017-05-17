@@ -14,8 +14,9 @@ import Login from './containers/Login';
 import Register from './containers/Register';
 import ArticleList from './containers/ArticleList'
 import FlashMessage from './containers/FlashMessage'
-import PostArticle from './containers/PostArticle'
+import {PostArticle} from './containers/PostArticle'
 import Article from './containers/Article'
+import LoadArticle from './containers/LoadArticle'
 import './css/common.css';
 const TestScreen = ()=>(
   <div className="App">
@@ -45,7 +46,7 @@ return (  <Route {...rest} render={props => (
 }
 
 
-
+//用户主页
 const UserIndex = ({ match })=>(
   <Route
     path={`${match.url}/:userId`}
@@ -55,7 +56,10 @@ const UserIndex = ({ match })=>(
 const EditArticle = ({ match }) => (
     <Route path={`${match.url}/:articleId`} component={PostArticle}/>
 )
-
+//查看文章页面
+const  ArticleDetail = ({match})=>(
+  <Route path={`${match.url}/:articleId`} component={LoadArticle}/>
+)
 const mapStateToProps = (state)=>{
   return {
     login:state.login
@@ -80,6 +84,7 @@ class App extends Component {
              <Route path="/loginOut" component={Login}/>
              <Route path="/register" component={Register}/>
              <Route path="/user" component={UserIndex}/>
+             <Route path="/article" component={ArticleDetail}/>
              <PrivateRoute path="/article/edit"
                component={EditArticle}
                auth ={auth}

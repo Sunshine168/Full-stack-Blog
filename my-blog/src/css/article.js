@@ -31,6 +31,7 @@ export default StyleSheet.create({
         "width": 800,
         "textAlign": "center"
     },
+    "author_intro": {},
     "article_context": {
         "paddingTop": 5,
         "paddingRight": 5,
@@ -38,7 +39,10 @@ export default StyleSheet.create({
         "paddingLeft": 5
     },
     "author_logo": {
-        "display": "inline-block",
+        "marginTop": 0,
+        "marginRight": "auto",
+        "marginBottom": 0,
+        "marginLeft": "auto",
         "width": 40,
         "height": 40,
         "backgroundColor": "rgb(109, 129, 210)",

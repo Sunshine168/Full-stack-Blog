@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 const mapStateToProps = (state)=>{
   return {
     article:state.article,
-    login:state.login,
+    user:state.login.user,
   }
 }
 const mapDispatchToProps = (dispatch)=>{
