@@ -196,3 +196,63 @@ export const login = async(params)=>{
     }
   }
 }
+
+/*
+添加评论
+ */
+export const addComment = async(params)=>{
+  let{articleId,comment,userId}=params,
+  url = DOMAIN+`/api/posts/${articleId}/comment`;
+  try{
+    var result = await fetch(url,{
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    articleId:articleId,
+    content:comment,
+    user_id:userId,
+  })
+    })
+  }catch(e){
+    console.log(e);
+  }
+  if(result){
+    return result.json();
+  }else{
+    return {
+     code:-2,
+     msg:"未知错误"
+    }
+  }
+}
+
+/*
+删除评论
+ */
+// GET /posts/:postId/comment/:commentId/remove 删除一条留言
+export const deleteComment = async(params)=>{
+  let{articleId,commentId,user_id}=params,
+  url = DOMAIN+`/posts/:postId/comment/:commentId/remove`;
+  try{
+    var result = await fetch(url,{
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+  }
+    })
+  }catch(e){
+    console.log(e);
+  }
+  if(result){
+    return result.json();
+  }else{
+    return {
+     code:-2,
+     msg:"未知错误"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PostArticle from '../component/Article';
+import PostArticle from '../component/PostArticle';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import redirect from '../hight-order-component/redirect';

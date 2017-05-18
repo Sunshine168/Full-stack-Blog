@@ -1,6 +1,7 @@
 import {createStore, combineReducers, applyMiddleware,compose} from 'redux';
 import thunk from 'redux-thunk';
-import {login,comment,flashMessage,article} from '../reducer/index'
+import {login,flashMessage,article} from '../reducer/index'
+import comment from '../reducer/comment';
 const reducer = combineReducers({
   login,
   comment,

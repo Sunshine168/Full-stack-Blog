@@ -9,14 +9,14 @@ import {
 import {StyleRoot} from 'radium';
 import {connect} from 'react-redux';
 import logo from './logo.svg';
-import Header from './containers/Header';
-import Login from './containers/Login';
-import Register from './containers/Register';
-import ArticleList from './containers/ArticleList'
-import FlashMessage from './containers/FlashMessage'
-import {PostArticle} from './containers/PostArticle'
-import Article from './containers/Article'
-import LoadArticle from './containers/LoadArticle'
+import Header from './container/Header';
+import Login from './container/Login';
+import Register from './container/Register';
+import ArticleList from './container/ArticleList'
+import FlashMessage from './container/FlashMessage'
+import PostArticle from './container/PostArticle'
+import Article from './container/Article'
+import LoadArticle from './container/LoadArticle'
 import './css/common.css';
 const TestScreen = ()=>(
   <div className="App">

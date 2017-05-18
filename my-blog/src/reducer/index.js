@@ -19,12 +19,7 @@ const REGISTER_ING = 'REGISTER_ING';
 const REGISTER_DONE = 'REGISTER_DONE';
 
 
-/*
-action type of COMMENTS
- */
-const INIT_COMMNETS = 'INIT_COMMNETS'
-const ADD_COMMENT = 'ADD_COMMENT'
-const DELETE_COMMENT = 'DELETE_COMMENT'
+
 
 /*
 action type of POSTS
@@ -49,29 +44,7 @@ const REMOVE_FLASHMESSAGE ="REMOVE_FLASHMESSAGE"
 
 
 
-//reducer for COMMENTS
-export const comment = (state,action)=>{
-  if(!state){
-     state = {comments:[]}
-  }
-  switch(action.type){
-    case INIT_COMMNETS:
-    return {comments:action.comments}
-    case ADD_COMMENT:
-    return {
-      comments:[...state.comments,action.comment]
-    }
-    case DELETE_COMMENT:
-    return {
-      comments:[
-        ...state.comments.slice(0,action.commentIndex),
-        ...state.comments.slice(action.commentIndex+1)
-      ]
-    }
-    default:
-    return state;
-  }
-}
+
 
 
 
@@ -154,16 +127,7 @@ export const flashMessage  = (state,action)=>{
 
 // -------action  creators----------
 
-// for COMMENTS
-export const initComments = (comments)=>{
-  return {type:INIT_COMMNETS,comments}
-}
-export const addComment = (comment)=>{
-  return {type:ADD_COMMENT,comment}
-}
-export const deleteComment = (comment)=>{
-  return {type:DELETE_COMMENT,comment}
-}
+
 
 // for LOGIN
 export const loginIn = (user)=>{

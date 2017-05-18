@@ -1,0 +1,24 @@
+.comment_detail{
+  margin-left: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+.comment_detail h5{
+  margin: 0;
+
+}
+.comment_detail span{
+  color: #999;
+  margin-left: 10px;
+}
+.comment_container{
+  width: 600px;
+  margin: 0 auto;
+}
+.comment_control{
+  display: inline-block;
+  float: right;
+}
+.comment_wrap{
+/*flex-direction: row;*/
+}

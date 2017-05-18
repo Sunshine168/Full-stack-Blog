@@ -1,5 +1,6 @@
 const checkLogin = require('../middlewares/check').checkLogin;
 const PostModel = require('../models/posts');
+const UserModel = require('../models/users');
 const CommentModel = require('../models/comments');
 module.exports = {
 	// GET /posts 所有用户或者特定用户的文章页
@@ -10,15 +11,17 @@ module.exports = {
 		    let author = ctx.request.query.author,
 				    code   =1;
       try{
-			   var posts = await	PostModel.getPosts(author);
+			   var posts = await	PostModel.getPosts(author),
+				    user =  await UserModel.getUserById(author);
 			}catch(e){
 				   var message = e;
 					     code = -1;
 			}
 			ctx.response.body = {
-				code:code,
-				message:message,
-				posts:posts
+				code,
+				message,
+	      posts,
+				user
 			}
 },
 	// POST /posts 发表一篇文章
@@ -141,7 +144,6 @@ module.exports = {
 	},
 	// POST /posts/:postId/comment 创建一条留言
 	'POST /api/posts/:postId/comment': async(ctx, next) => {
-		// ctx.response.body = ctx.flash.get();
 		  let postId  =  ctx.params.postId,
 			    code = 1,
 					message = "创建成功",
@@ -152,6 +154,7 @@ module.exports = {
 						postId:postId,
 						content:content
 					}
+					console.log(comment);
 			try{
 				var result =  await CommentModel.create(comment);
 				console.log(result);
@@ -167,8 +170,9 @@ module.exports = {
 	},
 	// GET /posts/:postId/comment/:commentId/remove 删除一条留言
 	'GET /posts/:postId/comment/:commentId/remove': async(ctx, next) => {
-		// ctx.response.body = ctx.flash.get();
+		console.log()
 		let postId  =  ctx.params.postId,
+		   commentId = ctx.params.commentId,
 			 code = 1,
 			 message = "删除成功",
 			 author = ctx.query.user_id||ctx.session.user._id;

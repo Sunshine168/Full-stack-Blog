@@ -8,7 +8,7 @@ import Article from './Article';
 import ArticleFoot from './ArticleFoot';
 export default class AriticleList extends Component{
 	static propTypes=({
-		articles:PropTypes.object,
+		articles:PropTypes.array,
 		user:PropTypes.object,
 		showFlashMessage:PropTypes.func,
 		removeFlashMessage:PropTypes.func,

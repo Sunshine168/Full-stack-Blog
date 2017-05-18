@@ -47,5 +47,13 @@ export default StyleSheet.create({
         "marginRight": "auto",
         "marginBottom": 0,
         "marginLeft": "auto"
+    },
+    "clearfix:after": {
+        "display": "block",
+        "content": "clear",
+        "height": 0,
+        "clear": "both",
+        "overflow": "hidden",
+        "visibility": "hidden"
     }
 });

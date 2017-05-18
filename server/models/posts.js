@@ -28,23 +28,31 @@ Post.plugin('contentToHtml', {
   afterFind: function (posts) {
     return posts.map(function (post) {
       post.content = marked(post.content);
-      //按照模型匹配数据会将用户信息暴露,删除重要信息
-      delete post.author.account;
-      delete post.author.password;
       return post;
     });
   },
   afterFindOne: function (post) {
     if (post) {
       post.content = marked(post.content);
-      //按照模型匹配数据会将用户信息暴露,删除重要信息 
-      delete post.author.account;
-      delete post.author.password;
     }
     return post;
   }
 });
-
+Post.plugin('safetyMode',{
+  afterFindOne:function(post){
+    if(post){
+      let author = {
+        avatar:post.author.avatar,
+        bio:post.author.bio,
+        name:post.author.name,
+        gender:post.author.gender
+      }
+      delete post.author;
+      post.author=author;
+    }
+    return post
+  }
+})
 module.exports = {
   // 创建一篇文章
   create: function create(post) {
@@ -59,6 +67,7 @@ module.exports = {
         path: 'author',
         model: 'User',
       })
+      .safetyMode()
       .addCreatedAt()
       .contentToHtml()
       .exec();
@@ -72,10 +81,10 @@ module.exports = {
     }
     return Post
       .find(query)
-      .populate({ path: 'author', model: 'User' })
       .sort({ _id: -1 })
       .addCreatedAt()
       .contentToHtml()
+      .addCommentsCount()
       .exec();
   },
 

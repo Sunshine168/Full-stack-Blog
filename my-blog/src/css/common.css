@@ -34,3 +34,10 @@
   width: 800px;
   margin: 0 auto;
 }
+.clearfix:after{
+  display:block;
+  content:"clear";
+  height:0;
+  clear:both;
+  overflow:hidden;
+   visibility:hidden;}
