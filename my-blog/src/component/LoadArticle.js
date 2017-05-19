@@ -19,7 +19,7 @@ export  default class LoadArticle extends Component {
 			super(props);
 			this.state={
 				user:props.user,
-        isCurrent:false,
+        isCurrent:null,
         article:null,
         comments:[],
 			}
@@ -34,11 +34,11 @@ export  default class LoadArticle extends Component {
           this.setState({
             article:result.post,
             comments:result.comments,
-            isCurrent:true,
+            isCurrent:user._id,
           })
         }else{
           console.log(result.comments)
-          // this.props.initComments(result.comments);
+          this.props.initComments(result.comments);
           this.setState({
             article:result.post,
             comments:result.comments,
@@ -71,8 +71,8 @@ export  default class LoadArticle extends Component {
       </section>
     </div>
     <CommentApp
-      isCurrent={this.state.isCurrent}
-      comments={this.state.comments}
+      isCurrent={isCurrent}
+      // comments={this.state.comments}
     />
   </div>
         :null

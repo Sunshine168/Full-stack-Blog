@@ -21,7 +21,6 @@ export default class LoginInput extends Component  {
 			 }
 		 }
 		 componentDidMount(){
-
 		 }
 		async _signIn(){
 			 //检查数据有效性
@@ -46,7 +45,7 @@ export default class LoginInput extends Component  {
 		 }
 		componentWillUpdate(nextProps,nextState){
 				 if(nextProps.user){
-					 let pathname ='/personal/index',
+					 let pathname = this.props.location.state.from.pathname||'/personal/index',
 					 redirectState = { from: this.props.location };
 					 this.props.redirect(pathname,redirectState)
 				 }

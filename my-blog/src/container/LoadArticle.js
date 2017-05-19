@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch)=>{
 			dispatch(removeFlashMessage);
 		},
     initComments:(comments)=>{
-      dispatch(comments)
+      dispatch(initComments(comments))
     }
 	}
 }

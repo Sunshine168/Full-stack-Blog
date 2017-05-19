@@ -18,7 +18,7 @@ export default class AriticleList extends Component{
 constructor(props){
   super(props);
 	this.state={
-		isCurrent:false,
+		isCurrent:null,
 		user:null
 	}
 }
@@ -59,14 +59,13 @@ render(){
 
 componentDidMount(){
    (async function(){
-
 		 let userId = this.props.match.params.userId,id="";
 		 if(userId){
 			 id=userId;
 		 }else{
 			 id=this.props.user._id;
 			 this.setState({
-				 isCurrent:true
+				 isCurrent:userId
 			 })
 		 }
 		 let result = await fetchPosts(id);

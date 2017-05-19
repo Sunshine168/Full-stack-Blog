@@ -27,15 +27,16 @@ module.exports = {
 	// POST /posts 发表一篇文章
 	'POST /api/posts':async(ctx, next) => {
 		// await checkLogin(ctx, next);
-		 let {title,context,user_id} = ctx.request.body;
-		 let author =  ctx.session.user||user_id,
+		 console.log(ctx.request.body);
+		 let {article,user_id} = ctx.request.body;
+		 let author =  user_id ||ctx.session.user,
 		//  flashMessage = ctx.flash.get(),
 		 code = 1,
 		 message ="成功发表";
 		 let postModel = {
 			 author:author,
-			 title:title,
-			 content:context,
+			 title:article.title,
+			 content:article.context,
 			 pv:0
 		 }
 		 try{
@@ -84,7 +85,6 @@ module.exports = {
 		// ctx.response.body = ctx.flash.get();
 		let code = 1;
 		let {postId} = ctx.params;
-		console.log(postId)
 		try{
 			var post = await PostModel.getRawPostById(postId);   // 获取原生文章信息
 			 if(!post){
@@ -126,7 +126,6 @@ module.exports = {
 	},
 	// GET /posts/:postId/remove 删除一篇文章
 	'GET /api/posts/:postId/remove': async(ctx, next) => {
-		// ctx.response.body = ctx.flash.get();
 		let {postId} = ctx.params,
 		     author  = ctx.query.user_id||ctx.session.user._id,
 				 code = 1,
@@ -165,7 +164,7 @@ module.exports = {
    ctx.response.body = {
 		 code:code,
 		 message:message,
-		 commentId:result.ops[0]._id
+		 comment:comment,
 	 }
 	},
 	// GET /posts/:postId/comment/:commentId/remove 删除一条留言

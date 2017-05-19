@@ -5,6 +5,11 @@ import { withRouter } from 'react-router-dom';
 import redirect from '../hight-order-component/redirect';
 import {showFlashMessage,
   removeFlashMessage} from '../reducer/index';
+const mapStateToProps = (state)=>{
+  return {
+    user:state.login.user,
+  }
+}
 const mapDispatchToProps = (dispatch)=>{
 	return {
 		showFlashMessage:(message)=>{
@@ -15,4 +20,4 @@ const mapDispatchToProps = (dispatch)=>{
 		},
 	}
 }
-export default withRouter(connect(null,mapDispatchToProps)(redirect(PostArticle)));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(redirect(PostArticle)));

@@ -39,10 +39,9 @@ const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
     }
     case DELETE_COMMENT:
     return {
-      ...state,
       comments:[
-        ...state.comments.slice(0,action.commentIndex),
-        ...state.comments.slice(action.commentIndex+1)
+        ...state.comments.slice(0,action.index),
+        ...state.comments.slice(action.index+1)
       ]
     }
     default:
@@ -57,8 +56,8 @@ export const initComments = (comments)=>{
 export const addComment = (comment)=>{
   return {type:ADD_COMMENT,comment}
 }
-export const deleteComment = (comment)=>{
-  return {type:DELETE_COMMENT,comment}
+export const deleteComment = (index)=>{
+  return {type:DELETE_COMMENT,index}
 }
 export const requestComments = ()=>{
   return {tyep:REQUEST_COMMENTS}

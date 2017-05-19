@@ -1,4 +1,9 @@
-const DOMAIN = "http://localhost:3005";
+export const DOMAIN = "http://localhost:3005";
+
+/*
+处理所有网络请求_目前没有和action集成异步数据流，
+使用同步数据流达成类似效果的后遗症应该就是组件耦合性巨高。。
+ */
 
 /*
 请求所有的博文
@@ -27,6 +32,7 @@ export const fetchPosts = async(id)=>{
   }
 }
 /*
+请求单个博文
 /api/posts/
  */
 export const fetchPost = async(postId)=>{
@@ -55,8 +61,8 @@ export const fetchPost = async(postId)=>{
 /*
 删除博文
  */
-export const deletePost = async(postId)=>{
-   let url = DOMAIN+`/api/posts/${postId}/remove?user_id=58fb5c4af81289702783067d`;
+export const deletePost = async(params)=>{
+   let url = DOMAIN+`/api/posts/${params.postId}/remove?user_id=${params.user_id}`;
    try{
      var result = await fetch(url,{
        method: 'GET',
@@ -81,7 +87,8 @@ export const deletePost = async(postId)=>{
 /*
 发表博文
  */
- export const addPost = async(article)=>{
+ export const addPost = async(params)=>{
+   console.log(params)
     let url = DOMAIN+"/api/posts";
     try{
       var result = await fetch(url,{
@@ -91,9 +98,8 @@ export const deletePost = async(postId)=>{
           'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-         title:article.title,
-         context:article.context,
-         user_id:"58fb5c4af81289702783067d",
+           article:params.article,
+           user_id:params.user_id,
     })
       })
     }catch(e){
@@ -147,7 +153,6 @@ export const updatePost = async(postId,article)=>{
    body: JSON.stringify({
      title:article.title,
      context:article.context,
-     user_id:"58fb5c4af81289702783067d",
    })
      })
    }catch(e){
@@ -164,8 +169,43 @@ export const updatePost = async(postId,article)=>{
    }
 }
 
-
-
+/*
+注册
+涉及头像上传
+暂时不分离
+params
+account
+name
+password
+bio
+ */
+ export const register = async(params)=>{
+   let url = DOMAIN+'/api/signIn',
+       {account,password}=params;
+   try{
+     var result = await fetch(url,{
+       method: 'POST',
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json'
+   },
+   body: JSON.stringify({
+     account: account,
+     password:password,
+   })
+     })
+   }catch(e){
+     console.log(e);
+   }
+   if(result){
+     return result.json();
+   }else{
+     return {
+      code:-2,
+      msg:"未知错误"
+     }
+   }
+ }
 /*
 登录
  */
@@ -235,7 +275,7 @@ export const addComment = async(params)=>{
 // GET /posts/:postId/comment/:commentId/remove 删除一条留言
 export const deleteComment = async(params)=>{
   let{articleId,commentId,user_id}=params,
-  url = DOMAIN+`/posts/:postId/comment/:commentId/remove`;
+  url = DOMAIN+`/posts/${articleId}/comment/${commentId}/remove?user_id=${user_id}`;
   try{
     var result = await fetch(url,{
       method: 'GET',

@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import Register from '../component/Register';
-export default class RegisterScreen extends Component {
-	constructor(props) {
-		super(props);
+import redirect from '../hight-order-component/redirect';
+import {connect} from 'react-redux';
+import {showFlashMessage} from '../reducer/index';
 
-		this.state = {};
-	}
-	render() {
-		return (
-			<div className="container">
-				<Register/>
-			</div>
-		)
-	}
+const mapDispatchToProps = (dispatch)=>{
+	return {
+		showFlashMessage:(message)=>{
+			dispatch(showFlashMessage(message))
+		}
 }
+}
+export default connect(null,mapDispatchToProps)(redirect(Register));

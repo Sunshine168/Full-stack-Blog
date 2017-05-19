@@ -24,7 +24,6 @@ evenKey
  export class ArticleFoot extends Component {
    constructor(props){
 		 super(props)
-     console.log(this.props);
 		 let {articleId,index} = props;
 		 this.state = {
 			 id:articleId,
@@ -34,7 +33,10 @@ evenKey
 	async controlHandle(eventKey){
 		 let {id,index}= this.state;
 		 if(eventKey==2){
-			let result = await deletePost(id);
+			let result = await deletePost({
+				 postId:id,
+				 user_id:this.props.isCurrent,
+			});
 			   if(result.code==1){
 					 if(!(typeof(index)===undefined)){
 						 //传了index代表是列表渲染

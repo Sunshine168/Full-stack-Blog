@@ -12,14 +12,12 @@ module.exports = {
 	//登录api
 	'POST /api/signIn': async(ctx, next) => {
 		await checkNotLogin(ctx, next);
-		let signal =  ctx.flash.get(),
 		code="1",message="登录成功";
 		let {account,password}=ctx.request.body;
     let user = await UserModel.getUserByAccount(account);
 		password = crypto.createHash('md5').update(password).digest('hex');
 		if(user&&(password==user.password)){
 			delete user.password;
-		 ctx.session.user = user ;
 		}else{
 				code="-1";
 				message="用户或密码错误";

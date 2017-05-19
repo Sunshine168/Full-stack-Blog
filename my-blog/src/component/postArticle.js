@@ -11,6 +11,7 @@ mode 2 代表编辑文章
  */
 export default class PostArticle  extends Component{
 	static propTypes=({
+		user:PropTypes.object,
 		showFlashMessage:PropTypes.func,
 		removeFlashMessage:PropTypes.func,
 	})
@@ -27,7 +28,6 @@ async  componentDidMount(){
 		let {articleId} = this.props.match.params;
 		if(articleId){
        let result = await fetchEditPost(articleId)
-			 console.log(result);
 			if(result.code==1){
 				  let post = result.post;
 					this.setState({
@@ -98,10 +98,17 @@ async  componentDidMount(){
 
 				}else{
 					let result = await addPost({
-						title,
-						context
+						article:{
+							title,
+							context,
+						},
+						user_id:this.props.user._id,
 					})
 					if(result.code==1){
+						this.props.showFlashMessage({
+							msgType:"success",
+							msg:"文章发表成功",
+						})
 						let pathname ='/personal/index',
  					 redirectState = { from: this.props.location };
  					 this.props.redirect(pathname,redirectState)

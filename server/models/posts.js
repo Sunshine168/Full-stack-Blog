@@ -45,7 +45,8 @@ Post.plugin('safetyMode',{
         avatar:post.author.avatar,
         bio:post.author.bio,
         name:post.author.name,
-        gender:post.author.gender
+        gender:post.author.gender,
+        _id:post.author._id,
       }
       delete post.author;
       post.author=author;

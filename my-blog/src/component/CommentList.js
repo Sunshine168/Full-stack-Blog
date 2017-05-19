@@ -3,28 +3,24 @@ import React, {
 } from 'react';
 import {ListGroup,ListGroupItem} from 'react-bootstrap';
 import Comment from './Comment'
-let comment = {
-  _id:"123",
-	authorName:"mai",
-	time:"2017-4-11",
-	context:"板凳"
-}
-
-
-
-
+import PropTypes from 'prop-types'
 export default class CommentList extends Component {
-
+   static propTypes=({
+		 deleteComment:PropTypes.func,
+		 showFlashMessage:PropTypes.func,
+		 comments:PropTypes.array,
+	 })
 	render(){
-		let {comments} = this.props;
-		console.log(this.props);
+		let {comments,isCurrent,deleteComment} = this.props;
    return (
 		 <ListGroup>
 			 {comments.map((comment,index)=>(
 				 <ListGroupItem key={index}>
 					 <Comment
+						 index = {index}
 						 comment={comment}
-						 isCurrent={true}
+						 isCurrent={isCurrent}
+						 deleteComment={deleteComment}
 					 />
 				 </ListGroupItem>
 			 )

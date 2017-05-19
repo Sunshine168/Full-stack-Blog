@@ -20,6 +20,7 @@ export default class CommentApp extends Component{
           header="留言"
         >
           <CommentList
+            isCurrent={this.props.isCurrent}
           />
           <CommentInput/>
         </Panel>
