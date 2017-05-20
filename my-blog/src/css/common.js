@@ -55,5 +55,12 @@ export default StyleSheet.create({
         "clear": "both",
         "overflow": "hidden",
         "visibility": "hidden"
+    },
+    "no-match-container": {
+        "textAlign": "center",
+        "marginTop": 0,
+        "marginRight": "auto",
+        "marginBottom": 0,
+        "marginLeft": "auto"
     }
 });

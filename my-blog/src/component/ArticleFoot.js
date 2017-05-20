@@ -4,8 +4,7 @@ import React, {
 import {SplitButton,MenuItem,FormGroup,ControlLabel,FormControl,Button,HelpBlock} from'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import {deletePost} from '../service/fetch';
-import redirect from '../hight-order-component/redirect';
-import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 /*
 evenKey
 1 : 编辑
@@ -21,29 +20,28 @@ evenKey
    commentsCount
    deleteArticle
 */
- export class ArticleFoot extends Component {
-   constructor(props){
-		 super(props)
-		 let {articleId,index} = props;
-		 this.state = {
-			 id:articleId,
-			 index:index,
-		 }
-	 }
+ export default class ArticleFoot extends Component {
+	 static propTypes=({
+	 	showFlashMessage:PropTypes.func,
+	 	removeFlashMessage:PropTypes.func,
+	 })
 	async controlHandle(eventKey){
-		 let {id,index}= this.state;
+		 let {articleId,index}= this.props;
+		 console.log(index);
 		 if(eventKey==2){
 			let result = await deletePost({
-				 postId:id,
+				 postId:articleId,
 				 user_id:this.props.isCurrent,
 			});
 			   if(result.code==1){
-					 if(!(typeof(index)===undefined)){
+					 if(!(index===undefined)){
 						 //传了index代表是列表渲染
 						 this.props.deleteArticle(index);
 					 }else{
-						 //没有传index代表是查看单个页面——删除成功后需要跳转
-
+						 //没有传index代表是查看单个页面——删除成功后需要跳转(重新加载列表)
+						 let pathname ='/personal/index',
+							redirectState = { from: this.props.location };
+							this.props.redirect(pathname,redirectState)
 					 }
 				 }
 		 }
@@ -61,7 +59,7 @@ evenKey
 				 <a href="#" className="foot_item">
 					 浏览({props.visit})
 				 </a>
-				 <LinkContainer key="1" to={`/article/${this.state.id}`}>
+				 <LinkContainer key="1" to={`/article/${props.articleId}`}>
 					 <a href="#" className="foot_item">
 						 留言({props.commentsCount})
 					 </a>
@@ -74,14 +72,12 @@ evenKey
              id="article-action"
              pullRight={true}
              onSelect={(eventKey)=>{this.controlHandle(eventKey)}}
-						 >
-             <LinkContainer key="2" to={`/article/edit/${this.state.id}`}>
+					 >
+             <LinkContainer key="2" to={`/edit/article/${props.articleId}`}>
 							 <MenuItem eventKey="1">编辑</MenuItem>
 						 </LinkContainer>
 						 <MenuItem divider />
-
-             <MenuItem eventKey="2">删除</MenuItem>
-
+						 <MenuItem eventKey="2">删除</MenuItem>
 						 </SplitButton>
 						 ):null}
 
@@ -89,4 +85,3 @@ evenKey
 		 </div>)
 	 }
  }
-export default withRouter(redirect(ArticleFoot))

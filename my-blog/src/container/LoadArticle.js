@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import LoadArticle from '../component/LoadArticle';
 import redirect from '../hight-order-component/redirect'
-import {showFlashMessage,removeFlashMessage} from '../reducer/index';
+import {showFlashMessage,removeFlashMessage} from '../reducer/flashMessage';
 import {initComments} from '../reducer/comment';
 const mapStateToProps = (state)=>(
   state.login

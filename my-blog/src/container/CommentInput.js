@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import CommentInput from '../component/CommentInput';
-import {showFlashMessage} from '../reducer/index';
+import {showFlashMessage} from '../reducer/flashMessage';
 import {addComment} from '../reducer/comment';
 import { withRouter } from 'react-router-dom';
 import redirect from '../hight-order-component/redirect';

@@ -65,6 +65,7 @@ export default class CommentInput extends Component {
 		<FormGroup controlId="formControlsTextarea">
 			<ControlLabel>Textarea</ControlLabel>
 			<FormControl
+        value = {this.state.comment}
 				componentClass="textarea"
 				placeholder="textarea"
 				onChange={(event)=>this.setState({comment:event.target.value})}

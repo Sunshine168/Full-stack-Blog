@@ -14,10 +14,10 @@ export default class PostArticle  extends Component{
 		user:PropTypes.object,
 		showFlashMessage:PropTypes.func,
 		removeFlashMessage:PropTypes.func,
+		addArticle:PropTypes.func,
 	})
 	constructor(props){
 		super(props);
-		console.log(props);
 		this.state={
 			title:props.title||"",
 			context:props.context||"",
@@ -105,6 +105,7 @@ async  componentDidMount(){
 						user_id:this.props.user._id,
 					})
 					if(result.code==1){
+						this.props.addArticle(result.post);
 						this.props.showFlashMessage({
 							msgType:"success",
 							msg:"文章发表成功",

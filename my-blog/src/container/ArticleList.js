@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ArticleList from '../component/ArticleList'
-import { initArticles,deleteArticle,showFlashMessage,removeFlashMessage } from '../reducer/index';
+import { initArticles,deleteArticle,} from '../reducer/article';
+import {showFlashMessage,removeFlashMessage } from '../reducer/flashMessage'
+import {startProgress,finishProgress} from '../reducer/progress';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom'
 const mapStateToProps = (state)=>{
@@ -16,6 +18,12 @@ const mapDispatchToProps = (dispatch)=>{
     },
     deleteArticle:(article)=>{
       dispatch(deleteArticle(article));
+    },
+    startProgress:()=>{
+        dispatch(startProgress())
+    },
+    finishProgress:()=>{
+      dispatch(finishProgress())
     }
   }
 }

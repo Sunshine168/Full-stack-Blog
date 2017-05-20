@@ -4,8 +4,7 @@ import React, {
 import PropTypes from 'prop-types'
 import {SplitButton,MenuItem} from'react-bootstrap';
 import {fetchPosts} from '../service/fetch';
-import Article from './Article';
-import ArticleFoot from './ArticleFoot';
+import ArticleApp from '../container/ArticleApp'
 export default class AriticleList extends Component{
 	static propTypes=({
 		articles:PropTypes.array,
@@ -13,7 +12,8 @@ export default class AriticleList extends Component{
 		showFlashMessage:PropTypes.func,
 		removeFlashMessage:PropTypes.func,
 		initArticles:PropTypes.func,
-		deleteArticle:PropTypes.func,
+		startProgress:PropTypes.func,
+		finishProgress:PropTypes.func,
 	})
 constructor(props){
   super(props);
@@ -22,7 +22,6 @@ constructor(props){
 		user:null
 	}
 }
-
 render(){
 	let {articles} = this.props.article,
 	{isCurrent}=this.state;
@@ -34,23 +33,13 @@ render(){
 			</div>
 			{
 				articles.map((article,index)=>(
-
-					<section  className="article_wrap" 	key={index}>
-						<Article
-
-							article={article}
-							index={index}
-						/>
-						<ArticleFoot
-							index={index}
-							articleId={article._id}
-							isCurrent={isCurrent}
-							visit={article.pv}
-							time = {article.created_at}
-							commentsCount={article.commentsCount}
-							deleteArticle={this.props.deleteArticle}
-						/>
-					</section>
+					<ArticleApp
+						key={index}
+						index={index}
+						article={article}
+						index = {index}
+						isCurrent={isCurrent}
+					/>
 				)
 				)}
 		</div>
@@ -65,13 +54,14 @@ componentDidMount(){
 		 }else{
 			 id=this.props.user._id;
 			 this.setState({
-				 isCurrent:userId
+				 isCurrent:id
 			 })
 		 }
+		 this.props.startProgress();
 		 let result = await fetchPosts(id);
+		  this.props.finishProgress();
 		//处理登录结果
 		if(result.code==1){
-			console.log(result);
 			let user = result.user;
 			this.setState({
 				user

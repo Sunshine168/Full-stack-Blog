@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import FlashMessage from '../component/FlashMessage';
-import {showFlashMessage,removeFlashMessage} from '../reducer/index';
+import {showFlashMessage,removeFlashMessage} from '../reducer/flashMessage';
 import Radium from 'radium';
 const mapStateToProps = (state)=>{
   return {

@@ -1,4 +1,4 @@
-export const DOMAIN = "http://localhost:3005";
+export const DOMAIN = (process.env.NODE_ENV !== 'production')?"http://localhost:3005":"..";
 
 /*
 处理所有网络请求_目前没有和action集成异步数据流，
@@ -88,7 +88,6 @@ export const deletePost = async(params)=>{
 发表博文
  */
  export const addPost = async(params)=>{
-   console.log(params)
     let url = DOMAIN+"/api/posts";
     try{
       var result = await fetch(url,{

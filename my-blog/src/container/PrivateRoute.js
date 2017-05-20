@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PrivateRoute from '../component/PrivateRoute';
 import '../css/login.css';
-import { loginIn,showFlashMessage,removeFlashMessage } from '../reducer/index';
+import { loginIn} from '../reducer/user';
+import {showFlashMessage,removeFlashMessage } from '../reducer/flashMessage';
 import {connect} from 'react-redux';
 const mapStateToProps = (state)=>{
   return {

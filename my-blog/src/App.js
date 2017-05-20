@@ -4,7 +4,8 @@ import {
   Route,
   Link,
   Redirect,
-  withRouter
+  withRouter,
+  Switch
 } from 'react-router-dom'
 import {StyleRoot} from 'radium';
 import {connect} from 'react-redux';
@@ -17,6 +18,8 @@ import FlashMessage from './container/FlashMessage'
 import PostArticle from './container/PostArticle'
 import Article from './container/Article'
 import LoadArticle from './container/LoadArticle'
+import NoMatch from './component/NoMatch';
+import ProgressBars from './container/ProgressBars'
 import './css/common.css';
 const TestScreen = ()=>(
   <div className="App">
@@ -76,29 +79,35 @@ class App extends Component {
      return (
        <StyleRoot>
          <Router>
-           <div className="container">
-             <Header/>
-             <FlashMessage/>
-             <Route exact path="/" component={TestScreen}/>
-             <Route path="/login" component={Login}/>
-             <Route path="/loginOut" component={Login}/>
-             <Route path="/register" component={Register}/>
-             <Route path="/user" component={UserIndex}/>
-             <Route path="/article" component={ArticleDetail}/>
-             <PrivateRoute path="/article/edit"
-               component={EditArticle}
-               auth ={auth}
-             />
-             <PrivateRoute
-               path="/personal/index"
-               component={ArticleList}
-               auth ={auth}
-             />
-             <PrivateRoute
-               path="/postArticle"
-               component={PostArticle}
-               auth ={auth}
-             />
+           <div>
+             <ProgressBars/>
+             <div className="container">
+               <Header/>
+               <FlashMessage/>
+               <Switch>
+                 <Route exact path="/" component={TestScreen}/>
+                 <Route path="/login" component={Login}/>
+                 <Route path="/loginOut" component={Login}/>
+                 <Route path="/register" component={Register}/>
+                 <Route path="/user" component={UserIndex}/>
+                 <Route path="/article" component={ArticleDetail}/>
+                 <PrivateRoute path="/edit/article"
+                   component={EditArticle}
+                   auth ={auth}
+                 />
+                 <PrivateRoute
+                   path="/personal/index"
+                   component={ArticleList}
+                   auth ={auth}
+                 />
+                 <PrivateRoute
+                   path="/postArticle"
+                   component={PostArticle}
+                   auth ={auth}
+                 />
+                 <Route component={NoMatch}/>
+               </Switch>
+             </div>
            </div>
          </Router>
        </StyleRoot>)

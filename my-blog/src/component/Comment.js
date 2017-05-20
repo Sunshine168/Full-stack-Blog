@@ -32,7 +32,6 @@ export default class Comment extends Component {
 		 }
  }
 	render(){
-		console.log(this.props);
 		let {author,created_at,content,index}= this.props.comment;
 		return(
 					<div className="comment_wrap">

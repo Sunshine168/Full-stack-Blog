@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import CommentList from '../component/CommentList';
-import {showFlashMessage} from '../reducer/index';
+import {showFlashMessage} from '../reducer/flashMessage';
 import {deleteComment} from '../reducer/comment';
 import { withRouter } from 'react-router-dom';
 const mapStateToProps=(state)=>(state.comment)

@@ -20,7 +20,7 @@ const beforeLoginAction = [{title:"登录",evenKey:"3",href:"/login"},{title:"�
 const NavbarInstance = (props)=>{
 	let {user} = props,url="";
 	let  actionsList=user?afterLoginAction:beforeLoginAction;
-	//获取当期blog的方法
+	//获取当期blog url的方法
 		const getBlogUrl = (id)=>{
 			//获取主机名
 			let hostname = window.location.hostname;
@@ -28,6 +28,7 @@ const NavbarInstance = (props)=>{
 			if (process.env.NODE_ENV == 'production') {
           url=`localhost/article/${id}`;
       }else{
+				//非开发模式下需要获取端口
 				let port = location.port;
 				url=`localhost:${port}/article/${id}`
 			}
@@ -130,10 +131,3 @@ render(){
 }
 
 }
-
-// const Nav =(props)=>{
-// return (<div>
-//   <h1 className="header_title">{props.title}</h1>
-//   <p>{props.introduce}</p>
-// </div>)
-// }

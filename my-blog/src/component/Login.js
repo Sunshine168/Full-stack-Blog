@@ -21,6 +21,7 @@ export default class LoginInput extends Component  {
 			 }
 		 }
 		 componentDidMount(){
+
 		 }
 		async _signIn(){
 			 //检查数据有效性
@@ -45,8 +46,15 @@ export default class LoginInput extends Component  {
 		 }
 		componentWillUpdate(nextProps,nextState){
 				 if(nextProps.user){
-					 let pathname = this.props.location.state.from.pathname||'/personal/index',
-					 redirectState = { from: this.props.location };
+					 if(this.props.location.state){
+						 //从外部因为需要登录跳转过来的逻辑
+						var pathname =  this.props.location.state.from.pathname;
+
+					 }else{
+						 //直接登录
+						 var pathname = '/personal/index';
+					 }
+					 let redirectState = { from: this.props.location };
 					 this.props.redirect(pathname,redirectState)
 				 }
 				//  if(this.props.login.user){

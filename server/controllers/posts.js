@@ -49,7 +49,7 @@ module.exports = {
 		ctx.response.body={
 		 "code":code,
 		 "message":message,
-		 "post_id":post._id
+		 "post":post
 	 }
  },
 	// GET /api/posts/:postId 单独一篇的文章页

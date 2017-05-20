@@ -49,6 +49,7 @@ const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
   }
 }
 
+// -------action  creators----------
 // for COMMENTS
 export const initComments = (comments)=>{
   return {type:INIT_COMMNETS,comments}

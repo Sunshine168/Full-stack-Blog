@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Login from '../component/Login';
 import '../css/login.css';
-import { loginIn,showFlashMessage,removeFlashMessage } from '../reducer/index';
+import {loginIn} from '../reducer/user';
+import {showFlashMessage,removeFlashMessage } from '../reducer/flashMessage';
 import redirect from '../hight-order-component/redirect';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom'
