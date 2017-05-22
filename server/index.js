@@ -14,8 +14,11 @@ const server = require('koa-static');
 const config = require('config-lite');
 const cors = require('koa2-cors');
 const uploader = require('koa2-file-upload')
+const winston = require('winston');
+const koaWinston = require('./middlewares/koa-winston');
 const app = new Koa();
 const isProduction = (process.env.NODE_ENV || 'production') === 'production';
+const log = require('./logs/log');
 app.use(cors());
 app.use(bodyParser());
 
@@ -74,22 +77,24 @@ app.use(async(ctx, next) => {
 // 	}
 // })
 
-// log request URL:
-app.use(async(ctx, next) => {
-	console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
-	var
-		start = new Date().getTime(),
-		execTime;
-	await next();
-	console.log(ctx.session);
-	execTime = new Date().getTime() - start;
-	ctx.response.set('X-Response-Time', `${execTime}ms`);
-});
+// // log request URL:
+// app.use(async(ctx, next) => {
+// 	console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
+// 	var
+// 		start = new Date().getTime(),
+// 		execTime;
+// 	await next();
+// 	console.log(ctx.session);
+// 	execTime = new Date().getTime() - start;
+// 	ctx.response.set('X-Response-Time', `${execTime}ms`);
+// });
 
-
+// 正常请求的日志
+app.use(koaWinston(log.logger));
 // add controller:
 app.use(controller());
-
+// 错误请求的日志
+app.use(koaWinston(log.errorloger));
 
 
 app.listen(config.port);

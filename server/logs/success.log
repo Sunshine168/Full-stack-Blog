@@ -1,0 +1,7 @@
+{"level":"info","message":"\u001b[90mGET /\u001b[39m\u001b[32m 200 \u001b[39m\u001b[90m9ms\u001b[39m","timestamp":"2017-05-22T07:10:37.848Z"}
+{"level":"info","message":"\u001b[90mPOST /api/signIn\u001b[39m\u001b[32m 404 \u001b[39m\u001b[90m0ms\u001b[39m","timestamp":"2017-05-22T07:13:14.975Z"}
+{"level":"info","message":"\u001b[90mPOST /api/signIn\u001b[39m\u001b[32m 200 \u001b[39m\u001b[90m11ms\u001b[39m","timestamp":"2017-05-22T07:13:14.986Z"}
+{"level":"info","message":"\u001b[90mGET /api/posts?author=58fb5c4af81289702783067d\u001b[39m\u001b[32m 200 \u001b[39m\u001b[90m19ms\u001b[39m","timestamp":"2017-05-22T07:13:15.347Z"}
+{"level":"info","message":"\u001b[90mGET /\u001b[39m\u001b[32m 200 \u001b[39m\u001b[90m10ms\u001b[39m","timestamp":"2017-05-22T07:22:27.485Z"}
+{"level":"info","message":"\u001b[90mGET /\u001b[39m\u001b[32m 200 \u001b[39m\u001b[90m5ms\u001b[39m","timestamp":"2017-05-22T07:24:22.992Z"}
+{"level":"info","message":"GET / 200 5ms","timestamp":"2017-05-22T07:27:18.870Z"}
