@@ -1,7 +1,13 @@
 var index = async(ctx, next) => {
-	await ctx.render('index', {
+	console.log("hello this is index");
+	await ctx.render('build/index', {
 	});
 }
+var defaultIndex = async(ctx,next)=>{
+	await ctx.render('index');
+
+}
 module.exports = {
-	'GET /index': index
+	'GET /': index,
+	'GET /me':defaultIndex,
 }

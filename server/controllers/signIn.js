@@ -18,6 +18,7 @@ module.exports = {
 		password = crypto.createHash('md5').update(password).digest('hex');
 		if(user&&(password==user.password)){
 			delete user.password;
+			ctx.session.user = user ; 
 		}else{
 				code="-1";
 				message="用户或密码错误";
