@@ -4,6 +4,7 @@ config/*
 !config/default.*
 npm-debug.log
 node_modules
+logs/*
 coverage
 # the mac problem
 .DS_Store
