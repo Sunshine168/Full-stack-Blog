@@ -14,7 +14,6 @@ export default class extends Component {
 		 }
    }
 componentDidMount(){
-console.log(this.props.progress)
 let {isStart,isFinish} = this.props.progress;
 if(isStart){
 this.increase()
