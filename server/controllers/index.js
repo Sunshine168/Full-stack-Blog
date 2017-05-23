@@ -8,7 +8,7 @@ var defaultIndex = async(ctx,next)=>{
 
 }
 var resume = async(ctx,next)=>{
-	await ctx.render('resume');
+	await ctx.render('resume/resume');
 
 }
 module.exports = {
