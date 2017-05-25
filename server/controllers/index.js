@@ -7,12 +7,17 @@ var defaultIndex = async(ctx,next)=>{
 	await ctx.render('index');
 
 }
-var resume = async(ctx,next)=>{
-	await ctx.render('resume/resume');
+var about = async(ctx,next)=>{
+	await ctx.render('resume/about');
+
+}
+var project = async(ctx,next)=>{
+	await ctx.render('resume/project');
 
 }
 module.exports = {
 	'GET /': index,
 	'GET /me':defaultIndex,
-	'GET /resume':resume,
+	'GET /me/about':about,
+	'GET /me/project':project,
 }
