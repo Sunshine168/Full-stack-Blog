@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "babel-core": "6.13.2",
+    "babel-plugin-transform-decorators": "^6.24.1",
     "babel-polyfill": "6.13.0",
     "babel-preset-es2015-node6": "0.3.0",
     "babel-preset-stage-3": "6.5.0",
