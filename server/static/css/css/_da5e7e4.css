@@ -1,0 +1,248 @@
+/*!css/aboutMe.css*/
+.interest ul li{
+	display: inline-block;
+	border: 1px solid black;
+	border-radius: 50%;
+	width: 85px;
+	height: 85px;
+	overflow: hidden;
+	
+}
+.interest  ul li i{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	display: block;
+	width: 40px;
+	height: 40px;
+	background-size: 40px;
+}
+.interest-icon{
+	position: relative;
+}
+/*icon*/
+.i_eat {background-repeat: no-repeat;}
+.i_cook {background-repeat: no-repeat;}
+.i_basketball{background-repeat: no-repeat;}
+.i_trip {background-repeat: no-repeat;}
+.i_pp{background-repeat: no-repeat;}
+.i_game{background-repeat: no-repeat;}
+
+.interest .i-descr{
+	display: block;
+	text-align: center;
+}
+
+.interest-icon{
+   	position: relative;
+   	width: 50px;
+   	height: 50px;
+   	margin:0 auto;
+   }
+
+
+ .interest h3{
+ 	padding: 15px 0;
+  	text-align: center;
+  	border-top: 1px solid black;
+  	border-bottom: 1px solid black;
+  	margin-bottom: 30px;
+  }
+  .interest ul{
+    
+  	padding: 10px 5px;
+  	width: 600px;
+  	margin:0 auto;
+  	/*text-align: center;*/
+  		display:flex;
+		display: -webkit-box;
+		 flex-direction:row;
+		 display: -webkit-box; 
+		 display: -ms-flexbox;
+		  display: -webkit-flex; 
+		 display: flex;
+		 justify-content:space-between;
+  }
+  .centent{
+  	 min-width: 600px;
+  }
+  .content p {
+  	font-size: 18px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  }
+  .content h1{
+  	margin-bottom: 30px;
+  }
+  .me-list {
+  	margin-bottom: 100px;
+  }
+  .me-list li{
+  	  font-size: 16px;
+      padding: 3px 0px;
+      list-style-type: square;
+      list-style-position: inside;
+  }
+/*!css/common.css*/
+	*{
+		margin: 0;
+		padding: 0;
+		font-family: 微软雅黑;
+	}
+	.left {
+		width: 300px;
+		/*height: 1700px;*/
+
+		float: left;
+	}
+	.context {
+	    margin-left: 300px;
+	    padding: 50px 70px;
+
+	}
+	a{
+		text-decoration: none;
+		color: #000;
+	}
+	ul li{
+		list-style-type: none;
+	}
+
+   /*清除浮动*/
+  .clearfix:after{
+  display:block;
+  content:"clear";
+  height:0;
+  clear:both;
+  overflow:hidden;
+   visibility:hidden;
+ }
+
+
+	/* left */
+	.left-header{
+		/*padding: 63px 63px 40px  40px;*/
+		background-color: #F6F7F7;
+	}
+	.avatar{
+		display: block;
+		height: 200px;
+		width: 200px;
+		border-radius: 50%;
+		margin:0 auto;
+		margin-bottom: 35px;
+	}
+	.introduce{
+		text-align: center;
+		background-color: #F6F7F7;
+	}
+	.introduce-context{
+		margin-bottom: 20px;
+	}
+	/*left introduce*/
+	.introduce-context h3{
+		font-size: 25px;
+	}
+	.introduce-context h4{
+         color: #6F6B68;
+         font-size: 17px;
+         margin-bottom: 20px;
+	}
+	.introduce-context p{
+     font-size: 17px;
+	}
+
+	/*left simple-list*/
+	.simple-list{
+		height: 80px;
+		width: 100%;
+		display:flex;
+		display: -webkit-box;
+		 flex-direction:row;
+		 display: -webkit-box; 
+		 display: -ms-flexbox;
+		  display: -webkit-flex; 
+		 display: flex;
+
+	}
+	 .simple-list .list-item{
+        border: 1px solid #DFDEDD;
+	 	padding: 5px 10px;
+    	flex:1;
+    	-webkit-flex:1;
+    	 flex-grow:1;
+    }
+    .simple-list .list-item:nth-child(2){
+    	border-right: none;
+    	border-left: none;
+    }
+     .simple-list span{
+     	font-size: 23px;
+     	font-weight: bolder;
+     }
+
+     /*left-nav-list*/
+	.left-nav-list i {
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+	}
+	.nav-item{
+		display: block;
+		font-size: 18px;
+		font-weight: bolder;
+		padding: 10px 50px;
+		border-bottom:1px solid #DFDEDD;
+		border-right: 1px solid #DFDEDD;
+		border-left: 1px solid #DFDEDD;
+	}
+	.nav-item:first-of-type{
+       border:1px solid #DFDEDD;
+	}
+	.nav-item:hover{
+		background-color: #F6F7F7;
+		cursor: pointer;
+	}
+   /*left foot*/
+
+   .left-footer{
+   	margin-top: 50px;
+   	height: 400px;
+   }
+   .work-contact{
+   	padding: 20px 60px;
+   	margin:0 auto;
+   }
+   .left-footer .description-title{
+   	display: block;
+   	padding: 10px 0;
+   	font-size: 16px;
+   	font-weight: bolder;
+   	line-height: 30px;
+
+   }
+   .contact-description{
+     margin-bottom: 30px;
+   }
+   .contact-list{
+   	font-size: 16px;
+   	font-weight: bold;
+   	color: #726D6A;
+   }
+   .contact-description p{
+   	line-height: 25px;
+   }
+
+
+
+   /* context header*/
+   .context-header{
+   	/*position: relative;*/
+
+   }
+   .menu-icon{
+   	display: block;
+   	position: absolute;
+   }
+.i_eat{background-position:right 0px}.i_cook{background-position:right -43px}.i_basketball{background-position:right -86px}.i_trip{background-position:right -129px}.i_pp{background-position:right -172px}.i_game{background-position:right -215px}.i_eat,.i_cook,.i_basketball,.i_trip,.i_pp,.i_game{background-image: url(/static/aio_z_44b227d.png)}
