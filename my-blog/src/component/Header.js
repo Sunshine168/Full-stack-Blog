@@ -25,12 +25,12 @@ const NavbarInstance = (props)=>{
 			//获取主机名
 			let hostname = window.location.hostname;
 			//判断开发模式
-			if (process.env.NODE_ENV == 'production') {
-          url=`localhost/article/${id}`;
-      }else{
-				//非开发模式下需要获取端口
+			if (process.env.NODE_ENV && process.env.NODE_ENV == 'development') {
+				//开发模式下需要获取端口
 				let port = location.port;
-				url=`localhost:${port}/article/${id}`
+				url=`localhost:${port}/user/${id}`
+      }else{
+				url=hostname+`/user/${id}`;
 			}
 			return url;
 		}
@@ -39,7 +39,7 @@ const NavbarInstance = (props)=>{
                <Navbar>
                  <Navbar.Header>
                    <Navbar.Brand>
-                     <a href="#">BLOG</a>
+                     <a href="https://sunshine168.github.io/resume/">关于我</a>
                    </Navbar.Brand>
                  </Navbar.Header>
 								 {user?

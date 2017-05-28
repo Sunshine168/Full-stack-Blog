@@ -8,6 +8,7 @@ import {
   Switch
 } from 'react-router-dom'
 import {StyleRoot} from 'radium';
+import queryString from 'query-string';
 import {connect} from 'react-redux';
 import logo from './logo.svg';
 import Header from './container/Header';
@@ -68,7 +69,18 @@ const mapStateToProps = (state)=>{
     login:state.login
   }
 }
-
+/*
+处理服务器重定向问题与404
+ */
+const RedirectFromServer = ({match})=>{
+  //deal the sever redirect
+  let url = window.location.search;
+   console.log(url.substring(1));
+  return url.substring(1)?<Redirect to={{
+    pathname: url.substring(1),
+    state: { from: '/' }
+  }}/>:<NoMatch/>
+}
 class App extends Component {
    constructor(props){
      super(props);
@@ -85,7 +97,7 @@ class App extends Component {
                <Header/>
                <FlashMessage/>
                <Switch>
-                 <Route exact path="/" component={TestScreen}/>
+                 <Route exact path="/index" component={TestScreen}/>
                  <Route path="/login" component={Login}/>
                  <Route path="/loginOut" component={Login}/>
                  <Route path="/register" component={Register}/>
@@ -105,7 +117,8 @@ class App extends Component {
                    component={PostArticle}
                    auth ={auth}
                  />
-                 <Route component={NoMatch}/>
+                 <Route path="/" component={RedirectFromServer}/>
+
                </Switch>
              </div>
            </div>

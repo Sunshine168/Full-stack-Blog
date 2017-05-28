@@ -25,7 +25,6 @@ export  default class LoadArticle extends Component {
 			}
 		}
 	  async componentDidMount(){
-      console.log(this.props.match)
 			  let {articleId} = this.props.match.params,
             {user} = this.props;
       let result = await fetchPost(articleId);
