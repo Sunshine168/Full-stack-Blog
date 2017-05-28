@@ -62,5 +62,12 @@ export default StyleSheet.create({
         "marginRight": "auto",
         "marginBottom": 0,
         "marginLeft": "auto"
+    },
+    "App-logo": {
+        "width": 300,
+        "height": 300
+    },
+    "App": {
+        "textAlign": "center"
     }
 });

@@ -45,3 +45,10 @@
   text-align: center;
   margin: 0 auto;
 }
+.App-logo{
+  width: 300px;
+  height: 300px;
+}
+.App{
+  text-align: center;
+}
