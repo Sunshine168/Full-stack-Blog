@@ -15,7 +15,7 @@ export default class CommentList extends Component {
    return (
 		 <ListGroup>
 			 {comments.map((comment,index)=>(
-				 <ListGroupItem key={index}>
+				 <ListGroupItem key={comment._id}>
 					 <Comment
 						 index = {index}
 						 comment={comment}

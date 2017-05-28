@@ -34,7 +34,7 @@ render(){
 			{
 				articles.map((article,index)=>(
 					<ArticleApp
-						key={index}
+						key={article._id}
 						index={index}
 						article={article}
 						index = {index}

@@ -1,5 +1,6 @@
-export const DOMAIN = (process.env.NODE_ENV !== 'production')?"http://localhost:3005":"..";
-
+/*手动设置*/
+export const DOMAIN = (process.env.ORIGIN)?process.env.ORIGIN:"..";
+const CREDENTIALS = (process.env.ORIGIN)?"include":'same-origin';
 /*
 处理所有网络请求_目前没有和action集成异步数据流，
 使用同步数据流达成类似效果的后遗症应该就是组件耦合性巨高。。
@@ -17,7 +18,8 @@ export const fetchPosts = async(id)=>{
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-  }
+  },
+   credentials: CREDENTIALS,
     })
   }catch(e){
     console.log(e);
@@ -43,7 +45,8 @@ export const fetchPost = async(postId)=>{
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-  }
+  },
+   credentials: CREDENTIALS,
     })
   }catch(e){
     console.log(e);
@@ -62,14 +65,15 @@ export const fetchPost = async(postId)=>{
 删除博文
  */
 export const deletePost = async(params)=>{
-   let url = DOMAIN+`/api/posts/${params.postId}/remove?user_id=${params.user_id}`;
+   let url = DOMAIN+`/api/posts/${params.postId}/remove`;
    try{
      var result = await fetch(url,{
        method: 'GET',
        headers: {
          'Accept': 'application/json',
          'Content-Type': 'application/json'
-   }
+   },
+   credentials: CREDENTIALS,
      })
    }catch(e){
      console.log(e);
@@ -98,8 +102,8 @@ export const deletePost = async(params)=>{
     },
     body: JSON.stringify({
            article:params.article,
-           user_id:params.user_id,
-    })
+    }),
+       credentials: CREDENTIALS,
       })
     }catch(e){
       console.log(e);
@@ -122,7 +126,8 @@ export const deletePost = async(params)=>{
        headers: {
          'Accept': 'application/json',
          'Content-Type': 'application/json'
-   }
+   },
+      credentials: CREDENTIALS,
      })
    }catch(e){
      console.log(e);
@@ -152,7 +157,8 @@ export const updatePost = async(postId,article)=>{
    body: JSON.stringify({
      title:article.title,
      context:article.context,
-   })
+   }),
+      credentials: CREDENTIALS,
      })
    }catch(e){
      console.log(e);
@@ -191,7 +197,8 @@ bio
    body: JSON.stringify({
      account: account,
      password:password,
-   })
+   }),
+      credentials: CREDENTIALS,
      })
    }catch(e){
      console.log(e);
@@ -221,7 +228,8 @@ export const login = async(params)=>{
   body: JSON.stringify({
     account: account,
     password:password,
-  })
+  }),
+     credentials: CREDENTIALS,
     })
   }catch(e){
     console.log(e);
@@ -240,7 +248,7 @@ export const login = async(params)=>{
 添加评论
  */
 export const addComment = async(params)=>{
-  let{articleId,comment,userId}=params,
+  let{articleId,comment}=params,
   url = DOMAIN+`/api/posts/${articleId}/comment`;
   try{
     var result = await fetch(url,{
@@ -252,8 +260,8 @@ export const addComment = async(params)=>{
   body: JSON.stringify({
     articleId:articleId,
     content:comment,
-    user_id:userId,
-  })
+  }),
+     credentials: CREDENTIALS,
     })
   }catch(e){
     console.log(e);
@@ -273,15 +281,16 @@ export const addComment = async(params)=>{
  */
 // GET /posts/:postId/comment/:commentId/remove 删除一条留言
 export const deleteComment = async(params)=>{
-  let{articleId,commentId,user_id}=params,
-  url = DOMAIN+`/posts/${articleId}/comment/${commentId}/remove?user_id=${user_id}`;
+  let{articleId,commentId}=params,
+  url = DOMAIN+`/posts/${articleId}/comment/${commentId}/remove`;
   try{
     var result = await fetch(url,{
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-  }
+  },
+     credentials: CREDENTIALS,
     })
   }catch(e){
     console.log(e);

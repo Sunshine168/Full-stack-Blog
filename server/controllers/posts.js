@@ -27,9 +27,8 @@ module.exports = {
 	// POST /posts 发表一篇文章
 	'POST /api/posts':async(ctx, next) => {
 		// await checkLogin(ctx, next);
-		 console.log(ctx.request.body);
 		 let {article,user_id} = ctx.request.body;
-		 let author =  user_id ||ctx.session.user,
+		 let author =  user_id ||ctx.session.user._id,
 		//  flashMessage = ctx.flash.get(),
 		 code = 1,
 		 message ="成功发表";
@@ -57,7 +56,6 @@ module.exports = {
 		// ctx.response.body = ctx.flash.get();
 		let code = 1;
 		let {postId} = ctx.params;
-		console.log(ctx.params)
 		try{
 			var result  =  await Promise.all([
 				PostModel.getPostById(postId),   // 获取文章信息
@@ -153,10 +151,8 @@ module.exports = {
 						postId:postId,
 						content:content
 					}
-					console.log(comment);
 			try{
 				var result =  await CommentModel.create(comment);
-				console.log(result);
 			}catch(e){
           code = -1,
 					message = e;
@@ -169,7 +165,6 @@ module.exports = {
 	},
 	// GET /posts/:postId/comment/:commentId/remove 删除一条留言
 	'GET /posts/:postId/comment/:commentId/remove': async(ctx, next) => {
-		console.log()
 		let postId  =  ctx.params.postId,
 		   commentId = ctx.params.commentId,
 			 code = 1,

@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "prop-types": "^15.5.8",
+    "query-string": "^4.3.4",
     "radium": "^0.18.2",
     "react": "^15.5.4",
     "react-animations": "^0.1.0",

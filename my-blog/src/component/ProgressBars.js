@@ -26,7 +26,6 @@ if(isFinish){
 }
 }
 increase(){
-	console.log(this)
 	const now = this.state.now + 1;
 	if (now >= 100) {
 		clearTimeout(this.timer);
@@ -74,7 +73,6 @@ componentWillUnmount(){
 }
   render(){
 		let {isFinish,isStart} = this.props.progress;
-		console.log(this.props)
     return (
 			this.state.now>1&&this.state.now<100?
 			<div className="progressbar">
