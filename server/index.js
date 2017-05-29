@@ -18,11 +18,13 @@ const koaWinston = require('./middlewares/koa-winston');
 const app = new Koa();
 const isProduction = (process.env.NODE_ENV || 'production') === 'production';
 const log = require('./logs/log');
-app.use(cors({
-	/*前后端分离时候 运行跨域访问用作 调试*/
-	origin: 'http://localhost:3000',
-	"credentials": true,
-}));
+if(!isProduction&&config.cors){
+	app.use(cors({
+		/*前后端分离时候 运行跨域访问用作 调试*/
+		origin: config.cors,
+		"credentials": true,
+	}));
+}
 app.use(bodyParser());
 
 app.use(uploader({
@@ -82,11 +84,11 @@ app.use(async(ctx, next) => {
 
 
 // 正常请求的日志
-// app.use(koaWinston(log.logger));
+app.use(koaWinston(log.logger));
 // add controller:
 app.use(controller());
 // 错误请求的日志
-// app.use(koaWinston(log.errorloger));
+app.use(koaWinston(log.errorloger));
 
 
 app.listen(config.port);

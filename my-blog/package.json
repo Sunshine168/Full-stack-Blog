@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "async-child-process": "^1.1.1",
     "async-file": "^2.0.2",
     "bootstrap": "^3.3.7",
     "prop-types": "^15.5.8",
@@ -65,7 +66,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
   },
   "jest": {
     "collectCoverageFrom": [

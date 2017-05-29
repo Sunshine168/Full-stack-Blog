@@ -1,27 +1,77 @@
-# Full-stack-blog
+# Full-stack-blog(不断更新笔记)
+效果http://sunnerrrr.cn/index
+(尚未完成数据检验和异步数据流)
 搭建一个基于Koa2的多人blog
 参考自https://github.com/nswbmw/N-blog
+前端部分以create-react-app的脚手架搭起react+react-router v4+redux的全家桶
+后端采用koa2+mongodb 
+
 ## 开发环境
-开发环境
+开发环境(node要求 7.6以上)
 Nodejs:7.6.0
 koa:2.0
 MongoDB:3.2.10
 
+## 目录结构
+
+## 如何运行
+
+后端默认配置在config/default.js中
+请确保本地Mongodb 端口27017(默认)可用
+ 
+```
+git clone https://github.com/Sunshine168/Full-stack-Blog.git
+cd myblog/
+npm install //or yarn install
+npm build 
+node scripts/publish ./server  //发布到server目录中
+cd ..
+cd server/
+npm install //or yarn install
+node index //默认3305端口
+```
+
+## 调试配置
+
+
+### 前后端分离配置(默认不需要配置)
+
+(需要整体运行一下项目产生一下cookies)
+#### 前端修改
+进入myblog目录进入config的env文件里修改
+
+```
+ 'ORIGIN':'http://localhost:3005' 
+//修改一下本地主机
+```
+#### 后端修改
+进入server目录下
+
+```
+config/default.js//默认配置文件
+```
+修改cors,修改成前端运行的域名,默认指向3000端口(不需要跨域调试的时候请注释掉) 后面提供process.env区分跨域模式
+
+```
+NODE_ENV=development node index.js
+```
 
 
 ## 总体任务
 
 ### 1改写项目框架由express->Koa2
-### 2前端初始通过模板实现->工程化的react.js
+### 2前端->工程化的react.js
 TODO
 
 * [x] 2.1多页面实践
 * [x] 2.2redux实践
 * [x] 2.3单页面实践
 * [ ] 2.4服务器同构
+* [ ] 2.5Immutable
+* [ ] 2.6react动画机制
 
 
-  ---
+---
 
 ## express->koa2
 **目前进度**
@@ -30,63 +80,21 @@ TODO
 * [x] 依赖模块
 * [x] 配置文件
 * [x] 路由部分
+* [x] 数据库访问
+* [x] 处理react单页重定向
 
 ## koa2
 
-更新koa2进度 前后端分离实践，通过postman检查api接口。
-测试时使用cor跨域，前端提交时提交用户id，
-
-单页面中
-去除flash
-中间件检查是否找到用户后返回结果。
-
-打算封装几个装饰器用于log Request中提交的参数
+待更
 
 
-## 更新一下关于react的进度
+## react
 
-无论如何也希望在这个月里能完成手头上的所有任务。。
-由于多种原因暂时放弃多页面的部分，
-直接开始单页构建 
-构建使用create-react-app
-ejct后通过手动配置`webpack.config.dev.js`
-
-~~~
-      // Process JS with Babel.
-      {
-        test: /\.(js|jsx)$/,
-        include: paths.appSrc,
-        loader: 'babel',
-        query: {
-          "plugins": [
-  "transform-decorators-legacy",
-  "transform-class-properties"
-],
-          // This is a feature of `babel-loader` for webpack (not Babel itself).
-          // It enables caching results in ./node_modules/.cache/babel-loader/
-          // directory for faster rebuilds.
-          cacheDirectory: true
-        }
-      },
-~~~
-达成使用装饰器的目的，尝鲜是种个性。。。
-
-目前选择 router4 。。但是据说坑还比较多 有待实践
-
-redux 的使用这个花了比较长时间才理解了个大概。。在实践里面争取尝试更多包括dva，这里记录下几个比较好的资料
-
-[redux中文资料](http://cn.redux.js.org/docs/introduction/index.html)
-[redux作者dan的教学视频](https://egghead.io/courses/getting-started-with-redux)配合这个[详细的doc资料](https://github.com/LanceLou/lancelou.github.io/issues/)
-[react小书](http://huziketang.com/books/react/)
-
-由于直接跳过flow的实践。。
-在完成redux的多种尝试后
-以后再尝试MobX的实践。
+完成react+redux+react-routerv4全家桶
 
 
-## 想法 
-react作为一个在浏览器和前端实践之间的渲染层。。。所具有的威力是巨大的，这个利器在展示其威力的同时也有巨大的后坐力。。。 可能我比较蠢。。。而且缺少交流。。感觉比较吃力
-。。但是无论是其打通sketch和react-vr。。前景都是非常光明的。。。 希望在找工作前能将这个demo 和 对之前写的一个RN demo进行重构。。。
-一步一个脚印 生活都是困难的 只能never give up了 。。实在只能这样安慰自己了。。。
+
+
+
 
 
