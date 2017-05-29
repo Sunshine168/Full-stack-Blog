@@ -16,7 +16,7 @@ export default StyleSheet.create({
     },
     "header_setting": {},
     "loginInputForm": {
-        "width": 400,
+        "width": 500,
         "marginTop": "auto",
         "marginRight": "auto",
         "marginBottom": "auto",

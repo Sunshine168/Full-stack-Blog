@@ -50,10 +50,10 @@ node index //默认3305端口
 ```
 config/default.js//默认配置文件
 ```
-修改cors,修改成前端运行的域名,默认指向3000端口(不需要跨域调试的时候请注释掉) 后面提供process.env区分跨域模式
+修改cors,修改成前端运行的域名,默认指向3000端口
 
 ```
-NODE_ENV=development node index.js
+node index -c
 ```
 
 
@@ -63,7 +63,8 @@ NODE_ENV=development node index.js
 ### 2前端->工程化的react.js
 TODO
 
-* [x] 2.1多页面实践
+* [ ] 重写布局css
+* [x] 2.1多页面实践(待更新/font)
 * [x] 2.2redux实践
 * [x] 2.3单页面实践
 * [ ] 2.4服务器同构

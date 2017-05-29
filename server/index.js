@@ -1,6 +1,6 @@
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
-const controller = require('./controller');
+const controller = require('./middlewares/controller');
 const route = require('koa-route');
 const multer = require('koa-multer');
 const session = require('koa2-session-store');
@@ -18,7 +18,9 @@ const koaWinston = require('./middlewares/koa-winston');
 const app = new Koa();
 const isProduction = (process.env.NODE_ENV || 'production') === 'production';
 const log = require('./logs/log');
-if(!isProduction&&config.cors){
+const corsMode = (process.argv[2]=='-c')?true:false;
+if(corsMode){
+	console.log(`CORS MODE for ${config.cors}`)
 	app.use(cors({
 		/*前后端分离时候 运行跨域访问用作 调试*/
 		origin: config.cors,
@@ -82,12 +84,11 @@ app.use(async(ctx, next) => {
 })
 
 
-
-// 正常请求的日志
+// // 正常请求的日志
 app.use(koaWinston(log.logger));
 // add controller:
 app.use(controller());
-// 错误请求的日志
+//错误请求的日志
 app.use(koaWinston(log.errorloger));
 
 

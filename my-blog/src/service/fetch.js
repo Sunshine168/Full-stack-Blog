@@ -185,8 +185,8 @@ password
 bio
  */
  export const register = async(params)=>{
-   let url = DOMAIN+'/api/signIn',
-       {account,password}=params;
+   let url = DOMAIN+'/api/signUp',
+       {account,username,password,gender,bio}=params;
    try{
      var result = await fetch(url,{
        method: 'POST',
@@ -195,11 +195,13 @@ bio
          'Content-Type': 'application/json'
    },
    body: JSON.stringify({
-     account: account,
-     password:password,
-   }),
-      credentials: CREDENTIALS,
-     })
+     account:account,
+     username: username,
+     password: password,
+     gender: gender,
+     bio: bio,
+   })
+   })
    }catch(e){
      console.log(e);
    }
@@ -290,6 +292,32 @@ export const deleteComment = async(params)=>{
         'Accept': 'application/json',
         'Content-Type': 'application/json'
   },
+     credentials: CREDENTIALS,
+    })
+  }catch(e){
+    console.log(e);
+  }
+  if(result){
+    return result.json();
+  }else{
+    return {
+     code:-2,
+     msg:"未知错误"
+    }
+  }
+}
+export const checkAccount = async(account)=>{
+  let url = DOMAIN+"/api/checkAccount";
+  try{
+    var result = await fetch(url,{
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+      account
+  }),
      credentials: CREDENTIALS,
     })
   }catch(e){

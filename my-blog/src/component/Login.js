@@ -25,24 +25,28 @@ export default class LoginInput extends Component  {
 		 }
 		async _signIn(){
 			 //检查数据有效性
-			 let {account,password} = this.state;
-        let result =await login({
-					account,
-					password
-				})
-				 //处理登录结果
-				 if(result.code==1){
-					 this.props.loginIn(result.user);//更新用户状态
-					 this.props.showFlashMessage({
-						 msg:"登录成功",
-						 msgType:"success",
-					 })
-				 }else{
-					 this.props.showFlashMessage({//返回失败信息
-						msg:result.message,
-						msgType:"danger",
+			 let {account,password,accountVaild,pwdValid} = this.state,
+			 valid=false;
+			 if(accountVaild!="error"&&pwdValid!="error"){valid=true}
+        if(valid){
+					let result =await login({
+						account,
+						password
 					})
-				 }
+					 //处理登录结果
+					 if(result.code==1){
+						 this.props.loginIn(result.user);//更新用户状态
+						 this.props.showFlashMessage({
+							 msg:"登录成功",
+							 msgType:"success",
+						 })
+					 }else{
+						 this.props.showFlashMessage({//返回失败信息
+							msg:result.message,
+							msgType:"danger",
+						})
+					 }
+				}
 		 }
 		componentWillUpdate(nextProps,nextState){
 				 if(nextProps.user){
@@ -64,25 +68,57 @@ export default class LoginInput extends Component  {
 				// 	})
 				// }
 		}
+		_checkAccount(value){
+			/*重设一次*/
+			this.setState({
+				accountVaild:null,
+				accountHelp:"",
+			})
+			if(value.length<6){
+				this.setState({
+					accountVaild:"error",
+					accountHelp:"账号长度需要大于6位"
+				})
+			}
+		}
+		_checkPassword(value){
+			/*重设一次*/
+			this.setState({
+				pwdVaild:null,
+				pwdHelp:"",
+			})
+			if(value.length<8){
+				this.setState({
+					pwdVaild:"error",
+					pwdHelp:"密码长度需要大于8位"
+				})
+			}
+		}
 		 render(){
 			 let loginStatus = this.props.user;
 			    return (
             <div className="loginInputForm">
-								<form>
-									<FieldGroup
-										id="formControlsEmail"
-										type="email"
-										label="Email address"
-										placeholder="Enter email"
-										ref={(input)=>this.email=input}
-										onChange={(event)=>this.setState({account:event.target.value})}
-									/>
-									<FieldGroup
-										id="formControlsPassword"
-										label="Password"
-										type="password"
-										placeholder="Enter Password"
-										onChange={(event)=>this.setState({password:event.target.value})}
+							<form>
+								<FieldGroup
+									id="formControlsEmail"
+									type="email"
+									label="Email address"
+									placeholder="Enter email"
+									ref={(input)=>this.email=input}
+									onChange={(event)=>this.setState({account:event.target.value})}
+									onBlur={(event)=>this._checkAccount(event.target.value)}
+									validationState={this.state.accountVaild}
+									help={this.state.accountHelp}
+								/>
+								<FieldGroup
+									id="formControlsPassword"
+									label="Password"
+									type="password"
+									placeholder="Enter Password"
+									onChange={(event)=>this.setState({password:event.target.value})}
+									onBlur={(event)=>this._checkPassword(event.target.value)}
+									validationState={this.state.pwdVaild}
+									help={this.state.pwdHelp}
 									/>
 									<Button bsStyle="primary" bsSize="large" block onClick={()=>this._signIn()}>LoginIn</Button>
 						</form>
@@ -90,9 +126,12 @@ export default class LoginInput extends Component  {
 		 }
 }
 
-function FieldGroup({ id, label, help, ...props }) {
+function FieldGroup({ id, label, help,validationState, ...props }) {
   return (
-    <FormGroup controlId={id}>
+    <FormGroup
+			controlId={id}
+			validationState={validationState}
+		>
       <ControlLabel>{label}</ControlLabel>
       <FormControl {...props} />
       {help && <HelpBlock>{help}</HelpBlock>}
