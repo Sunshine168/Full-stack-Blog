@@ -1,10 +1,10 @@
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
-const controller = require('./controller');
+const controller = require('./middlewares/controller');
 const route = require('koa-route');
 const multer = require('koa-multer');
 const session = require('koa2-session-store');
-const MongoStore   = require('koa2-session-mongolass');
+const MongoStore = require('koa2-session-mongolass');
 const convert = require('koa-convert');
 const path = require('path');
 const render = require('koa-ejs');
@@ -18,10 +18,15 @@ const koaWinston = require('./middlewares/koa-winston');
 const app = new Koa();
 const isProduction = (process.env.NODE_ENV || 'production') === 'production';
 const log = require('./logs/log');
-app.use(cors({
-	origin: 'http://localhost:3000',
-	"credentials":true,
-}));
+const corsMode = (process.argv[2]=='-c')?true:false;
+if(corsMode){
+	console.log(`CORS MODE for ${config.cors}`)
+	app.use(cors({
+		/*前后端分离时候 运行跨域访问用作 调试*/
+		origin: config.cors,
+		"credentials": true,
+	}));
+}
 app.use(bodyParser());
 
 app.use(uploader({
@@ -42,16 +47,16 @@ app.use(session({
 	cookie: {
 		maxAge: config.session.maxAge // 过期时间，过期后 cookie 中的 session id 自动删除
 	},
-	store:new MongoStore(),
+	store: new MongoStore(),
 }));
 // //通过koa-ejs中间件 也可以直接使用
 // app.use(views(path.join(__dirname, './views'), {
 //         extension: 'ejs'
 //     }))
 
-app.use(convert(server(path.join(__dirname, '/'))));
+app.use(convert(server(path.join(__dirname, '/build/'))));
 render(app, {
-	root: path.join(__dirname, '/views/'),
+	root: path.join(__dirname, '/build/'),
 	layout: false,
 	viewExt: 'html',
 	cache: false,
@@ -72,20 +77,19 @@ app.use(async(ctx, next) => {
 app.use(async(ctx, next) => {
 	await next();
 	if (ctx.response.status == 404) {
-	   console.log(ctx.request.url);
+		console.log(ctx.request.url);
 
-		ctx.response.redirect('/?'+ctx.request.url);
+		ctx.response.redirect('/?' + ctx.request.url);
 	}
 })
 
 
-
-// 正常请求的日志
-// app.use(koaWinston(log.logger));
+// // 正常请求的日志
+app.use(koaWinston(log.logger));
 // add controller:
 app.use(controller());
-// 错误请求的日志
-// app.use(koaWinston(log.errorloger));
+//错误请求的日志
+app.use(koaWinston(log.errorloger));
 
 
 app.listen(config.port);

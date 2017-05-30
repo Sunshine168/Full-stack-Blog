@@ -29,7 +29,6 @@ module.exports = {
 			try{
         let result =  await UserModel.create(user);
 				let currentUser = result.ops[0];
-				console.log(currentUser);
 				delete user.password;
 				ctx.session.user = user;
 			}catch(e){
@@ -50,5 +49,18 @@ module.exports = {
 				"username":user.username,
 			}
 
+	},
+	'POST /api/checkAccount':async(ctx,next)=>{
+		let {account} =ctx.request.body,code="1",message="";
+		let user = await UserModel.getUserByAccount(account);
+		if(user){
+			code=-1;
+			message="用户名已存在"
+		}
+		ctx.response.body={
+			code,
+			message,
+		}
 	}
+
 }
