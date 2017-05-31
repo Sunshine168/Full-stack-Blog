@@ -1,11 +1,13 @@
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-config/*
+server/config/*
 !config/default.*
 npm-debug.log
 node_modules
-logs/*
-coverage
+server/logs/*
+# build folder
+server/build
+#coverage
 # the mac problem
 .DS_Store
 .DS_Store?

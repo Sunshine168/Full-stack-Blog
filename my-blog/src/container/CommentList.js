@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import CommentList from '../component/CommentList';
 import {showFlashMessage} from '../reducer/flashMessage';

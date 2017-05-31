@@ -48,5 +48,5 @@
     "winston": "^2.3.1"
   },
   "author": "maizi",
-  "license": "ISC"
+  "license": "MIT"
 }

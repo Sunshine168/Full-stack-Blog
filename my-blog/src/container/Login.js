@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import Login from '../component/Login';
 import '../css/login.css';
 import {loginIn} from '../reducer/user';

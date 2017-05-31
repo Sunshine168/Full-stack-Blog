@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
 import ArticleList from '../component/ArticleList'
 import { initArticles,deleteArticle,} from '../reducer/article';
-import {showFlashMessage,removeFlashMessage } from '../reducer/flashMessage'
 import {startProgress,finishProgress} from '../reducer/progress';
 import {connect} from 'react-redux';
-import { withRouter } from 'react-router-dom'
 const mapStateToProps = (state)=>{
   return {
     article:state.article,

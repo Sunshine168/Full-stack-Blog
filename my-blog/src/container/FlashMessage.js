@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import FlashMessage from '../component/FlashMessage';
 import {showFlashMessage,removeFlashMessage} from '../reducer/flashMessage';

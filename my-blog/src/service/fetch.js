@@ -29,7 +29,7 @@ export const fetchPosts = async(id)=>{
   }else{
     return {
        code:-2,
-       msg:"未知错误"
+       message:"未知错误"
     }
   }
 }
@@ -56,7 +56,7 @@ export const fetchPost = async(postId)=>{
   }else{
     return {
        code:-2,
-       msg:"未知错误"
+       message:"未知错误"
     }
   }
 }
@@ -83,7 +83,7 @@ export const deletePost = async(params)=>{
    }else{
      return {
        code:-2,
-       msg:"未知错误"
+       message:"未知错误"
      }
    }
 }
@@ -113,7 +113,7 @@ export const deletePost = async(params)=>{
     }else{
       return {
        code:-2,
-       msg:"未知错误"
+       message:"未知错误"
       }
     }
  }
@@ -137,7 +137,7 @@ export const deletePost = async(params)=>{
    }else{
      return {
         code:-2,
-        msg:"未知错误"
+        message:"未知错误"
      }
    }
  }
@@ -169,7 +169,7 @@ export const updatePost = async(postId,article)=>{
    }else{
      return {
         code:-2,
-        msg:"未知错误"
+        message:"未知错误"
      }
    }
 }
@@ -210,7 +210,7 @@ bio
    }else{
      return {
       code:-2,
-      msg:"未知错误"
+      message:"未知错误"
      }
    }
  }
@@ -241,7 +241,7 @@ export const login = async(params)=>{
   }else{
     return {
      code:-2,
-     msg:"未知错误"
+     message:"未知错误"
     }
   }
 }
@@ -273,7 +273,7 @@ export const addComment = async(params)=>{
   }else{
     return {
      code:-2,
-     msg:"未知错误"
+     message:"未知错误"
     }
   }
 }
@@ -302,7 +302,7 @@ export const deleteComment = async(params)=>{
   }else{
     return {
      code:-2,
-     msg:"未知错误"
+     message:"未知错误"
     }
   }
 }
@@ -328,7 +328,7 @@ export const checkAccount = async(account)=>{
   }else{
     return {
      code:-2,
-     msg:"未知错误"
+     message:"未知错误"
     }
   }
 }

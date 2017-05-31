@@ -14,7 +14,7 @@ import PropTypes from 'prop-types'
 			<div className="article_context">
 				<div dangerouslySetInnerHTML={{__html:article.content}}></div>
 			</div>
-
+			
 		</div>)
 }
 

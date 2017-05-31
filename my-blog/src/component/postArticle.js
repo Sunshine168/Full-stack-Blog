@@ -22,6 +22,10 @@ export default class PostArticle  extends Component{
 			title:props.title||"",
 			context:props.context||"",
 			mode:1,
+			titleValid:null,
+			titleHelp:"",
+      contextValid:null,
+			contextHelp:""
 		}
 	}
 async  componentDidMount(){
@@ -49,6 +53,40 @@ async  componentDidMount(){
 			})
 		}
 	}
+	/*检验标题*/
+	_checkTitle(value){
+		this.setState({
+			titleValid:null,
+			titleHelp:"",
+		})
+		if(value.length==0){
+			this.setState({
+				titleValid:"error",
+				titleHelp:"标题不能为空",
+			})
+		}else{
+			this.setState({
+				titleValid:"success",
+			})
+		}
+	}
+		/*检验内容*/
+	_checkContext(value){
+		this.setState({
+		contextValid:null,
+		contextHelp:"",
+		})
+		if(value.length==0){
+			this.setState({
+			contextValid:"error",
+			contextHelp:"内容不能为空",
+			})
+		}else{
+			this.setState({
+			contextValid:"success",
+			})
+		}
+	}
 	render(){
     let {title,context}  = this.state;
 		return (<div className="article_container">
@@ -63,13 +101,23 @@ async  componentDidMount(){
 						placeholder="Enter text"
 						value={title}
 						onChange={(event)=>this.setState({title:event.target.value})}
+						validationState={this.state.titleValid}
+						help={this.state.titleHelp}
+						onBlur={(event)=>this._checkTitle(event.target.value)}
 					/>
-					<FormGroup controlId="formControlsTextarea">
+					<FormGroup
+						controlId="formControlsTextarea"
+						validationState={this.state.contextValid}
+					>
 						<ControlLabel>内容</ControlLabel>
-						<FormControl componentClass="textarea" placeholder="textarea"
+						<FormControl
+							componentClass="textarea"
+							placeholder="textarea"
 							onChange={(event)=>this.setState({context:event.target.value})}
+							onBlur={(event)=>this._checkContext(event.target.value)}
 							style={{ height: 200 }}
 							value={context}/>
+						{this.state.contextHelp && <HelpBlock>{this.state.contextHelp}</HelpBlock>}
 					</FormGroup>
 		    </section>
 				{
@@ -89,14 +137,10 @@ async  componentDidMount(){
 	}
 	//发表文章的网络请求
   async _postArticle(){
-		let {title,context}=this.state;
+		let {title,context,titleValid,contextValid}=this.state,valid
 			//检查数据有效性
-			if(title==""){
 
-			}else{
-				if(context==""){
-
-				}else{
+				if(titleValid=="success"&&contextValid=="success"){
 					let result = await addPost({
 						article:{
 							title,
@@ -111,11 +155,15 @@ async  componentDidMount(){
 							msg:"文章发表成功",
 						})
 						let pathname ='/personal/index',
- 					 redirectState = { from: this.props.location };
- 					 this.props.redirect(pathname,redirectState)
+					 redirectState = { from: this.props.location };
+					 this.props.redirect(pathname,redirectState)
+					}else{
+					 this.props.showFlashMessage({
+						msgType:"danger",
+						msg:"文章发表失败"
+					})
 					}
 				}
-			}
 
 	}
 	//更新文章的网络请求
@@ -156,9 +204,12 @@ async  componentDidMount(){
 }
 }
 //返回表单元素组
-function FieldGroup({ id, label, help, ...props }) {
+function FieldGroup({ id, label,validationState, help, ...props }) {
   return (
-    <FormGroup controlId={id}>
+    <FormGroup
+			controlId={id}
+			validationState={validationState}
+		>
       <ControlLabel>{label}</ControlLabel>
       <FormControl {...props} />
       {help && <HelpBlock>{help}</HelpBlock>}
