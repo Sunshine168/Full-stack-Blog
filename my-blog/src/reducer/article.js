@@ -7,15 +7,6 @@ import {startProgress,finishProgress} from '../reducer/progress';
 */
 
 //-------action-------//
-
-
-/*
-action type of POSTS
- */
-const INIT_POSTS = 'INIT_POSTS'
-const ADD_POST = 'ADD_POST'
-const DELETE_POST = 'DELETE_POST'
-
 /*
 action  type of ARTICLES
  */
@@ -23,9 +14,9 @@ action  type of ARTICLES
  const ADD_ARTICLE = 'ADD_ARTICLE'
  const DELETE_ARTICLE = 'DELETE_ARTICLE'
 
- const FETCH_STARTED = 'FETCH_STARTED'
- const FETCH_SUCCESS = 'FETCH_SUCCESS'
- const FETCH_FAILURE = 'FETCH_FAILURE'
+ const POST_STARTED = 'POST_STARTED'
+ const POST_SUCCESS = 'POST_SUCCESS'
+ const POST_FAILURE = 'POST_FAILURE'
 
 
 
@@ -43,17 +34,32 @@ action stauts
 //reducer for ARTICLES
  const article = (state,action)=>{
   if(!state){
-     state = {articles:[]}
+     state = {
+       articles:[],
+       posting:false,
+     }
   }
   switch(action.type){
     case INIT_ARTICLES:
     return {articles:action.articles}
-    case ADD_ARTICLE:
+    case POST_SUCCESS:
     return {
-      articles:[...state.articles,action.article]
+      posting:false,
+      articles:[...state.articles,action.result]
+    }
+    case POST_STARTED:
+    return {
+      ...state,
+      posting:true,
+    }
+    case POST_FAILURE:
+    return {
+      ...state,
+      posting:false,
     }
     case DELETE_ARTICLE:
     return {
+      ...state,
       articles:[
         ...state.articles.slice(0,action.articleIndex),
         ...state.articles.slice(action.articleIndex+1)
@@ -87,28 +93,40 @@ export default article;
 
 
 //
-export const fetchArticlesStarted = () =>({
-  type:FETCH_STARTED
+export const postArticleStarted = () =>({
+  type:POST_STARTED
 })
 
-export const fetchArticlesSuccess = (result)=>({
-  type:FETCH_SUCCESS,
+export const postArticleSuccess = (result)=>({
+  type:POST_SUCCESS,
   result
 })
-export const fetchArticlesFailure = (error)=>({
-  type:FETCH_FAILURE,
+export const postArticleFailure = (error)=>({
+  type:POST_FAILURE,
   error
 })
-
-
-export const fetchArticles = (userId)=>{
-  return async(dispatch)=>{
-    dispatch(fetchArticlesStarted())
-    let result = await fetchPosts(userId);
-    if(result.code==1){
-      dispatch(fetchArticlesSuccess(result.posts))
-    }else{
-      dispatch(fetchArticlesFailure(result.msg))
-    }
+export const successPost = ()=>(
+  {
+    msgType:"success",
+    msg:"文章发表成功"
   }
-}
+)
+export const failurePost = (error)=>(
+  {
+    msgType:"warning",
+    msg:error
+  }
+)
+
+
+// export const fetchArticles = (userId)=>{
+//   return async(dispatch)=>{
+//     dispatch(fetchArticlesStarted())
+//     let result = await fetchPosts(userId);
+//     if(result.code==1){
+//       dispatch(fetchArticlesSuccess(result.posts))
+//     }else{
+//       dispatch(fetchArticlesFailure(result.msg))
+//     }
+//   }
+// }

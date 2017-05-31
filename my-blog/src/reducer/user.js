@@ -5,16 +5,56 @@ const LOGIN_IN = 'LOGIN_IN';
 const LOGIN_OUT = 'LOGIN_OUT';
 
 
+
+ const LOGIN_STARTED = 'LOGIN_STARTED'
+ const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+ const LOGIN_FAILURE = 'LOGIN_FAILURE'
+
+
+
+
+
+/*
+action stauts
+ */
+
+  const LOADING = 'loading'
+  const SUCCESS = 'success'
+  const FAILURE = 'failure'
+
 //reducer for LOGIN
  const login = (state,action)=>{
   if(!state){
-     state ={user:null}
+     state ={
+       user:null,
+       logining:false,
+       message:""
+     }
   }
   switch(action.type){
-    case LOGIN_IN:
-    return{user:action.user}
+    case LOGIN_STARTED:
+    return{
+      ...state,
+      logining:true,
+    }
+    case LOGIN_SUCCESS:
+    return{
+      user:action.result,
+      logining:false,
+    }
+    case LOGIN_FAILURE:
+    return {
+      ...state,
+      logining:false,
+      message:action.error
+
+    }
     case LOGIN_OUT:
-    return {user:null}
+    return {
+      user:null,
+      logining:false,
+      message:""
+    }
     default:
     return state;
   }
@@ -34,6 +74,8 @@ const LOGIN_OUT = 'LOGIN_OUT';
 // }
 
 
+
+
 //-------action  creators----------
 //------- for LOGIN
 export const loginIn = (user)=>{
@@ -42,5 +84,32 @@ export const loginIn = (user)=>{
 export const loginOut = ()=>{
   return {type:LOGIN_OUT}
 }
+
+
+
+export const startLogin = () =>({
+  type:LOGIN_STARTED
+})
+
+export const finishLogin = (result)=>({
+  type:LOGIN_SUCCESS,
+  result
+})
+export const failLogin = (error)=>({
+  type:LOGIN_FAILURE,
+  error
+})
+export const loginSuccess = ()=>(
+  {
+    msg:"登录成功",
+    msgType:"success",
+  }
+)
+export const loginFail = (error)=>(
+  {
+    msg:error,
+    msgType:"warning",
+  }
+)
 
 export default login;

@@ -20,6 +20,7 @@
     "react-router-redux": "^4.0.8",
     "react-singleton": "^1.3.3",
     "redux": "^3.6.0",
+    "redux-await": "^5.0.1",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
