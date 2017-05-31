@@ -3,7 +3,6 @@ import CommentInput from './CommentInput';
 import CommentList from './CommentList';
 import PropTypes from 'prop-types'
 import {Panel} from 'react-bootstrap';
-import {addComment,deleteComment} from '../service/fetch'
 /*
 组件的命名上有待纠结
  */

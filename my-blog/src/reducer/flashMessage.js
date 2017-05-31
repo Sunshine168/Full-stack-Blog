@@ -10,7 +10,10 @@ const REMOVE_FLASHMESSAGE ="REMOVE_FLASHMESSAGE"
 //reducer for flashMessage
  const flashMessage  = (state,action)=>{
   if(!state){
-    state = {show:false}
+    state = {
+      show:false,
+      msg:"网络错误"
+    }
   }
   switch(action.type){
     case SHOW_FLASHMESSAGE:

@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import ProgressBars from '../component/ProgressBars';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';

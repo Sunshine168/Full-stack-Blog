@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Redirect,
-  withRouter,
   Switch
 } from 'react-router-dom'
 import {StyleRoot} from 'radium';
-import queryString from 'query-string';
 import {connect} from 'react-redux';
 import logo from './logo.svg';
 import Header from './container/Header';
@@ -17,7 +14,6 @@ import Register from './container/Register';
 import ArticleList from './container/ArticleList'
 import FlashMessage from './container/FlashMessage'
 import PostArticle from './container/PostArticle'
-import Article from './container/Article'
 import LoadArticle from './container/LoadArticle'
 import NoMatch from './component/NoMatch';
 import ProgressBars from './container/ProgressBars'
@@ -29,7 +25,7 @@ const TestScreen = ()=>(
       <h2>Welcome to React</h2>
     </div>
     <p className="App-intro">
-      My first try 
+      My first try
     </p>
   </div>
 )
@@ -82,10 +78,6 @@ const RedirectFromServer = ({match})=>{
   }}/>:<NoMatch/>
 }
 class App extends Component {
-   constructor(props){
-     super(props);
-
-   }
    componentDidMount(){
      let loading = document.getElementById('loading');
      loading.style.display="none";
@@ -109,17 +101,17 @@ class App extends Component {
                  <Route path="/article" component={ArticleDetail}/>
                  <PrivateRoute path="/edit/article"
                    component={EditArticle}
-                   auth ={auth}
+                   auth={auth}
                  />
                  <PrivateRoute
                    path="/personal/index"
                    component={ArticleList}
-                   auth ={auth}
+                   auth={auth}
                  />
                  <PrivateRoute
                    path="/postArticle"
                    component={PostArticle}
-                   auth ={auth}
+                   auth={auth}
                  />
                  <Route exact path="/" component={RedirectFromServer}/>
 

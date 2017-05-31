@@ -29,6 +29,7 @@ if(corsMode){
 }
 app.use(bodyParser());
 
+/*尚未完成图片上传*/
 app.use(uploader({
 	"url": '/api/upload',
 	"storeDir": 'img',
@@ -77,8 +78,6 @@ app.use(async(ctx, next) => {
 app.use(async(ctx, next) => {
 	await next();
 	if (ctx.response.status == 404) {
-		console.log(ctx.request.url);
-
 		ctx.response.redirect('/?' + ctx.request.url);
 	}
 })

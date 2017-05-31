@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import PrivateRoute from '../component/PrivateRoute';
 import '../css/login.css';
 import { loginIn} from '../reducer/user';

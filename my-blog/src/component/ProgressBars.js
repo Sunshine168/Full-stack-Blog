@@ -2,11 +2,11 @@ import React, {
 	Component
 } from 'react';
 import {ProgressBar} from'react-bootstrap';
-import {addPost,fetchEditPost,updatePost} from '../service/fetch';
-import ArticleFoot from './ArticleFoot';
 import PropTypes from 'prop-types';
-
 export default class extends Component {
+	static propTypes=({
+	 progress:PropTypes.object,
+	})
    constructor(props){
      super(props)
 		 this.state = {
@@ -72,7 +72,6 @@ componentWillUnmount(){
 	clearTimeout(this.timer);
 }
   render(){
-		let {isFinish,isStart} = this.props.progress;
     return (
 			this.state.now>1&&this.state.now<100?
 			<div className="progressbar">

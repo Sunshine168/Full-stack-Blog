@@ -14,7 +14,7 @@ import ArticleFoot from './ArticleFoot';
           articleId={article._id}
           isCurrent={isCurrent}
           visit={article.pv}
-          time = {article.created_at}
+          time={article.created_at}
           commentsCount={article.commentsCount}
         />
       </section>

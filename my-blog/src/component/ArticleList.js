@@ -2,7 +2,6 @@ import React, {
 	Component
 } from 'react';
 import PropTypes from 'prop-types'
-import {SplitButton,MenuItem} from'react-bootstrap';
 import {fetchPosts} from '../service/fetch';
 import ArticleApp from '../container/ArticleApp'
 export default class AriticleList extends Component{
@@ -39,6 +38,7 @@ render(){
 						article={article}
 						index = {index}
 						isCurrent={isCurrent}
+						
 					/>
 				)
 				)}
@@ -60,12 +60,8 @@ componentDidMount(){
 		 this.props.startProgress();
 		 let result = await fetchPosts(id);
 		  this.props.finishProgress();
-		//处理登录结果
+		//处理获取文章结果
 		if(result.code==1){
-			let user = result.user;
-			this.setState({
-				user
-			})
 			this.props.initArticles(result.posts);//初始化文章列表
      //如果需要使用flashmessage则调用this.props.showFlashMessage方法
 		}else{

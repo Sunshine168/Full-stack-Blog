@@ -11,16 +11,17 @@ export default class CommentList extends Component {
 		 comments:PropTypes.array,
 	 })
 	render(){
-		let {comments,isCurrent,deleteComment} = this.props;
+		let {comments,isCurrent,deleteComment,showFlashMessage} = this.props;
    return (
 		 <ListGroup>
 			 {comments.map((comment,index)=>(
 				 <ListGroupItem key={comment._id}>
 					 <Comment
-						 index = {index}
+						 index={index}
 						 comment={comment}
 						 isCurrent={isCurrent}
 						 deleteComment={deleteComment}
+						 showFlashMessage={showFlashMessage}
 					 />
 				 </ListGroupItem>
 			 )

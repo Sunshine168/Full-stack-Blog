@@ -1,3 +1,5 @@
+import {fetchPosts} from '../service/fetch';
+import {startProgress,finishProgress} from '../reducer/progress';
 /*
 目前所有关于redux的内容都暂时集中在一个文件处理
 目前功能比较简单，如果功能复杂考虑按照类别分类，但action和reducer会放在同一个文件中
@@ -5,15 +7,6 @@
 */
 
 //-------action-------//
-
-
-/*
-action type of REGISTER
- */
-const REGISTER_ING = 'REGISTER_ING';
-const REGISTER_DONE = 'REGISTER_DONE';
-
-
 
 
 /*
@@ -30,10 +23,21 @@ action  type of ARTICLES
  const ADD_ARTICLE = 'ADD_ARTICLE'
  const DELETE_ARTICLE = 'DELETE_ARTICLE'
 
+ const FETCH_STARTED = 'FETCH_STARTED'
+ const FETCH_SUCCESS = 'FETCH_SUCCESS'
+ const FETCH_FAILURE = 'FETCH_FAILURE'
 
 
 
 
+
+/*
+action stauts
+ */
+
+  const LOADING = 'loading'
+  const SUCCESS = 'success'
+  const FAILURE = 'failuer'
 
 
 //reducer for ARTICLES
@@ -64,9 +68,6 @@ action  type of ARTICLES
 
 
 
-
-
-
 // -------action  creators----------
 
 
@@ -83,3 +84,31 @@ export const deleteArticle = (articleIndex)=>{
   return {type:DELETE_ARTICLE,articleIndex}
 }
 export default article;
+
+
+//
+export const fetchArticlesStarted = () =>({
+  type:FETCH_STARTED
+})
+
+export const fetchArticlesSuccess = (result)=>({
+  type:FETCH_SUCCESS,
+  result
+})
+export const fetchArticlesFailure = (error)=>({
+  type:FETCH_FAILURE,
+  error
+})
+
+
+export const fetchArticles = (userId)=>{
+  return async(dispatch)=>{
+    dispatch(fetchArticlesStarted())
+    let result = await fetchPosts(userId);
+    if(result.code==1){
+      dispatch(fetchArticlesSuccess(result.posts))
+    }else{
+      dispatch(fetchArticlesFailure(result.msg))
+    }
+  }
+}

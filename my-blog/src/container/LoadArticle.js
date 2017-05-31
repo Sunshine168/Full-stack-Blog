@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import LoadArticle from '../component/LoadArticle';
 import redirect from '../hight-order-component/redirect'

@@ -1,11 +1,8 @@
 import React, {
 	Component
 } from 'react';
-import {Panel,FormGroup,FormControl,Button,ControlLabel} from 'react-bootstrap';
-import {addComment,deleteComment} from '../service/fetch';
-import PropTypes from 'prop-types';
-import redirect from '../hight-order-component/redirect';
-import { withRouter } from 'react-router'
+import {Button} from 'react-bootstrap';
+import {deleteComment} from '../service/fetch';
 export default class Comment extends Component {
 	/*
 并不理想组件之间耦合性太高了
@@ -18,24 +15,24 @@ export default class Comment extends Component {
 				commentId:comment._id,
 				user_id:isCurrent
 		})
-	   if(result.code==1){
+	   if(result.code===1){
 			  let temp =  this.props.deleteComment&&this.props.deleteComment(index);
-				// this.props.showFlashMessage({
-				// 	msgType:"success",
-				// 	msg:"评论删除成功",
-				// })
+				this.props.showFlashMessage({
+					msgType:"success",
+					msg:"评论删除成功",
+				})
 		 }else{
-			//  this.props.showFlashMessage({
-			// 	 msgType:"danger",
-			// 	 msg:"评论删除失败",
-			//  })
+			 this.props.showFlashMessage({
+				 msgType:"danger",
+				 msg:"评论删除失败",
+			 })
 		 }
  }
 	render(){
-		let {author,created_at,content,index}= this.props.comment;
+		let {author,created_at,content}= this.props.comment;
 		return(
 					<div className="comment_wrap">
-						<img src="" className="author_logo"/>
+						<img src="" className="author_logo" alt="avater"/>
 						<div className="comment_detail">
 							<h5>{author.name}<span>{created_at}</span></h5>
 							<div className="comment_context">

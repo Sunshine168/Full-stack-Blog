@@ -1,7 +1,7 @@
 import React, {
 	Component
 } from 'react';
-import {SplitButton,MenuItem,FormGroup,ControlLabel,FormControl,Button,HelpBlock} from'react-bootstrap';
+import {SplitButton,MenuItem} from'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import {deletePost} from '../service/fetch';
 import PropTypes from 'prop-types'
@@ -28,12 +28,17 @@ evenKey
 	async controlHandle(eventKey){
 		 let {articleId,index}= this.props;
 		 console.log(index);
-		 if(eventKey==2){
+		 if(eventKey==="2"){
 			let result = await deletePost({
 				 postId:articleId,
 				 user_id:this.props.isCurrent,
 			});
-			   if(result.code==1){
+			   if(result.code===1){
+					 //删除成功
+					 this.props.showFlashMessage({
+						 msgType:"success",
+						 msg:"删除成功"
+					 })
 					 if(!(index===undefined)){
 						 //传了index代表是列表渲染
 						 this.props.deleteArticle(index);
@@ -43,6 +48,11 @@ evenKey
 							redirectState = { from: this.props.location };
 							this.props.redirect(pathname,redirectState)
 					 }
+				 }else{
+					 this.props.showFlashMessage({
+						msgType:"danger",
+						msg:"删除失败"
+					})
 				 }
 		 }
 	 }
