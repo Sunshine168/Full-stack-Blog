@@ -9,10 +9,10 @@ export default class AriticleList extends Component{
 		articles:PropTypes.array,
 		user:PropTypes.object,
 		showFlashMessage:PropTypes.func,
-		removeFlashMessage:PropTypes.func,
 		initArticles:PropTypes.func,
 		startProgress:PropTypes.func,
 		finishProgress:PropTypes.func,
+		redirect:PropTypes.func,
 	})
 constructor(props){
   super(props);
@@ -29,7 +29,7 @@ render(){
 		<div className="article_container">
 			<div className="author_intro">
 				<img className="author_logo"/>
-				<h3>{this.props.user?this.props.user.name:"loading"}</h3>
+				<h3>{this.state.user?this.state.user.name:"loading"}</h3>
 			</div>
 			{
 				articles.map((article,index)=>(
@@ -62,13 +62,20 @@ componentDidMount(){
 		 let result = await fetchPosts(id);
 		  this.props.finishProgress();
 		//处理获取文章结果
+		console.log(result);
 		if(result.code==1){
 			this.props.initArticles(result.posts);//初始化文章列表
      //如果需要使用flashmessage则调用this.props.showFlashMessage方法
+    this.setState({
+			user:result.user
+		})
 		}else{
 			//获取失败
+		  var pathname = '/';
+			let redirectState = { from: this.props.location };
+			this.props.redirect(pathname,redirectState)
 			this.props.showFlashMessage({
-			 msg:result.message,
+			 msg:"用户不存在",
 			 msgType:"danger",
 		 })
 		}
