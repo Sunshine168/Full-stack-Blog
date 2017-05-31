@@ -1,10 +1,10 @@
 # Full-stack-blog(不断更新笔记)
 效果http://sunnerrrr.cn/index
-(尚未完成数据检验和异步数据流)
+(有待进一步完善)
 搭建一个基于Koa2的多人blog
 参考自https://github.com/nswbmw/N-blog
 前端部分以create-react-app的脚手架搭起react+react-router v4+redux的全家桶
-后端采用koa2+mongodb 
+后端采用koa2+mongodb
 
 ## 开发环境
 开发环境(node要求 7.6以上)
@@ -18,12 +18,12 @@ MongoDB:3.2.10
 
 后端默认配置在config/default.js中
 请确保本地Mongodb 端口27017(默认)可用
- 
+
 ```
 git clone https://github.com/Sunshine168/Full-stack-Blog.git
 cd myblog/
 npm install //or yarn install
-npm build 
+npm build
 node scripts/publish ./server  //发布到server目录中
 cd ..
 cd server/
@@ -41,7 +41,7 @@ node index //默认3305端口
 进入myblog目录进入config的env文件里修改
 
 ```
- 'ORIGIN':'http://localhost:3005' 
+ 'ORIGIN':'http://localhost:3005'
 //修改一下本地主机
 ```
 #### 后端修改
@@ -92,10 +92,3 @@ TODO
 ## react
 
 完成react+redux+react-routerv4全家桶
-
-
-
-
-
-
-
