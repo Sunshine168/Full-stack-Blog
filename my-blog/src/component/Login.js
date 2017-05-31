@@ -9,43 +9,33 @@ export default class LoginInput extends Component  {
 	static propTypes=({
 		user:PropTypes.object,
 		loginIn:PropTypes.func,
-		showFlashMessage:PropTypes.func,
-		removeFlashMessage:PropTypes.func,
 		redirect:PropTypes.func,
 	})
      constructor(props){
 			 super(props);
 			 this.state = {
 				 account:"",
-				 password:""
+				 password:"",
+				 loading:false,
 			 }
 		 }
 		 componentDidMount(){
 
 		 }
+		 _setStateAsync(state) {
+			return new Promise((resolve) => {
+					this.setState(state, resolve)
+			});
+	}
 		async _signIn(){
 			 //检查数据有效性
-			 let {account,password,accountVaild,pwdValid} = this.state,
+			 let {account,password,accountValid,pwdValid} = this.state,
 			 valid=false;
-			 if(accountVaild!="error"&&pwdValid!="error"){valid=true}
+			 this._checkAccount(this.state.account)
+			 this._checkPassword(this.state.password)
+			 if(accountValid=="success"&&pwdValid=="success"){valid=true}
         if(valid){
-					let result =await login({
-						account,
-						password
-					})
-					 //处理登录结果
-					 if(result.code==1){
-						 this.props.loginIn(result.user);//更新用户状态
-						 this.props.showFlashMessage({
-							 msg:"登录成功",
-							 msgType:"success",
-						 })
-					 }else{
-						 this.props.showFlashMessage({//返回失败信息
-							msg:result.message,
-							msgType:"danger",
-						})
-					 }
+				  	await this.props.loginIn({account,password})
 				}
 		 }
 		componentWillUpdate(nextProps,nextState){
@@ -71,26 +61,34 @@ export default class LoginInput extends Component  {
 		_checkAccount(value){
 			/*重设一次*/
 			this.setState({
-				accountVaild:null,
+				accountValid:null,
 				accountHelp:"",
 			})
 			if(value.length<6){
 				this.setState({
-					accountVaild:"error",
+					accountValid:"error",
 					accountHelp:"账号长度需要大于6位"
+				})
+			}else{
+				this.setState({
+					accountValid:"success",
 				})
 			}
 		}
 		_checkPassword(value){
 			/*重设一次*/
 			this.setState({
-				pwdVaild:null,
+				pwdValid:null,
 				pwdHelp:"",
 			})
 			if(value.length<8){
 				this.setState({
-					pwdVaild:"error",
+					pwdValid:"error",
 					pwdHelp:"密码长度需要大于8位"
+				})
+			}else{
+				this.setState({
+					pwdValid:"success",
 				})
 			}
 		}
@@ -107,7 +105,7 @@ export default class LoginInput extends Component  {
 									ref={(input)=>this.email=input}
 									onChange={(event)=>this.setState({account:event.target.value})}
 									onBlur={(event)=>this._checkAccount(event.target.value)}
-									validationState={this.state.accountVaild}
+									validationState={this.state.accountValid}
 									help={this.state.accountHelp}
 								/>
 								<FieldGroup
@@ -117,10 +115,10 @@ export default class LoginInput extends Component  {
 									placeholder="Enter Password"
 									onChange={(event)=>this.setState({password:event.target.value})}
 									onBlur={(event)=>this._checkPassword(event.target.value)}
-									validationState={this.state.pwdVaild}
+									validationState={this.state.pwdValid}
 									help={this.state.pwdHelp}
-									/>
-									<Button bsStyle="primary" bsSize="large" block onClick={()=>this._signIn()}>LoginIn</Button>
+								/>
+								<Button disabled={this.props.loading} bsStyle="primary" bsSize="large" block onClick={()=>this._signIn()}>LoginIn</Button>
 						</form>
 					</div>)
 		 }

@@ -19,6 +19,8 @@ const redirect = (WrappedComponent)=>(props)=>{
 			 redirectState:null,
      }
    }
+	 componentDidMount(){
+	 }
    _redirect(path,state){
      this.setState({
         path,

@@ -4457,6 +4457,10 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
+redux-await@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/redux-await/-/redux-await-5.0.1.tgz#7899b23a6081f7f1b24586f50324066cc3ee653e"
+
 redux-thunk@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"

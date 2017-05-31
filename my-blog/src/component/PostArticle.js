@@ -12,6 +12,7 @@ mode 2 代表编辑文章
 export default class PostArticle  extends Component{
 	static propTypes=({
 		user:PropTypes.object,
+    posting:PropTypes.bool,
 		showFlashMessage:PropTypes.func,
 		removeFlashMessage:PropTypes.func,
 		addArticle:PropTypes.func,
@@ -88,8 +89,9 @@ async  componentDidMount(){
 		}
 	}
 	render(){
-    let {title,context}  = this.state;
-		return (<div className="article_container">
+    let {title,context}  = this.state,
+        {posting} = this.props;
+ 		return (<div className="article_container">
 	    <img className="author_logo"/>
 			<div className="article_wrap">
 
@@ -121,8 +123,10 @@ async  componentDidMount(){
 					</FormGroup>
 		    </section>
 				{
-					this.state.mode==1?	<Button
-						componentClass="foot_btn"
+					this.state.mode==1?
+            <Button
+              disabled={posting=="loading"}
+							componentClass="foot_btn"
 						onClick={()=>this._postArticle()}>
 					发送</Button>:null
 
@@ -139,33 +143,21 @@ async  componentDidMount(){
   async _postArticle(){
 		let {title,context,titleValid,contextValid}=this.state,valid
 			//检查数据有效性
-
 				if(titleValid=="success"&&contextValid=="success"){
-					let result = await addPost({
+					let result = await this.props.addPost({
 						article:{
 							title,
 							context,
 						},
 						user_id:this.props.user._id,
 					})
-					if(result.code==1){
-						this.props.addArticle(result.post);
-						this.props.showFlashMessage({
-							msgType:"success",
-							msg:"文章发表成功",
-						})
-						let pathname ='/personal/index',
-					 redirectState = { from: this.props.location };
-					 this.props.redirect(pathname,redirectState)
-					}else{
-					 this.props.showFlashMessage({
-						msgType:"danger",
-						msg:"文章发表失败"
-					})
+          if(result){
+            let pathname ='/personal/index',
+             redirectState = { from: this.props.location };
+             this.props.redirect(pathname,redirectState)
+          }
 					}
 				}
-
-	}
 	//更新文章的网络请求
    async _updateArticle(){
 		 let {title,context}=this.state;

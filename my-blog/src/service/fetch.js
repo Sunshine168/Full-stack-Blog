@@ -163,7 +163,6 @@ export const updatePost = async(postId,article)=>{
    }catch(e){
      console.log(e);
    }
-   console.log(result)
    if(result){
      return result.json();
    }else{
@@ -331,4 +330,25 @@ export const checkAccount = async(account)=>{
      message:"未知错误"
     }
   }
+}
+
+
+
+//** promise
+
+export const loginFetch= (params)=>{
+  let url = DOMAIN+'/api/signIn',
+      {account,password}=params;
+  return fetch(url,{
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+  account: account,
+  password:password,
+}),
+   credentials: CREDENTIALS,
+  })
 }

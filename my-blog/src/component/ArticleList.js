@@ -16,6 +16,7 @@ export default class AriticleList extends Component{
 	})
 constructor(props){
   super(props);
+	console.log(props)
 	this.state={
 		isCurrent:null,
 		user:null
@@ -28,7 +29,7 @@ render(){
 		<div className="article_container">
 			<div className="author_intro">
 				<img className="author_logo"/>
-				<h3>{this.state.user?this.state.user.name:"loading"}</h3>
+				<h3>{this.props.user?this.props.user.name:"loading"}</h3>
 			</div>
 			{
 				articles.map((article,index)=>(
@@ -38,7 +39,7 @@ render(){
 						article={article}
 						index = {index}
 						isCurrent={isCurrent}
-						
+
 					/>
 				)
 				)}
