@@ -22,13 +22,20 @@ constructor(props){
 		user:null
 	}
 }
+_avaterHandle(){
+	var myPicture = document.getElementById('avater');
+myPicture.onError = errorHandler();
+function errorHandler(msg,file_loc,line_num) {
+  myPicture.src = '/upload/avater/loading.gif';
+   }
+}
 render(){
 	let {articles} = this.props.article,
 	{isCurrent}=this.state;
   return(
 		<div className="article_container">
 			<div className="author_intro">
-				<img className="author_logo"/>
+				<img className="author_logo" src={this.state.user?this.state.user.avatar:null} id="avater"/>
 				<h3>{this.state.user?this.state.user.name:"loading"}</h3>
 			</div>
 			{

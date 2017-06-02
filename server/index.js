@@ -55,7 +55,8 @@ app.use(session({
 //         extension: 'ejs'
 //     }))
 
-app.use(convert(server(path.join(__dirname, '/build/'))));
+// app.use(convert(server(path.join(__dirname, '/build/'))));
+app.use(convert(server(path.join(__dirname, '/upload/'))));
 render(app, {
 	root: path.join(__dirname, '/build/'),
 	layout: false,
@@ -65,7 +66,6 @@ render(app, {
 });
 
 
-// app.use(flash());
 app.use(async(ctx, next) => {
 	try {
 		await next();
@@ -81,6 +81,7 @@ app.use(async(ctx, next) => {
 		ctx.response.redirect('/?' + ctx.request.url);
 	}
 })
+
 
 
 // // 正常请求的日志

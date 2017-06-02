@@ -1,4 +1,5 @@
 /*手动设置*/
+import {stringify} from 'qs'
 export const DOMAIN = (process.env.ORIGIN)?process.env.ORIGIN:"..";
 const CREDENTIALS = (process.env.ORIGIN)?"include":'same-origin';
 /*
@@ -183,23 +184,15 @@ name
 password
 bio
  */
- export const register = async(params)=>{
-   let url = DOMAIN+'/api/signUp',
-       {account,username,password,gender,bio}=params;
+ export const register = async(formData)=>{
+   let url = DOMAIN+'/api/signUp';
    try{
      var result = await fetch(url,{
        method: 'POST',
-       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json'
-   },
-   body: JSON.stringify({
-     account:account,
-     username: username,
-     password: password,
-     gender: gender,
-     bio: bio,
-   })
+  //      headers: {
+  //          'Content-Type': 'application/x-www-form-urlencoded'
+  //  },
+   body:formData
    })
    }catch(e){
      console.log(e);
