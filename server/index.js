@@ -18,8 +18,8 @@ const koaWinston = require('./middlewares/koa-winston');
 const app = new Koa();
 const isProduction = (process.env.NODE_ENV || 'production') === 'production';
 const log = require('./logs/log');
-const corsMode = (process.argv[2]=='-c')?true:false;
-if(corsMode){
+const corsMode = (process.argv[2] == '-c') ? true : false;
+if (corsMode) {
 	console.log(`CORS MODE for ${config.cors}`)
 	app.use(cors({
 		/*前后端分离时候 运行跨域访问用作 调试*/
@@ -55,7 +55,7 @@ app.use(session({
 //         extension: 'ejs'
 //     }))
 
-// app.use(convert(server(path.join(__dirname, '/build/'))));
+app.use(convert(server(path.join(__dirname, '/build/'))));
 app.use(convert(server(path.join(__dirname, '/upload/'))));
 render(app, {
 	root: path.join(__dirname, '/build/'),
