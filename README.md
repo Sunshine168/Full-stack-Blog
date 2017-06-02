@@ -87,7 +87,7 @@ TODO
 * [x] 处理react单页重定向
 
 ## 笔记
-[网络请求](https://github.com/Sunshine168/Full-stack-Blog/note/note1.md)
+[网络请求](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note1.md)
 ## koa2
 
 有关网络请求的部分应该放在redux中(尚未修改完成)
