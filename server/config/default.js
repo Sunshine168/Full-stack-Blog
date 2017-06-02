@@ -1,5 +1,5 @@
 module.exports = {
-	port: 3005,
+	port: 80,
 	secretKey:"maizi",
 	session: {
 		secret: 'myblog',
