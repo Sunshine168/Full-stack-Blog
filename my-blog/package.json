@@ -7,6 +7,7 @@
     "async-file": "^2.0.2",
     "bootstrap": "^3.3.7",
     "prop-types": "^15.5.8",
+    "qs": "^6.4.0",
     "query-string": "^4.3.4",
     "radium": "^0.18.2",
     "react": "^15.5.4",

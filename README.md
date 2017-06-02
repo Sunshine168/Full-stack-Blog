@@ -1,7 +1,8 @@
 # Full-stack-blog(不断更新笔记)
-效果http://sunnerrrr.cn/index
+[效果Demo](sunnerrrr.cn/user/59218504eb091853efc9ba67)
 (有待进一步完善)
 搭建一个基于Koa2的多人blog
+功能(登录注册上传头像,发表博文,发表留言)
 参考自https://github.com/nswbmw/N-blog
 前端部分以create-react-app的脚手架搭起react+react-router v4+redux的全家桶
 后端采用koa2+mongodb
@@ -21,7 +22,7 @@ MongoDB:3.2.10
 
 ```
 git clone https://github.com/Sunshine168/Full-stack-Blog.git
-cd myblog/
+cd Full-stack-Blog/myblog
 npm install //or yarn install
 npm build
 node scripts/publish ./server  //发布到server目录中
@@ -29,6 +30,7 @@ cd ..
 cd server/
 npm install //or yarn install
 node index //默认3305端口
+//open loalhost:3305/
 ```
 
 ## 调试配置
@@ -84,11 +86,15 @@ TODO
 * [x] 数据库访问
 * [x] 处理react单页重定向
 
+## 笔记
+[网络请求](https://github.com/Sunshine168/Full-stack-Blog/note/note1.md)
 ## koa2
 
-待更
+有关网络请求的部分应该放在redux中(尚未修改完成)
 
 
 ## react
 
 完成react+redux+react-routerv4全家桶
+
+

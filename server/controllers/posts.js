@@ -17,6 +17,9 @@ module.exports = {
 				   var message = e;
 					     code = -1;
 			}
+			if(!user){
+				code=-1
+			}
 			ctx.response.body = {
 				code,
 				message,

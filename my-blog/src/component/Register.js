@@ -1,7 +1,7 @@
 import React, {
 	Component
 } from 'react';
-import {FormGroup,ControlLabel,FormControl,HelpBlock,Button} from 'react-bootstrap';
+import {FormGroup,ControlLabel,FormControl,HelpBlock,Button,Modal} from 'react-bootstrap';
 import {DOMAIN,register,checkAccount} from "../service/fetch";
 import PropTypes from 'prop-types'
 export default class RegisterInput extends Component {
@@ -11,7 +11,7 @@ export default class RegisterInput extends Component {
 	})
      constructor(props){
 			 super(props);
-
+    let data = new FormData();
 			 this.state = {
 				 account:"",
 				 password:"",
@@ -26,8 +26,11 @@ export default class RegisterInput extends Component {
 				 accountHelp:"",
 				 pwdHelp:"",
 				 cpwdHelp:"",
-				 unHelp:""
+				 unHelp:"",
+				 formData:data,
+
 			 }
+			//  this._closeModal.bind(this);
 			//  this._handleAccount.bind(this);
 		 }
 		 render(){
@@ -82,12 +85,16 @@ export default class RegisterInput extends Component {
                   <option value="1">女</option>
                 </FormControl>
               </FormGroup>
-              <FieldGroup
-                id="formControlsFile"
-                type="file"
-                label="上传头像"
-                help="Example block-level help text here."
-              />
+							<FormGroup controlId="avaterUpload">
+								<ControlLabel>上传头像</ControlLabel>
+								<Button
+									bsStyle="primary"
+									onClick={()=>this.setState({
+										showModal:true
+									})}
+								>
+								点击上传</Button>
+							</FormGroup>
               <FormGroup controlId="formControlsTextarea">
                 <ControlLabel>Textarea</ControlLabel>
                 <FormControl componentClass="textarea" placeholder="个人签名"
@@ -95,6 +102,25 @@ export default class RegisterInput extends Component {
               </FormGroup>
 							<Button bsStyle="primary" bsSize="large" block onClick={()=>this._register()}>signUp</Button>
 						</form>
+						<Modal show={this.state.showModal} onHide={()=>this._closeModal()}>
+							<Modal.Header closeButton>
+								<Modal.Title>上传头像</Modal.Title>
+							</Modal.Header>
+							<Modal.Body>
+								<h4></h4>
+								<FieldGroup
+									id="upload"
+									type="file"
+									label="File"
+									onChange={(event)=>this._change(event.target.value)}
+								/>
+								<img src="" alt="" className="previewAvater" id="preview"/>
+							</Modal.Body>
+							<Modal.Footer>
+								<Button onClick={()=>this._confirmAvater()}>确定</Button>
+								<Button onClick={()=>this._closeModal()}>取消</Button>
+							</Modal.Footer>
+						</Modal>
 					</div>
 		 }
 		 /*
@@ -152,7 +178,7 @@ export default class RegisterInput extends Component {
 			 cpwdValid:null,
 			 cpwdHelp:"",
 		 })
-			if(this.state.password!=this.state.confirmPassword){
+			if((this.state.password!=this.state.confirmPassword)||this.state.confirmPassword==""){
 				this.setState({
 				 cpwdValid:"error",
 				 cpwdHelp:"两次密码必须一样",
@@ -182,18 +208,23 @@ export default class RegisterInput extends Component {
 			 })
 			}
 		}
+		_closeModal(){
+			this.setState({
+				showModal:false
+			})
+		}
 		 async _register(){
 			   //检查数据有效性
 			   let {account,username,password,gender,bio, accountVaild,pwdValid,cpwdValid,unValid} = this.state,valid = false;
          if(accountVaild=="success"&&pwdValid=="success"&&cpwdValid=="success"&&unValid=="success"){valid = true}
          if(valid){
-					 let result = await register({
-					 account,
-					 username,
-					 password,
-					 gender,
-					 bio
-				 });
+					 let formData= this.state.formData;
+					 formData.append("account",account);
+					 formData.append("username",username);
+					 formData.append("password",password);
+					 formData.append("gender",gender);
+					 formData.append("bio",bio);
+					 let result = await register(formData);
 				 if(result.code==1){
 					this.props.showFlashMessage({
 						msg:"注册成功",
@@ -210,8 +241,49 @@ export default class RegisterInput extends Component {
 				}
 				 }
 		 }
+		 /*
+    参考自
+		 http://www.cnblogs.com/tugenhua0707/p/3568134.html
+		  */
+		_change() {
+			/*直接操作原生dom对象*/
+      let pic = document.getElementById("preview"),
+			   file = document.getElementById("upload");
+
+      let valid =/(.jpg|.png|.gif|.jpeg)$/.test(file.value);
+
+     // gif在IE浏览器暂时无法显示
+     if(!valid){
+         alert("图片的格式必须为png或者jpg或者jpeg格式！");
+         return;
+     }
+    this._html5Reader(file);
 }
 
+    _html5Reader(file){
+			console.log(file)
+			 var file = file.files[0];
+     var reader = new FileReader();
+     reader.readAsDataURL(file);
+     reader.onload = function(e){
+         var pic = document.getElementById("preview");
+         pic.src=this.result;
+     }
+ }
+  _confirmAvater(){
+    /*直接操作原生dom对象*/
+		let picSrc = document.getElementById("preview").src;
+		if(picSrc==""){
+			  alert("图片不能为空！");
+		}else{
+			let formData= this.state.formData;
+			formData.append('pic',picSrc)
+		}
+		//关闭Modal
+		this._closeModal()
+	}
+}
+/*生成表单元素*/
 function FieldGroup({ id, label, help,validationState, ...props }) {
   return (
     <FormGroup controlId={id}
