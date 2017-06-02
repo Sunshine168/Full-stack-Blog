@@ -65,7 +65,8 @@ module.exports = {
 			 message=e.message
 		 }
 		 //注册失败删除头像
-		 await fs.unlink("/upload/"+avater);
+		 console.log(avater)
+		 await fs.unlink(avater);
 		}
 		ctx.response.body={
 				"code":code,
