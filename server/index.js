@@ -55,7 +55,7 @@ app.use(session({
 //         extension: 'ejs'
 //     }))
 
-// app.use(convert(server(path.join(__dirname, '/build/'))));
+app.use(convert(server(path.join(__dirname, '/build/'))));
 app.use(convert(server(path.join(__dirname, '/upload/'))));
 render(app, {
 	root: path.join(__dirname, '/build/'),
