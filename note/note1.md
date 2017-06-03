@@ -171,3 +171,52 @@ router.post('/api/upload', async(ctx, next) => {
 
 ## 前后端分离实践(next)
 跨域问题以及跨域附带cookies的问题
+
+前后端分离开发的时候除了mock数据,经常会使用到跨域访问。
+
+### koa2 跨域
+使用koa2-cors中间件
+
+```
+const cors = require('koa2-cors');
+const app = new Koa();
+const Koa = require('koa');
+app.use(cors({
+		origin: config.cors,
+		/*允许跨域访问的地址,都允许则设置成"*"  */
+	}));
+```
+
+如果在跨域的时候运行附带cookies
+
+```
+	app.use(cors({
+		origin: config.cors,
+		"credentials": true,/*允许附带cookies*/
+	}));
+```
+
+### fetch附带cookies
+ 
+```
+const CREDENTIALS ;
+//credentials就是fetch附带cookies的opts,同源下使用"same-origin",跨域下使用"include"
+ fetch(url,{
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+  },
+   credentials: CREDENTIALS,
+    })
+```
+
+ps:
+
+在react单页配合koa2进行开发的时候需要注意的一个小问题,需要在单页的第一次访问就在session中放一个任意数据用作标记。否则cookies是无法种下到浏览器的~ 
+单页中后面每次数据交互以json交互,暂时看来不会附带cookies到浏览器上
+
+
+
+
+
