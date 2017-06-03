@@ -1,7 +1,7 @@
 ## 笔记一
 ## 网络请求
 ### 前端使用fetch发起网络请求
-[fetch api](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch) 
+[fetch api](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch)
 目前fetch只支持现代浏览器,如果需要在还不支持的浏览器中使用需要使用fetch  polyfill
 而create-react-app的脚手架已经默认配置好了fetch  polyfill
 在await/async下使用了fetch当网络请求
@@ -32,13 +32,13 @@ post序列化的json数据
      /**/
   }
  }
- 
+
  //使用的时候
     async function(){
        var result = await test({test:1})
        console.log(result)
     }
- 
+
 ```
 如果需要使用FormData的时候及通过post上传文件或者base64数据,不需要声明请求头，因为FormData默认已经是表单形式进行上传
 
@@ -51,10 +51,10 @@ post序列化的json数据
     method: 'POST',
    body:formData
    })
-   
+
 ```
 
-##koa2
+## koa2
 
 在Koa2中处理网络请求
 
@@ -139,7 +139,7 @@ form.parse()如果该里面处理一定多量的异步数据流的时候 在回�
 	//any await process
 	ctx.response.body="end"//did not work
 	}))
-	
+
 ```
 所以为了避免这样的情况要做出以下改进
 
@@ -169,15 +169,5 @@ router.post('/api/upload', async(ctx, next) => {
 ```
 
 
-##前后端分离实践(next)
+## 前后端分离实践(next)
 跨域问题以及跨域附带cookies的问题
-
-
-
-
-
-
-
-
-
-

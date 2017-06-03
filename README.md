@@ -30,7 +30,7 @@ cd ..
 cd server/
 npm install //or yarn install
 node index //默认3305端口
-//open loalhost:3305/
+//open localhost:3305/
 ```
 
 ## 调试配置
