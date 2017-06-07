@@ -88,11 +88,12 @@ TODO
 
 ## 笔记
 [网络请求](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note1.md)
+[koa2路由](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note2.md)
 ## koa2
 
 有关网络请求的部分应该放在redux中(尚未修改完成)
 
 
 ## react
-
+准备node proxy代替跨域进行调试(create-react-app自带)
 完成react+redux+react-routerv4全家桶

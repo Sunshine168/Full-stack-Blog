@@ -23,7 +23,7 @@ if (corsMode) {
 	console.log(`CORS MODE for ${config.cors}`)
 	app.use(cors({
 		/*前后端分离时候 运行跨域访问用作 调试*/
-		origin: "*",
+		origin: config.cors,
 		"credentials": true,
 	}));
 }

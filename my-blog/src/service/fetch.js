@@ -1,6 +1,4 @@
-/*手动设置*/
-import {stringify} from 'qs'
-export const DOMAIN = (process.env.ORIGIN)?process.env.ORIGIN:"..";
+export const DOMAIN = (process.env.ORIGIN)?process.env.ORIGIN:window.location.host;
 const CREDENTIALS = (process.env.ORIGIN)?"include":'same-origin';
 /*
 处理所有网络请求_目前没有和action集成异步数据流，
@@ -39,6 +37,9 @@ export const fetchPosts = async(id)=>{
 /api/posts/
  */
 export const fetchPost = async(postId)=>{
+  if(DOMAIN=='..'){
+    //服务器部署下需要调整路径,没有考虑到相对路径存在的问题
+  }
   let url = DOMAIN+`/api/posts/${postId}`;
   try{
     var result = await fetch(url,{
