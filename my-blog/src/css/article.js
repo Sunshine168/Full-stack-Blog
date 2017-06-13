@@ -45,7 +45,6 @@ export default StyleSheet.create({
         "marginLeft": "auto",
         "width": 40,
         "height": 40,
-        "backgroundColor": "rgb(109, 129, 210)",
         "verticalAlign": "top"
     },
     "article_wrap": {

@@ -6,7 +6,7 @@ import {fetchPosts} from '../service/fetch';
 import ArticleApp from '../container/ArticleApp'
 export default class AriticleList extends Component{
 	static propTypes=({
-		articles:PropTypes.array,
+		article:PropTypes.object,
 		user:PropTypes.object,
 		showFlashMessage:PropTypes.func,
 		initArticles:PropTypes.func,
@@ -16,27 +16,33 @@ export default class AriticleList extends Component{
 	})
 constructor(props){
   super(props);
-	console.log(props)
 	this.state={
 		isCurrent:null,
-		user:null
 	}
+
+
 }
 _avaterHandle(){
 	var myPicture = document.getElementById('avater');
-myPicture.onError = errorHandler();
-function errorHandler(msg,file_loc,line_num) {
-  myPicture.src = '/upload/avater/loading.gif';
-   }
+	console.log(myPicture.src)
+      if(myPicture.src=="avatar"){
+				   myPicture.src="/avatar/loading.gif";
+			}
 }
 render(){
-	let {articles} = this.props.article,
-	{isCurrent}=this.state;
+	let {articles} = this.props,
+	{isCurrent}=this.state,
+	user;
+	if(isCurrent){
+		 user = this.props.user;
+	}else{
+	   user = this.props.author;
+	}
   return(
 		<div className="article_container">
 			<div className="author_intro">
-				<img className="author_logo" src={this.state.user?this.state.user.avatar:null} id="avater"/>
-				<h3>{this.state.user?this.state.user.name:"loading"}</h3>
+				<img className="author_logo" src={user?user.avatar:""} id="avater"/>
+				<h3>{user?user.name:"loading"}</h3>
 			</div>
 			{
 				articles.map((article,index)=>(
@@ -46,7 +52,6 @@ render(){
 						article={article}
 						index = {index}
 						isCurrent={isCurrent}
-
 					/>
 				)
 				)}
@@ -55,27 +60,22 @@ render(){
 			}
 
 componentDidMount(){
-   (async function(){
-		 let userId = this.props.match.params.userId,id="";
-		 if(userId){
-			 id=userId;
+ (async function(){
+	 var userId = this.props.match.params.userId,
+		id=this.props.user._id;
+    await this.props.initArticles(id)
+		let {author} = this.props;
+		//处理获取文章结果
+		if(author){
+			if(userId){
+				this.setState({
+			 isCurrent:id==userId?id:null
+			 })
 		 }else{
-			 id=this.props.user._id;
 			 this.setState({
 				 isCurrent:id
 			 })
 		 }
-		 this.props.startProgress();
-		 let result = await fetchPosts(id);
-		  this.props.finishProgress();
-		//处理获取文章结果
-		console.log(result);
-		if(result.code==1){
-			this.props.initArticles(result.posts);//初始化文章列表
-     //如果需要使用flashmessage则调用this.props.showFlashMessage方法
-    this.setState({
-			user:result.user
-		})
 		}else{
 			//获取失败
 		  var pathname = '/';
@@ -88,5 +88,6 @@ componentDidMount(){
 		}
 	}.bind(this)
 	)()
+
 }
  }

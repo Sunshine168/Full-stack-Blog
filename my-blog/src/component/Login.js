@@ -95,7 +95,7 @@ export default class LoginInput extends Component  {
 		 render(){
 			 let loginStatus = this.props.user;
 			    return (
-            <div className="loginInputForm">
+            <div className="content_wrap">
 							<form>
 								<FieldGroup
 									id="formControlsEmail"

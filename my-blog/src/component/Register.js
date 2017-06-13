@@ -34,7 +34,7 @@ export default class RegisterInput extends Component {
 			//  this._handleAccount.bind(this);
 		 }
 		 render(){
-			    return<div className="loginInputForm">
+			    return<div className="content_wrap">
 						<form>
 							<FieldGroup
 								id="formControlsEmail"

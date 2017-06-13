@@ -41,7 +41,11 @@ action stauts
   }
   switch(action.type){
     case INIT_ARTICLES:
-    return {articles:action.articles}
+    return {
+      ...state,
+      articles:action.articles.articles,
+      author:action.articles.author
+    }
     case POST_SUCCESS:
     return {
       posting:false,
@@ -55,7 +59,7 @@ action stauts
     case POST_FAILURE:
     return {
       ...state,
-      posting:false,
+      posting:"error",
     }
     case DELETE_ARTICLE:
     return {
@@ -105,10 +109,10 @@ export const postArticleFailure = (error)=>({
   type:POST_FAILURE,
   error
 })
-export const successPost = ()=>(
+export const successPost = (msg)=>(
   {
     msgType:"success",
-    msg:"文章发表成功"
+    msg:msg
   }
 )
 export const failurePost = (error)=>(

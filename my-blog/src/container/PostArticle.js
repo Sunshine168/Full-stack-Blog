@@ -24,10 +24,10 @@ const mapDispatchToProps = (dispatch)=>{
       let result = await addPost(article);
       if(result.code==1){
         postArticleSuccess(result.post);
-        dispatch(showFlashMessage(successPost()))
+        dispatch(showFlashMessage(successPost("发表文章成功")))
         return true;
       }else{
-        dispatch(showFlashMessage(failurePost()))
+        dispatch(showFlashMessage(failurePost("发表文章失败")))
         dispatch(postArticleFailure(result.message))
         return false;
     }

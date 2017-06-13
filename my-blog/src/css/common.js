@@ -15,7 +15,7 @@ export default StyleSheet.create({
         "display": "inline-block"
     },
     "header_setting": {},
-    "loginInputForm": {
+    "content_wrap": {
         "width": 500,
         "marginTop": "auto",
         "marginRight": "auto",

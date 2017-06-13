@@ -58,6 +58,21 @@ config/default.js//默认配置文件
 node index -c
 ```
 
+### 前后端分离方案
+
+#### 前端使用proxy做代理转发
+
+```
+ //在package.json中加入proxy字段,并更换域名即可
+"proxy":"http://localhost:3005"
+```
+
+#### 后端无需改动
+
+
+```
+node index //启动即可
+```
 
 ## 总体任务
 
@@ -85,6 +100,7 @@ TODO
 * [x] 路由部分
 * [x] 数据库访问
 * [x] 处理react单页重定向
+* [ ] 单元测试
 
 ## 笔记
 [网络请求](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note1.md)
