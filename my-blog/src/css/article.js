@@ -57,9 +57,10 @@ export default StyleSheet.create({
         "display": "inline-block",
         "verticalAlign": "top",
         "width": 500,
-        "border": "1px solid #c6c6c6",
+        "border": "2px solid #c6c6c6",
         "boxShadow": "10px 10px 5px #888888",
-        "marginBottom": 40
+        "marginBottom": 40,
+        "borderRadius": 15
     },
     "foot_left": {
         "display": "inline-block"
@@ -76,5 +77,10 @@ export default StyleSheet.create({
     },
     "dropdown-menu": {
         "width": 50
+    },
+    "ellipsis": {
+        "maxHeight": 100,
+        "textOverflow": "ellipsis",
+        "overflow": "hidden"
     }
 });

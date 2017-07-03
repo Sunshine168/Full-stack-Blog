@@ -6,6 +6,7 @@
     "async-child-process": "^1.1.1",
     "async-file": "^2.0.2",
     "bootstrap": "^3.3.7",
+    "classnames": "^2.2.5",
     "prop-types": "^15.5.8",
     "qs": "^6.4.0",
     "query-string": "^4.3.4",
@@ -101,5 +102,5 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
+  }
 }

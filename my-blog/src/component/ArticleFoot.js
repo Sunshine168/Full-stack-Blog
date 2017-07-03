@@ -71,7 +71,7 @@ evenKey
 				 </a>
 				 <LinkContainer key="1" to={`/article/${props.articleId}`}>
 					 <a href="#" className="foot_item">
-						 留言({props.commentsCount})
+						 详情({props.commentsCount})
 					 </a>
          </LinkContainer>
          {props.isCurrent?(

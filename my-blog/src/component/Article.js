@@ -1,20 +1,22 @@
 import React, {
 	Component
 } from 'react';
+import classNames from 'classnames';
 import {FormGroup,ControlLabel,FormControl,Button,HelpBlock} from'react-bootstrap';
 import PropTypes from 'prop-types'
-//考虑成型用draft.js作为文章输入
  const Article = (props)=>{
-		let {article} = props;
+		let {article,isDetail} = props,
+		 articleClass  = classNames('article_context',{'ellipsis':isDetail===false})
+		 		console.log(props)
 	return (
 		<div>
 			<h3 className="article_title">
 				{article.title}
 			</h3>
-			<div className="article_context">
+			<div className={articleClass}>
 				<div dangerouslySetInnerHTML={{__html:article.content}}></div>
 			</div>
-			
+
 		</div>)
 }
 

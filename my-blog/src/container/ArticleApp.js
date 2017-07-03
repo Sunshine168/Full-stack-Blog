@@ -8,6 +8,7 @@ import ArticleFoot from './ArticleFoot';
       <section  className="article_wrap">
         <Article
           article={article}
+          isDetail={(typeof index) !== undefined ? false:true}
         />
         <ArticleFoot
           index={index}

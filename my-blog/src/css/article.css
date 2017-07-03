@@ -39,9 +39,10 @@
   display: inline-block;
   vertical-align: top;
   width: 500px;
-  border:1px solid #c6c6c6;
+  border:2px solid #c6c6c6;
   box-shadow: 10px 10px 5px #888888;
   margin-bottom: 40px;
+  border-radius: 15px;
 }
 .foot_left{
   display: inline-block;
@@ -58,4 +59,9 @@ foot_btn{
 }
 .dropdown-menu{
   width: 50px;
+}
+.ellipsis{
+  max-height: 100px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
