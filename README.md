@@ -24,7 +24,7 @@ MongoDB:3.2.10
 git clone https://github.com/Sunshine168/Full-stack-Blog.git
 cd Full-stack-Blog/myblog
 npm install //or yarn install
-npm build
+npm run build //or yarn build
 node scripts/publish ./server  //发布到server目录中
 cd ..
 cd server/
