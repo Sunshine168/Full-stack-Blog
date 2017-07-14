@@ -6,7 +6,9 @@ const {width, height, scale} = Dimensions.get("window"),
     vmax = Math.max(vw, vh);
 
 export default StyleSheet.create({
-    "header": {},
+    "cursorPoint:hover": {
+        "cursor": "pointer"
+    },
     "content_center": {
         "textAlign": "center"
     },

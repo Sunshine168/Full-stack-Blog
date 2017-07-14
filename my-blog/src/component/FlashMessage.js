@@ -5,6 +5,7 @@ import {Panel} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import {fadeIn,fadeOut} from 'react-animations';
 import Radium from 'radium';
+import '../css/flashMessage.css'
 /*
 目前构思是通过定时器在5s后使flashmessage消失
 目前这个组件还有bug

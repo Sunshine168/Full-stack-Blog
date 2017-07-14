@@ -4,6 +4,7 @@ import CommentList from './CommentList';
 import PropTypes from 'prop-types'
 import {Panel} from 'react-bootstrap';
 import {addComment,deleteComment} from '../service/fetch'
+import '../css/comment.css'
 /*
 组件的命名上有待纠结
  */

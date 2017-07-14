@@ -1,12 +1,16 @@
 import React, {
 	Component,
 } from 'react';
+import {Link} from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import PropTypes from 'prop-types'
 import {Navbar,Nav,NavDropdown,NavItem,MenuItem,PageHeader,Popover,OverlayTrigger} from'react-bootstrap';
 import CopyToClipboard from 'react-copy-to-clipboard';
-const afterLoginAction = [{title:"个人主页",evenKey:"2",href:"/personal/index"},{title:"发表文章",evenKey:"2.1",href:"/postArticle"},{title:"退出登录",evenKey:"2.2",href:"/loginOut"}]
-const beforeLoginAction = [{title:"登录",evenKey:"3",href:"/login"},{title:"注册",evenKey:"3.1",href:"/register"}]
+const afterLoginAction = [{title:"个人主页",evenKey:"2",href:"/personal/index"},
+{title:"发表文章",evenKey:"2.1",href:"/postArticle"},
+{title:"退出登录",evenKey:"2.2",href:"/loginOut"}]
+const beforeLoginAction = [{title:"登录",evenKey:"3",href:"/login"},
+{title:"注册",evenKey:"3.1",href:"/register"}]
 
 /*
 目前设计的导航栏耦合性还是非常高。。
@@ -41,6 +45,12 @@ const NavbarInstance = (props)=>{
                    <Navbar.Brand>
                      <a href="https://sunshine168.github.io/resume/">关于我</a>
                    </Navbar.Brand>
+
+									 <Navbar.Brand>
+										 <Link to="/">
+											 <span className="cursorPoint">主页</span>
+										 </Link>
+									 </Navbar.Brand>
                  </Navbar.Header>
 								 {user?
 									 <CopyToClipboard

@@ -17,6 +17,7 @@ import PostArticle from './container/PostArticle'
 import LoadArticle from './container/LoadArticle'
 import NoMatch from './component/NoMatch';
 import ProgressBars from './container/ProgressBars'
+import Index from './component/Index'
 import './css/common.css';
 const TestScreen = ()=>(
   <div className="App">
@@ -71,7 +72,6 @@ const mapStateToProps = (state)=>{
 const RedirectFromServer = ({match})=>{
   //deal the sever redirect
   let url = window.location.search;
-   console.log(url.substring(1));
   return url.substring(1)?<Redirect to={{
     pathname: url.substring(1),
     state: { from: '/' }
@@ -83,44 +83,45 @@ class App extends Component {
      loading.style.display="none";
    }
    render(){
-     let auth = this.props.login
-     return (
-       <StyleRoot>
-         <Router>
-           <div>
-             <ProgressBars/>
-             <div className="container">
-               <Header/>
-               <FlashMessage/>
-               <Switch>
-                 <Route exact path="/index" component={TestScreen}/>
-                 <Route path="/login" component={Login}/>
-                 <Route path="/loginOut" component={Login}/>
-                 <Route path="/register" component={Register}/>
-                 <Route path="/user" component={UserIndex}/>
-                 <Route path="/article" component={ArticleDetail}/>
-                 <PrivateRoute path="/edit/article"
-                   component={EditArticle}
-                   auth={auth}
-                 />
-                 <PrivateRoute
-                   path="/personal/index"
-                   component={ArticleList}
-                   auth={auth}
-                 />
-                 <PrivateRoute
-                   path="/postArticle"
-                   component={PostArticle}
-                   auth={auth}
-                 />
-                 <Route exact path="/" component={RedirectFromServer}/>
+ let auth = this.props.login
+ return (
+   <StyleRoot>
+     <Router>
+       <div>
+         <ProgressBars/>
+         <div className="container">
+           <Header/>
+           <FlashMessage/>
+           <Switch>
+             <Route exact path="/" component={Index}/>
+             <Route exact path="/index" component={TestScreen}/>
+             <Route path="/login" component={Login}/>
+             <Route path="/loginOut" component={Login}/>
+             <Route path="/register" component={Register}/>
+             <Route path="/user" component={UserIndex}/>
+             <Route path="/article" component={ArticleDetail}/>
+             <PrivateRoute path="/edit/article"
+               component={EditArticle}
+               auth={auth}
+             />
+             <PrivateRoute
+               path="/personal/index"
+               component={ArticleList}
+               auth={auth}
+             />
+             <PrivateRoute
+               path="/postArticle"
+               component={PostArticle}
+               auth={auth}
+             />
+             <Route exact path="/" component={RedirectFromServer}/>
 
-               </Switch>
-             </div>
-           </div>
-         </Router>
-       </StyleRoot>)
-   }
+           </Switch>
+         </div>
+       </div>
+     </Router>
+   </StyleRoot>)
+}
 
 }
 

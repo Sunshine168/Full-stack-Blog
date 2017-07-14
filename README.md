@@ -1,5 +1,5 @@
 # Full-stack-blog(不断更新笔记)
-[效果Demo](https://sunnerrrr.cn/user/59218504eb091853efc9ba67)
+[效果Demo](http://sunnerrrr.cn/user/59218504eb091853efc9ba67)
 (有待进一步完善)
 搭建一个基于Koa2的多人blog
 功能(登录注册上传头像,发表博文,发表留言)

@@ -33,6 +33,9 @@ const mapDispatchToProps = (dispatch)=>{
       }else{
         dispatch(showFlashMessage(failurePost(result.message)))
       }
+    },
+    showFlashMessage:(message)=>{
+      dispatch(showFlashMessage(message))
     }
   }
 }

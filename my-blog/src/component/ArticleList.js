@@ -61,9 +61,12 @@ render(){
 
 componentDidMount(){
  (async function(){
+	 /*两种入口,一种入口是通过查看某个用户直接url跳转,另外一种是登录后跳转首页(参数里传递登录的用户id)*/
 	 var userId = this.props.match.params.userId,
-		id=this.props.user._id;
+		id=this.props.user ? this.props.user._id:userId;
+		console.log(id)
     await this.props.initArticles(id)
+		console.log(this.props)
 		let {author} = this.props;
 		//处理获取文章结果
 		if(author){

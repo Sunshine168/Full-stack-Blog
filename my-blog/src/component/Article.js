@@ -7,7 +7,6 @@ import PropTypes from 'prop-types'
  const Article = (props)=>{
 		let {article,isDetail} = props,
 		 articleClass  = classNames('article_context',{'ellipsis':isDetail===false})
-		 		console.log(props)
 	return (
 		<div>
 			<h3 className="article_title">
