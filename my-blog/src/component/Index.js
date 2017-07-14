@@ -51,12 +51,15 @@ var colorArray = [
   "#9298DD",
   "#3CD0D8"
 ];
+var previouslyScroTop = 0;
 /*鼠标移动事件*/
 canvas.addEventListener("mousemove", function() {
-  if(document.body.scrollTop !== 0 ){
-    //需要考虑垂直偏移
-     mouse.x = event.x -  rect.left;
-     mouse.y = event.y  - rect.top + document.body.scrollTop;
+  if(document.body.scrollTop !== 0){
+    //避免第一次调用直接偏移
+      //需要考虑垂直偏移
+       mouse.x = event.x -  rect.left;
+       mouse.y = event.y  - rect.top + document.body.scrollTop;
+    previouslyScroTop = document.body.scrollTop
   }else{
 
     mouse.x = event.x -  rect.left;
