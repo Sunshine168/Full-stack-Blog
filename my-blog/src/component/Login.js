@@ -3,13 +3,11 @@ import React, {
 } from 'react';
 import {FormGroup,ControlLabel,FormControl,HelpBlock,Button} from 'react-bootstrap';
 import PropTypes from 'prop-types'
-import {Redirect} from'react-router-dom';
-import {login} from '../service/fetch';
+import {Redirect} from 'react-router-dom'
 export default class LoginInput extends Component  {
 	static propTypes=({
 		user:PropTypes.object,
 		loginIn:PropTypes.func,
-		redirect:PropTypes.func,
 	})
      constructor(props){
 			 super(props);
@@ -19,45 +17,17 @@ export default class LoginInput extends Component  {
 				 loading:false,
 			 }
 		 }
-		 componentDidMount(){
-
-		 }
-		 _setStateAsync(state) {
-			return new Promise((resolve) => {
-					this.setState(state, resolve)
-			});
-	}
 		async _signIn(){
 			 //检查数据有效性
 			 let {account,password,accountValid,pwdValid} = this.state,
 			 valid=false;
 			 this._checkAccount(this.state.account)
 			 this._checkPassword(this.state.password)
-			 if(accountValid=="success"&&pwdValid=="success"){valid=true}
+			 if(accountValid == "success"&&pwdValid == "success"){valid=true}
         if(valid){
 				  	await this.props.loginIn({account,password})
 				}
 		 }
-		componentWillUpdate(nextProps,nextState){
-				 if(nextProps.user){
-					 if(this.props.location.state){
-						 //从外部因为需要登录跳转过来的逻辑
-						var pathname =  this.props.location.state.from.pathname;
-
-					 }else{
-						 //直接登录
-						 var pathname = '/personal/index';
-					 }
-					 let redirectState = { from: this.props.location };
-					 this.props.redirect(pathname,redirectState)
-				 }
-				//  if(this.props.login.user){
-				// 	this.props.showFlashMessage({
-				// 		msgType:"danger",
-				// 		msg:"已经登录",
-				// 	})
-				// }
-		}
 		_checkAccount(value){
 			/*重设一次*/
 			this.setState({
@@ -93,8 +63,15 @@ export default class LoginInput extends Component  {
 			}
 		}
 		 render(){
-			 let loginStatus = this.props.user;
-			    return (
+      let {user,location} = this.props;
+			if(user){
+					return(
+					<Redirect to={{
+						pathname: 'personal/index',
+						state: { from:location }
+					}}/>)
+				}
+     return (
             <div className="content_wrap">
 							<form>
 								<FieldGroup
@@ -119,8 +96,9 @@ export default class LoginInput extends Component  {
 									help={this.state.pwdHelp}
 								/>
 								<Button disabled={this.props.loading} bsStyle="primary" bsSize="large" block onClick={()=>this._signIn()}>LoginIn</Button>
-						</form>
-					</div>)
+							</form>
+						</div>
+					)
 		 }
 }
 

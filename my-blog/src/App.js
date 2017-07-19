@@ -93,8 +93,7 @@ class App extends Component {
            <Header/>
            <FlashMessage/>
            <Switch>
-             <Route exact path="/" component={Index}/>
-             <Route exact path="/index" component={TestScreen}/>
+             <Route exact path="/index" component={Index}/>
              <Route path="/login" component={Login}/>
              <Route path="/loginOut" component={Login}/>
              <Route path="/register" component={Register}/>
@@ -114,8 +113,7 @@ class App extends Component {
                component={PostArticle}
                auth={auth}
              />
-             <Route exact path="/" component={RedirectFromServer}/>
-
+             <Route  path="/" component={RedirectFromServer}/>
            </Switch>
          </div>
        </div>

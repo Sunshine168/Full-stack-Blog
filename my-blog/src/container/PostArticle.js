@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch)=>{
     addPost:async(article)=>{
       dispatch(postArticleStarted());
       let result = await addPost(article);
-      if(result.code==1){
+      if(result.code === 1){
         postArticleSuccess(result.post);
         dispatch(showFlashMessage(successPost("发表文章成功")))
         return true;
@@ -31,7 +31,6 @@ const mapDispatchToProps = (dispatch)=>{
         dispatch(postArticleFailure(result.message))
         return false;
     }
-    return null;
   },
 		showFlashMessage:(message)=>{
 			dispatch(showFlashMessage(message))

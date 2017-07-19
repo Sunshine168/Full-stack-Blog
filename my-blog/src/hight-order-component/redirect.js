@@ -60,16 +60,16 @@ const checkLoginRedirect = (WrappedComponent)=>(props)=>{
 			 console.log(nextProps);
 		}
 		render(){
-  props.login.user?
-				 <Redirect
-					 to={{
-						 pathname: '/personal/index',
-						 state: { from: this.props.location }
-					 }}/>
-					 :
-				 <WrappedComponent
-					 {...props}
-				 />
+     return (  props.login.user?
+		 				 <Redirect
+		 					 to={{
+		 						 pathname: '/personal/index',
+		 						 state: { from: this.props.location }
+		 					 }}/>
+		 					 :
+		 				 <WrappedComponent
+		 					 {...props}
+							/>)
 		}
 	}
 	return <InnerComponent/>;

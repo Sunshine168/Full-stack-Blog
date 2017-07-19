@@ -28,12 +28,12 @@ evenKey
 	async controlHandle(eventKey){
 		 let {articleId,index}= this.props;
 		 console.log(index);
-		 if(eventKey==="2"){
+		 if(eventKey == "2"){
 			let result = await deletePost({
 				 postId:articleId,
 				 user_id:this.props.isCurrent,
 			});
-			   if(result.code===1){
+			   if(result.code == 1){
 					 //删除成功
 					 this.props.showFlashMessage({
 						 msgType:"success",

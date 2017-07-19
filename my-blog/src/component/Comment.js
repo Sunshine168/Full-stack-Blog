@@ -16,7 +16,6 @@ export default class Comment extends Component {
 				user_id:isCurrent
 		})
 	   if(result.code===1){
-			  let temp =  this.props.deleteComment&&this.props.deleteComment(index);
 				this.props.showFlashMessage({
 					msgType:"success",
 					msg:"评论删除成功",

@@ -1,5 +1,3 @@
-import {fetchPosts} from '../service/fetch';
-import {startProgress,finishProgress} from '../reducer/progress';
 /*
 目前所有关于redux的内容都暂时集中在一个文件处理
 目前功能比较简单，如果功能复杂考虑按照类别分类，但action和reducer会放在同一个文件中

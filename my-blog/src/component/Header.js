@@ -4,11 +4,11 @@ import React, {
 import {Link} from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import PropTypes from 'prop-types'
-import {Navbar,Nav,NavDropdown,NavItem,MenuItem,PageHeader,Popover,OverlayTrigger} from'react-bootstrap';
+import {Navbar,Nav,NavDropdown,NavItem,PageHeader,Popover,OverlayTrigger} from'react-bootstrap';
 import CopyToClipboard from 'react-copy-to-clipboard';
 const afterLoginAction = [{title:"个人主页",evenKey:"2",href:"/personal/index"},
 {title:"发表文章",evenKey:"2.1",href:"/postArticle"},
-{title:"退出登录",evenKey:"2.2",href:"/loginOut"}]
+{title:"退出登录",evenKey:"2.2",href:"/login"}]
 const beforeLoginAction = [{title:"登录",evenKey:"3",href:"/login"},
 {title:"注册",evenKey:"3.1",href:"/register"}]
 
@@ -112,7 +112,7 @@ constructor(props){
 }
 dropDownHandler(key){
 //通过Key判断下拉栏选中状态
-if(key=="2.2"){
+if(key === "2.2"){
 this.props.loginOut();
 this.props.showFlashMessage({
 	msg:"注销成功",
@@ -131,8 +131,8 @@ render(){
 			 />
 
        <NavHeader
-         title={this.state.blogTitle}
-         introduce={this.state.blogIntroduce}
+         title={user ? user.name + " 's blog":this.state.blogTitle}
+         introduce={user? "": this.state.blogIntroduce}
 
        />
 

@@ -1,7 +1,7 @@
 # Full-stack-blog(不断更新笔记)
 [效果Demo](http://sunnerrrr.cn:3005/)
 ![](./media/blog.gif)
-(有待进一步完善)
+(有待进一步完善,组件之间功能划分应该明确,希望不断学习进步！)
 搭建一个基于Koa2的多人blog
 功能(登录注册上传头像,发表博文,发表留言)
 参考自https://github.com/nswbmw/N-blog
@@ -114,5 +114,3 @@ TODO
 ## react
 准备node proxy代替跨域进行调试(create-react-app自带)
 完成react+redux+react-routerv4全家桶
-
-
