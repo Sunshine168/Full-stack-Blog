@@ -3,93 +3,42 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types'
 import {fetchPosts} from '../service/fetch';
-import ArticleApp from '../container/ArticleApp'
+import Article from '../container/Article'
+import ArticleFoot from '../container/ArticleFoot'
 export default class AriticleList extends Component{
 	static propTypes=({
 		article:PropTypes.object,
 		user:PropTypes.object,
 		showFlashMessage:PropTypes.func,
 		initArticles:PropTypes.func,
-		startProgress:PropTypes.func,
-		finishProgress:PropTypes.func,
 		redirect:PropTypes.func,
 	})
-constructor(props){
-  super(props);
-	this.state={
-		isCurrent:null,
-	}
-
-
-}
-_avaterHandle(){
-	var myPicture = document.getElementById('avater');
-	console.log(myPicture.src)
-      if(myPicture.src=="avatar"){
-				   myPicture.src="/avatar/loading.gif";
-			}
-}
 render(){
-	let {articles} = this.props,
-	{isCurrent}=this.state,
-	user;
-	if(isCurrent){
-		 user = this.props.user;
-	}else{
-	   user = this.props.author;
-	}
+	/*
+  传入文章列表和current用户属性
+	 */
+	let {articles,currentUser} = this.props,user;
   return(
-		<div className="article_container">
-			<div className="author_intro">
-				<img className="author_logo" src={user?user.avatar:""} id="avater"/>
-				<h3>{user?user.name:"loading"}</h3>
-			</div>
+		<div>
 			{
 				articles.map((article,index)=>(
-					<ArticleApp
-						key={article._id}
-						index={index}
-						article={article}
-						index = {index}
-						isCurrent={isCurrent}
-					/>
+					<section  className="article_wrap" key={article._id}>
+						<Article
+							article={article}
+							isDetail={(typeof index) !== undefined ? false:true}
+						/>
+						<ArticleFoot
+							index={index}
+							articleId={article._id}
+							currentUser={currentUser}
+							visit={article.pv}
+							time={article.created_at}
+							commentsCount={article.commentsCount}
+						/>
+					</section>
 				)
 				)}
 		</div>
-				)
+			)
 			}
-
-componentDidMount(){
- (async function(){
-	 /*两种入口,一种入口是通过查看某个用户直接url跳转,另外一种是登录后跳转首页(参数里传递登录的用户id)*/
-	 var userId = this.props.match.params.userId,
-		id=userId ? userId : this.props.user._id;
-    await this.props.initArticles(id)
-		let {author} = this.props;
-		//处理获取文章结果
-		if(author){
-			if(userId){
-				this.setState({
-			 isCurrent:id == this.props.user._id?this.props.user._id:null
-			 })
-			 console.log(this.state)
-		 }else{
-			 this.setState({
-				 isCurrent:id
-			 })
-		 }
-		}else{
-			//获取失败
-		  var pathname = '/';
-			let redirectState = { from: this.props.location };
-			this.props.redirect(pathname,redirectState)
-			this.props.showFlashMessage({
-			 msg:"用户不存在",
-			 msgType:"danger",
-		 })
-		}
-	}.bind(this)
-	)()
-
-}
  }

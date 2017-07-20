@@ -1,9 +1,11 @@
 import React , {Component}from 'react';
 import Article from './Article';
 import ArticleFoot from './ArticleFoot';
-import CommentApp from '../container/CommentApp'
+import CommentInput from '../container/CommentInput';
+import CommentList from '../container/CommentList';
 import PropTypes from 'prop-types';
 import {fetchPost} from '../service/fetch';
+import {Panel} from 'react-bootstrap';
 // import
 //加载单个文章
 //通过redux 加载当前用户判断页面状态
@@ -84,10 +86,16 @@ export  default class LoadArticle extends Component {
         />
       </section>
     </div>
-    <CommentApp
-      isCurrent={isCurrent}
-      // comments={this.state.comments}
-    />
+    <div className="comment_container">
+      <Panel
+        header="留言"
+      >
+        <CommentList
+          isCurrent={this.props.currentUser}
+        />
+        <CommentInput/>
+      </Panel>
+    </div>
   </div>
         :null
 			)

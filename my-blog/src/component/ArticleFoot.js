@@ -14,7 +14,7 @@ evenKey
 /*
    index
    articleId
-   isCurrent
+   currentUser
    visit
    time
    commentsCount
@@ -31,7 +31,7 @@ evenKey
 		 if(eventKey == "2"){
 			let result = await deletePost({
 				 postId:articleId,
-				 user_id:this.props.isCurrent,
+				 user_id:this.props.currentUser,
 			});
 			   if(result.code == 1){
 					 //删除成功
@@ -74,7 +74,7 @@ evenKey
 						 详情({props.commentsCount})
 					 </a>
          </LinkContainer>
-         {props.isCurrent?(
+         {props.currentUser?(
            <SplitButton
              bsStyle="link"
              title="操作"
