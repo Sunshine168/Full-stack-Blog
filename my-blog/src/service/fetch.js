@@ -147,8 +147,9 @@ export const deletePost = async(params)=>{
 /*
 更新博文
 */
-export const updatePost = async(postId,article)=>{
-   let url = DOMAIN+`/api/posts/${postId}/edit`;
+export const updatePost = async(params)=>{
+  console.log(params)
+   let url = DOMAIN+`/api/posts/${params.articleId}/edit`;
    try{
      var result = await fetch(url,{
        method: 'POST',
@@ -157,8 +158,8 @@ export const updatePost = async(postId,article)=>{
          'Content-Type': 'application/json'
    },
    body: JSON.stringify({
-     title:article.title,
-     context:article.context,
+     title:params.title,
+     context:params.context,
    }),
       credentials: CREDENTIALS,
      })

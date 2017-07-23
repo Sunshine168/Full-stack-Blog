@@ -5,6 +5,8 @@ import flashMessage from '../reducer/flashMessage';
 import article from '../reducer/article';
 import login from '../reducer/user'
 import progress from '../reducer/progress';
+import postArticle from '../reducer/postArticle'
+import loadArticle from '../reducer/loadArticle'
 import {persistStore, autoRehydrate} from 'redux-persist'
 const reducer = combineReducers({
   login,
@@ -12,10 +14,11 @@ const reducer = combineReducers({
   flashMessage,
   article,
   progress,
+  postArticle,
+  loadArticle
 })
-//暂时还不明白如何使用redux-detool
+//加载redux-detool
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer,{},composeEnhancers(applyMiddleware(thunk),autoRehydrate()))
 persistStore(store,{blacklist:['progress','article']})
-export default store
-;
+export default store;

@@ -9,11 +9,11 @@ export default class Comment extends Component {
 感觉组件应该显示和操作分开
 	 */
  async _deleteComment(){
-	  let {comment,index,isCurrent} = this.props
+	  let {comment,index,current} = this.props
 	  let result =await deleteComment({
         articleId:comment.postId,
 				commentId:comment._id,
-				user_id:isCurrent
+				user_id:current
 		})
 	   if(result.code===1){
 				this.props.showFlashMessage({
@@ -38,7 +38,7 @@ export default class Comment extends Component {
 								<div dangerouslySetInnerHTML={{__html:content}}></div>
 							</div>
 						</div>
-						{this.props.isCurrent?
+						{this.props.current?
 							<div className="comment_control clearfix">
 								<Button bsStyle="link" onClick={()=>this._deleteComment()}>删除</Button>
 							</div>:null}

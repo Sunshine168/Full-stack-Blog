@@ -3,14 +3,13 @@ import React, {
 } from 'react';
 import {SplitButton,MenuItem} from'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import {deletePost} from '../service/fetch';
+
 import PropTypes from 'prop-types'
 /*
 evenKey
 1 : 编辑
 2 ：删除
  */
-
 /*
    index
    articleId
@@ -22,43 +21,20 @@ evenKey
 */
  export default class ArticleFoot extends Component {
 	 static propTypes=({
-	 	showFlashMessage:PropTypes.func,
-	 	removeFlashMessage:PropTypes.func,
+	 	deleteArticle:PropTypes.func
 	 })
 	async controlHandle(eventKey){
-		 let {articleId,index}= this.props;
+		 let {articleId,index,deleteArticle}= this.props;
 		 console.log(index);
 		 if(eventKey == "2"){
-			let result = await deletePost({
-				 postId:articleId,
-				 user_id:this.props.currentUser,
-			});
-			   if(result.code == 1){
-					 //删除成功
-					 this.props.showFlashMessage({
-						 msgType:"success",
-						 msg:"删除成功"
-					 })
-					 if(!(index===undefined)){
-						 //传了index代表是列表渲染
-						 this.props.deleteArticle(index);
-					 }else{
-						 //没有传index代表是查看单个页面——删除成功后需要跳转(重新加载列表)
-						 let pathname ='/personal/index',
-							redirectState = { from: this.props.location };
-							this.props.redirect(pathname,redirectState)
-					 }
-				 }else{
-					 this.props.showFlashMessage({
-						msgType:"danger",
-						msg:"删除失败"
-					})
-				 }
+			 await deleteArticle({
+ 				postId:articleId,
+ 				user_id:this.props.currentUser,
+ 		 })
 		 }
 	 }
-
 	 render(){
-		 let {props} = this;
+		 const {props} = this;
 		 return (<div className="article_foot">
 			 <div className="foot_left">
 				 <a href="#" className="foot_item">

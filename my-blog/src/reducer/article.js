@@ -11,15 +11,6 @@ action  type of ARTICLES
  const INIT_ARTICLES = 'INIT_ARTICLES'
  const ADD_ARTICLE = 'ADD_ARTICLE'
  const DELETE_ARTICLE = 'DELETE_ARTICLE'
-
- const POST_STARTED = 'POST_STARTED'
- const POST_SUCCESS = 'POST_SUCCESS'
- const POST_FAILURE = 'POST_FAILURE'
-
-
-
-
-
 /*
 action stauts
  */
@@ -44,20 +35,10 @@ action stauts
       articles:action.articles.articles,
       author:action.articles.author
     }
-    case POST_SUCCESS:
+    case ADD_ARTICLE:
     return {
       posting:false,
       articles:[...state.articles,action.result]
-    }
-    case POST_STARTED:
-    return {
-      ...state,
-      posting:true,
-    }
-    case POST_FAILURE:
-    return {
-      ...state,
-      posting:"error",
     }
     case DELETE_ARTICLE:
     return {
@@ -73,14 +54,13 @@ action stauts
 }
 
 
-
+// export const deleteMessage= (message)=>({
+//     msgType:message.type,
+//     msg:message.context
+//   })
 
 
 // -------action  creators----------
-
-
-
-
 // for article
 export const initArticles = (articles)=>{
   return {type:INIT_ARTICLES,articles}
@@ -92,43 +72,3 @@ export const deleteArticle = (articleIndex)=>{
   return {type:DELETE_ARTICLE,articleIndex}
 }
 export default article;
-
-
-//
-export const postArticleStarted = () =>({
-  type:POST_STARTED
-})
-
-export const postArticleSuccess = (result)=>({
-  type:POST_SUCCESS,
-  result
-})
-export const postArticleFailure = (error)=>({
-  type:POST_FAILURE,
-  error
-})
-export const successPost = (msg)=>(
-  {
-    msgType:"success",
-    msg:msg
-  }
-)
-export const failurePost = (error)=>(
-  {
-    msgType:"warning",
-    msg:error
-  }
-)
-
-
-// export const fetchArticles = (userId)=>{
-//   return async(dispatch)=>{
-//     dispatch(fetchArticlesStarted())
-//     let result = await fetchPosts(userId);
-//     if(result.code==1){
-//       dispatch(fetchArticlesSuccess(result.posts))
-//     }else{
-//       dispatch(fetchArticlesFailure(result.msg))
-//     }
-//   }
-// }

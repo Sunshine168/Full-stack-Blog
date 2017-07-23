@@ -2,9 +2,9 @@ import React, {
 	Component
 } from 'react';
 import {FormGroup,ControlLabel,FormControl,Button,HelpBlock} from'react-bootstrap';
-import {addPost,fetchEditPost,updatePost} from '../service/fetch';
 import ArticleFoot from './ArticleFoot';
 import PropTypes from 'prop-types'
+import {Redirect} from 'react-router-dom'
 /*
 mode 1 代表发表文章
 mode 2 代表编辑文章
@@ -12,10 +12,10 @@ mode 2 代表编辑文章
 export default class PostArticle  extends Component{
 	static propTypes=({
 		user:PropTypes.object,
-    posting:PropTypes.bool,
-		showFlashMessage:PropTypes.func,
-		removeFlashMessage:PropTypes.func,
-		addArticle:PropTypes.func,
+		postingArticle:PropTypes.object,
+		initEditArticle:PropTypes.func,
+		updateArticle:PropTypes.func,
+		postResult:PropTypes.bool
 	})
 	constructor(props){
 		super(props);
@@ -29,31 +29,74 @@ export default class PostArticle  extends Component{
 			contextHelp:""
 		}
 	}
-async  componentDidMount(){
-		let {articleId} = this.props.match.params;
+	asyncSetState(state){
+		let that = this;
+		return new Promise(function(resolve){
+       that.setState(state,resolve)
+		})
+	}
+	 async componentDidMount(){
+		let {articleId} = this.props.match.params,
+		 {initEditArticle}= this.props;
 		if(articleId){
-       let result = await fetchEditPost(articleId)
-			if(result.code==1){
-				  let post = result.post;
-					this.setState({
-						title:post.title,
-						context:post.content,
-						id:articleId
-					})
-			}else{
-				this.props.showFlashMessage({
-					msgType:"danger",
-					msg:"文章不存在",
-				})
-			let pathname ='/personal/index',
-			 redirectState = { from: this.props.location };
-			 this.props.redirect(pathname,redirectState)
-			}
-      this.setState({
-				mode:2
+			this.setState({
+				articleId
 			})
+       await initEditArticle(articleId)
+
 		}
 	}
+	async componentWillReceiveProps(nextProps){
+		 let {article} = nextProps.postArticle;
+		 if(article){
+			 await this.asyncSetState({
+				 aritcleId:article._id,
+				 mode:2,
+				 title:article.title,
+				 context:article.content
+			 })
+		 }
+	}
+	//发表文章的网络请求
+  async _postArticle(){
+		let {title,context,titleValid,contextValid}=this.state,valid,isRedirect=true;
+			//检查数据有效性
+				if(titleValid=="success"&&contextValid=="success"){
+					let result = await this.props.addArticle({
+						article:{
+							title,
+							context,
+						},
+						user_id:this.props.user._id,
+					 })
+					 if(result==true){
+						 this.setState({isRedirect})
+					 }
+					}
+}
+	//更新文章的网络请求
+   async _updateArticle(){
+		 let {title,context,articleId}=this.state,result;
+		 if(title==""){
+
+		 }else{
+			 if(context==""){
+
+			 }else{
+				console.log(this.state)
+        result = await this.props.updateArticle({
+					articleId,
+					title,
+					context
+				})
+				if(result){
+					this.setState({
+						isRedirect:true,
+					})
+				}
+			 }
+	   }
+   }
 	/*检验标题*/
 	_checkTitle(value){
 		this.setState({
@@ -89,43 +132,50 @@ async  componentDidMount(){
 		}
 	}
 	render(){
-    let {title,context}  = this.state,
-        {posting} = this.props;
- 		return (<div className="article_container">
-	    <img className="author_logo"/>
-			<div className="article_wrap">
-
-		    <section className="article_context">
-					<FieldGroup
-						id="formControlsText"
-						type="text"
-						label="标题"
-						placeholder="Enter text"
-						value={title}
-						onChange={(event)=>this.setState({title:event.target.value})}
-						validationState={this.state.titleValid}
-						help={this.state.titleHelp}
-						onBlur={(event)=>this._checkTitle(event.target.value)}
-					/>
-					<FormGroup
-						controlId="formControlsTextarea"
-						validationState={this.state.contextValid}
-					>
-						<ControlLabel>内容</ControlLabel>
-						<FormControl
-							componentClass="textarea"
-							placeholder="textarea"
-							onChange={(event)=>this.setState({context:event.target.value})}
-							onBlur={(event)=>this._checkContext(event.target.value)}
-							style={{ height: 200 }}
-							value={context}/>
-						{this.state.contextHelp && <HelpBlock>{this.state.contextHelp}</HelpBlock>}
-					</FormGroup>
-		    </section>
-				{
-					this.state.mode==1?
-            <Button
-              disabled={posting=="loading"}
+		/*比对user._id 和article.author._id*/
+    if(this.state.isRedirect==true){
+			return<Redirect to={{
+        pathname: '/personal/index',
+        state: { from: this.props.location }
+      }}/>
+		}
+		let {title,context} = this.state;
+		const {posting} = this.props;
+ 		return (
+			<div className="article_container">
+				<img className="author_logo"/>
+				<div className="article_wrap">
+					<section className="article_context">
+						<FieldGroup
+							id="formControlsText"
+							type="text"
+							label="标题"
+							placeholder="Enter text"
+							value={title}
+							onChange={(event)=>this.setState({title:event.target.value})}
+							validationState={this.state.titleValid}
+							help={this.state.titleHelp}
+							onBlur={(event)=>this._checkTitle(event.target.value)}
+						/>
+						<FormGroup
+							controlId="formControlsTextarea"
+							validationState={this.state.contextValid}
+						>
+							<ControlLabel>内容</ControlLabel>
+							<FormControl
+								componentClass="textarea"
+								placeholder="textarea"
+								onChange={(event)=>this.setState({context:event.target.value})}
+								onBlur={(event)=>this._checkContext(event.target.value)}
+								style={{ height: 200 }}
+								value={context}/>
+							{this.state.contextHelp && <HelpBlock>{this.state.contextHelp}</HelpBlock>}
+						</FormGroup>
+					</section>
+					{
+						this.state.mode==1?
+							<Button
+								disabled={posting=="loading"}
 							componentClass="foot_btn"
 						onClick={()=>this._postArticle()}>
 					发送</Button>:null
@@ -139,61 +189,6 @@ async  componentDidMount(){
 			</div>
 	  </div>)
 	}
-	//发表文章的网络请求
-  async _postArticle(){
-		let {title,context,titleValid,contextValid}=this.state,valid
-			//检查数据有效性
-				if(titleValid=="success"&&contextValid=="success"){
-					let result = await this.props.addPost({
-						article:{
-							title,
-							context,
-						},
-						user_id:this.props.user._id,
-					})
-          if(result){
-            let pathname ='/personal/index',
-             redirectState = { from: this.props.location };
-             this.props.redirect(pathname,redirectState)
-          }
-					}
-				}
-	//更新文章的网络请求
-   async _updateArticle(){
-		 let {title,context}=this.state;
-		 if(title==""){
-
-		 }else{
-			 if(context==""){
-
-			 }else{
-				 try{
-				 let result = await updatePost(this.state.id,{
-					    title,
-							context
-				 })
-				 if(result.code==1){
-					this.props.showFlashMessage({
-						msgType:"success",
-						msg:"更新成功"
-					})
-						let pathname ='/personal/index',
-					 redirectState = { from: this.props.location };
-					 this.props.redirect(pathname,redirectState)
-				 }else{
-					 this.props.showFlashMessage({
-						 msgType:"danger",
-						 msg:"更新失败请稍后再试"
-					 })
-				 }
-			 }catch(e){
-        console.log(e);
-			 }
-
-			 }
-
-	 }
-}
 }
 //返回表单元素组
 function FieldGroup({ id, label,validationState, help, ...props }) {

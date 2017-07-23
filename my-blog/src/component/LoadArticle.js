@@ -11,65 +11,16 @@ import {Panel} from 'react-bootstrap';
 //通过redux 加载当前用户判断页面状态
 export  default class LoadArticle extends Component {
   static propTypes = ({
-    user:PropTypes.object,
-    showFlashMessage:PropTypes.func,
-    removeFlashMessage:PropTypes.func,
-    redirect:PropTypes.func,
-    initComments:PropTypes.func,
+    current:PropTypes.string,
+    article:PropTypes.object,
   })
 	  constructor(props){
 			super(props);
-			this.state={
-				user:props.user,
-        isCurrent:null,
-        article:null,
-        comments:[],
-			}
 		}
-	  async componentDidMount(){
-			  let {articleId} = this.props.match.params,
-            {user} = this.props;
-      let result = await fetchPost(articleId);
-      //通过结果码判断是否成功
-      if(result.code==1){
-        //判断用户状态以及是否本文章用户
-        if(user&&(user._id==result.post.author._id)){
-          //登录用户是本文章作者
-          this.setState({
-            article:result.post,
-            comments:result.comments,
-            isCurrent:user._id,
-          })
-          //初始化文章列表
-          this.props.initComments(result.comments);
-        }else{
-          //登录用户不是本文章作者
-          this.props.initComments(result.comments);
-          this.setState({
-            article:result.post,
-            comments:result.comments,
-          })
-        }
-
-      }else{
-        //文章不存在
-         this.props.showFlashMessage({
-           msg:"该文章不存在",
-           msgType:"danger"
-         })
-         /*
-      处理文章不存在的逻辑
-          */
-        let pathname ='/404/',
-         redirectState = { from: this.props.location };
-         this.props.redirect(pathname,redirectState)
-        }
-      }
 		render(){
   //  console.log(this.state.article);
-   let {article,isCurrent,deleteArticle} = this.state;
+   let {article,current} = this.props;
 			return (
-				this.state.article?
   <div>
     <div className="article_container">
       <section  className="article_wrap">
@@ -78,11 +29,10 @@ export  default class LoadArticle extends Component {
         />
         <ArticleFoot
           articleId={article._id}
-          articleId={article._id}
-          isCurrent={isCurrent}
+          current={current}
           visit={article.pv}
           time = {article.created_at}
-          commentsCount={this.state.comments.length}
+          commentsCount={0}
         />
       </section>
     </div>
@@ -91,13 +41,12 @@ export  default class LoadArticle extends Component {
         header="留言"
       >
         <CommentList
-          isCurrent={this.props.currentUser}
+          current= {current}
         />
         <CommentInput/>
       </Panel>
     </div>
   </div>
-        :null
 			)
 		}
 }

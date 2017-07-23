@@ -10,6 +10,7 @@ const Footer  = ()=>{
       <a href="https://github.com/Sunshine168/Full-stack-Blog">
         <img src={gitSVG} alt = "github" className = "gitLogo"/>
       </a>
+      图标资源<a href="http://www.freepik.com">Designed by Photoroyalty / Freepik</a>
     </div>
   )
 }

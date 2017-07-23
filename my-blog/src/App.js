@@ -14,7 +14,7 @@ import Register from './container/Register';
 import AccessArticles from './container/AccessArticles'
 import FlashMessage from './container/FlashMessage'
 import PostArticle from './container/PostArticle'
-import LoadArticle from './container/LoadArticle'
+import AccessArticle from './container/AccessArticle'
 import NoMatch from './component/NoMatch';
 import ProgressBars from './container/ProgressBars'
 import Index from './component/Index'
@@ -59,7 +59,7 @@ const EditArticle = ({ match }) => (
 )
 //查看文章页面
 const  ArticleDetail = ({match})=>(
-  <Route path={`${match.url}/:articleId`} component={LoadArticle}/>
+  <Route path={`${match.url}/:articleId`} component={AccessArticle}/>
 )
 const mapStateToProps = (state)=>{
   return {
