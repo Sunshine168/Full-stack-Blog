@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import {SplitButton,MenuItem} from'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-
+import {Redirect}  from 'react-router-dom'
 import PropTypes from 'prop-types'
 /*
 evenKey
@@ -23,18 +23,35 @@ evenKey
 	 static propTypes=({
 	 	deleteArticle:PropTypes.func
 	 })
+	 constructor(args){
+		 super(args)
+		 this.state = {
+			 isRedirect:false
+		 }
+	 }
 	async controlHandle(eventKey){
-		 let {articleId,index,deleteArticle}= this.props;
-		 console.log(index);
+		 let {articleId,index,deleteArticle}= this.props,
+		 result;
 		 if(eventKey == "2"){
-			 await deleteArticle({
+			 result = await deleteArticle({
  				postId:articleId,
  				user_id:this.props.currentUser,
- 		 })
+ 		  })
+			if(result){
+				//redirect
+				this.setState({isRedirect:true})
+			}
 		 }
 	 }
 	 render(){
 		 const {props} = this;
+		 if(this.state.isRedirect==true){
+			 return<Redirect to={{
+				 pathname: '/personal/index',
+				 state: { from: this.props.location }
+			 }}/>
+		 }
+
 		 return (<div className="article_foot">
 			 <div className="foot_left">
 				 <a href="#" className="foot_item">

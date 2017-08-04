@@ -1,6 +1,6 @@
 import React , {Component}from 'react';
 import Article from './Article';
-import ArticleFoot from './ArticleFoot';
+import ArticleFoot from '../container/ArticleFoot';
 import CommentInput from '../container/CommentInput';
 import CommentList from '../container/CommentList';
 import PropTypes from 'prop-types';
@@ -18,8 +18,7 @@ export  default class LoadArticle extends Component {
 			super(props);
 		}
 		render(){
-  //  console.log(this.state.article);
-   let {article,current} = this.props;
+   let {article,currentUser} = this.props;
 			return (
   <div>
     <div className="article_container">
@@ -29,7 +28,7 @@ export  default class LoadArticle extends Component {
         />
         <ArticleFoot
           articleId={article._id}
-          current={current}
+          currentUser={currentUser}
           visit={article.pv}
           time = {article.created_at}
           commentsCount={0}
@@ -41,7 +40,7 @@ export  default class LoadArticle extends Component {
         header="留言"
       >
         <CommentList
-          current= {current}
+          currentUser= {currentUser}
         />
         <CommentInput/>
       </Panel>

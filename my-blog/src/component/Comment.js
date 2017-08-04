@@ -3,11 +3,18 @@ import React, {
 } from 'react';
 import {Button} from 'react-bootstrap';
 import {deleteComment} from '../service/fetch';
+import {Redirect} from 'react-router-dom';
 export default class Comment extends Component {
 	/*
 并不理想组件之间耦合性太高了
 感觉组件应该显示和操作分开
 	 */
+	constructor(args){
+		super(args)
+		this.state = {
+			isRedirect:false
+		}
+	}
  async _deleteComment(){
 	  let {comment,index,current} = this.props
 	  let result =await deleteComment({
@@ -20,6 +27,7 @@ export default class Comment extends Component {
 					msgType:"success",
 					msg:"评论删除成功",
 				})
+				this.props.deleteComment(index)
 		 }else{
 			 this.props.showFlashMessage({
 				 msgType:"danger",
@@ -38,7 +46,7 @@ export default class Comment extends Component {
 								<div dangerouslySetInnerHTML={{__html:content}}></div>
 							</div>
 						</div>
-						{this.props.current?
+						{this.props.currentUser?
 							<div className="comment_control clearfix">
 								<Button bsStyle="link" onClick={()=>this._deleteComment()}>删除</Button>
 							</div>:null}

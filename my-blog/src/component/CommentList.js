@@ -11,7 +11,7 @@ export default class CommentList extends Component {
 		 comments:PropTypes.array,
 	 })
 	render(){
-		let {comments,isCurrent,deleteComment,showFlashMessage} = this.props;
+		let {comments,currentUser,deleteComment,showFlashMessage} = this.props;
    return (
 		 <ListGroup>
 			 {comments.map((comment,index)=>(
@@ -19,7 +19,7 @@ export default class CommentList extends Component {
 					 <Comment
 						 index={index}
 						 comment={comment}
-						 isCurrent={isCurrent}
+						 currentUser={currentUser}
 						 deleteComment={deleteComment}
 						 showFlashMessage={showFlashMessage}
 					 />

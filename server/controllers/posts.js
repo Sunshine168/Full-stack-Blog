@@ -57,8 +57,8 @@ module.exports = {
 	// GET /api/posts/:postId 单独一篇的文章页
 	'GET /api/posts/:postId': async(ctx, next) => {
 		// ctx.response.body = ctx.flash.get();
-		let code = 1;
-		let {postId} = ctx.params;
+		let code = 1,{postId} = ctx.params,
+		user = ctx.session.user;
 		try{
 			var result  =  await Promise.all([
 				PostModel.getPostById(postId),   // 获取文章信息
@@ -74,37 +74,43 @@ module.exports = {
 			  code = -1;
 				console.log(e);
 		}
-		ctx.response.body = {
-			"code":code,
-			post:post,
-			comments:comments,
+		if(user){
+			//比对
+			if(user._id == post.author._id){
+				ctx.response.body = {
+					"code":code,
+					post:post,
+					current:user._id,
+					comments:comments
+				}
+			}
+		}else{
+			ctx.response.body = {
+				"code":code,
+				post:post,
+				comments:comments
+			}
 		}
 
 	},
 	// GET /api/posts/edit/:postId 单独一篇的文章页
-	'GET /api/posts/edit/:postId': async(ctx, next) => {
-		// ctx.response.body = ctx.flash.get();
-		let code = 1;
-		let {postId} = ctx.params;
-		try{
-			var post = await PostModel.getRawPostById(postId);   // 获取原生文章信息
-			 if(!post){
-				 throw new Error('不能找到该文章')
-			 }
-		}catch(e){
-				code = -1;
-		}
-		ctx.response.body = {
-			"code":code,
-			post:post,
-		}
-
-	},
-	// GET /posts/:postId/edit 更新文章页
-	'GET /api/posts/:postId/edit': async(ctx, next) => {
-		// ctx.response.body = ctx.flash.get();
-
-	},
+  'GET /api/posts/edit/:postId': async(ctx, next) => {
+	// ctx.response.body = ctx.flash.get();
+	let code = 1;
+	let {postId} = ctx.params;
+	try{
+		var post = await PostModel.getRawPostById(postId);   // 获取原生文章信息
+		 if(!post){
+			 throw new Error('不能找到该文章')
+		 }
+	}catch(e){
+			code = -1;
+	}
+	ctx.response.body = {
+		"code":code,
+		post:post,
+	}
+},
 	// POST /posts/:postId/edit 更新一篇文章
 	'POST /api/posts/:postId/edit': async(ctx, next) => {
        let postId  =  ctx.params.postId,

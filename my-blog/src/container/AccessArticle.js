@@ -9,7 +9,7 @@ const mapStateToProps = (state)=>(
   state.login,
   state.loadArticle
 )
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch,getState)=>{
 	return {
 		showFlashMessage:(message)=>{
 			dispatch(showFlashMessage(message))
@@ -20,14 +20,15 @@ const mapDispatchToProps = (dispatch)=>{
     initComments:(comments)=>{
       dispatch(initComments(comments))
     },
-    fetchArticle:async(user,articleId)=>{
+    fetchArticle:async(articleId)=>{
+
     let result = await fetchPost(articleId);
-    //通过结果码判断是否成功
+    //通过结果码以及结果判断是否本文章作者
     if(result.code==1){
       dispatch(initLoadArticle(result.post))
       //判断用户状态以及是否本文章用户
-      if(user&&(user._id==result.post.author._id)){
-       dispatch(setCurrent(user._id))
+      if(result.current){
+          dispatch(setCurrent(result.current))
       }
       dispatch(initComments(result.comments));
     }else{

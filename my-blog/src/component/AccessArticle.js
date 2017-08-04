@@ -10,7 +10,6 @@ export default class AccessArticle extends Component {
   constructor(props){
     super(props);
     this.state= {
-      user:props.user,
       current:null,
       article:null,
       comments:[]
@@ -19,7 +18,7 @@ export default class AccessArticle extends Component {
   async componentDidMount(){
     let {articleId} = this.props.match.params,
         {user,fetchArticle} = this.props;
-        await fetchArticle(user,articleId);
+        await fetchArticle(articleId);
     }
     render(){
       let {article,current,location}  = this.props;
@@ -29,11 +28,11 @@ export default class AccessArticle extends Component {
             pathname: '/404/',
             state: { from: location }
           }}
-        />
+              />
       }
       return(<LoadArticle
         article={article}
-        current={current}
+        currentUser={current}
              />)
     }
 }
