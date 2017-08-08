@@ -7,7 +7,9 @@
 参考自https://github.com/nswbmw/N-blog
 前端部分以create-react-app的脚手架搭起react+react-router v4+redux的全家桶
 后端采用koa2+mongodb
-
+## 笔记
+[网络请求](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note1.md)
+[koa2路由](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note2.md)
 ## 开发环境
 开发环境(node要求 7.6以上)
 Nodejs:7.6.0
@@ -26,7 +28,7 @@ git clone https://github.com/Sunshine168/Full-stack-Blog.git
 cd Full-stack-Blog/myblog
 npm install //or yarn install
 npm run build //or yarn build
-node scripts/publish ./server  //发布到server目录中
+node publish  //发布到server目录中
 cd ..
 cd server/
 npm install //or yarn install
@@ -103,14 +105,8 @@ TODO
 * [x] 处理react单页重定向
 * [ ] 单元测试
 
-## 笔记
-[网络请求](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note1.md)
-[koa2路由](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note2.md)
-## koa2
-
-有关网络请求的部分应该放在redux中(尚未修改完成)
 
 
-## react
-准备node proxy代替跨域进行调试(create-react-app自带)
-完成react+redux+react-routerv4全家桶
+
+
+

@@ -28,14 +28,10 @@ const NavbarInstance = (props)=>{
 		const getBlogUrl = (id)=>{
 			//获取主机名
 			let hostname = window.location.hostname;
-			//判断开发模式
-			if (process.env.NODE_ENV && process.env.NODE_ENV == 'development') {
 				//开发模式下需要获取端口
 				let port = location.port;
 				url=`localhost:${port}/user/${id}`
-      }else{
-				url=hostname+`/user/${id}`;
-			}
+
 			return url;
 		}
              return(

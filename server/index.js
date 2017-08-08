@@ -77,6 +77,10 @@ app.use(async(ctx, next) => {
 })
 app.use(async(ctx, next) => {
 	await next();
+	//保证附带cookie
+	if(!ctx.session){
+		ctx.session.flag = 1
+	}
 	if (ctx.response.status == 404) {
 		ctx.response.redirect('/?' + ctx.request.url);
 	}

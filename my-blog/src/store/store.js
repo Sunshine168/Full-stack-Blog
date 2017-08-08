@@ -20,5 +20,8 @@ const reducer = combineReducers({
 //加载redux-detool
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer,{},composeEnhancers(applyMiddleware(thunk),autoRehydrate()))
-persistStore(store,{blacklist:['progress','article']})
+persistStore(store, {blacklist: ['progress','article']}, () => {
+  //check cookie
+  console.log('rehydration complete')
+})
 export default store;

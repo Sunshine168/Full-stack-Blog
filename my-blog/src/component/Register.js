@@ -225,6 +225,7 @@ export default class RegisterInput extends Component {
 					 formData.append("gender",gender);
 					 formData.append("bio",bio);
 					 let result = await register(formData);
+					 console.log(result)
 				 if(result.code==1){
 					this.props.showFlashMessage({
 						msg:"注册成功",
