@@ -7,9 +7,8 @@
 参考自https://github.com/nswbmw/N-blog
 前端部分以create-react-app的脚手架搭起react+react-router v4+redux的全家桶
 后端采用koa2+mongodb
-## 笔记
-[网络请求](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note1.md)
-[koa2路由](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note2.md)
+## 实践笔记
+### [笔记目录](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/noteMenu.md)
 ## 开发环境
 开发环境(node要求 7.6以上)
 Nodejs:7.6.0

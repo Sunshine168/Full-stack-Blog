@@ -15,6 +15,7 @@ import '../css/flashMessage.css'
 通过radium结合react-animations来对动画进行控制
 
  */
+
  const styles = {
    fadeIn: {
      animation: 'x 3s',
@@ -27,7 +28,7 @@ import '../css/flashMessage.css'
  }
 
 
-export default class FlashMessage extends Component{
+ class FlashMessage extends Component{
 	static propTypes=({
 		flashMessage:PropTypes.object,
 		showFlashMessage:PropTypes.func,
@@ -58,8 +59,8 @@ export default class FlashMessage extends Component{
 	return (
 		<div className="flashMessage_container">
 			{flashMessage.show?
-			<div
-				style={
+				<div
+					style={
 						flashStyle
 				}>
 				<Panel
@@ -75,3 +76,4 @@ export default class FlashMessage extends Component{
 
 	}
 }
+export default Radium(FlashMessage)
