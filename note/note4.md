@@ -4,14 +4,14 @@ SPA应用中一定会涉及路由问题。
 
 ## 使用前端路由的情况
   
-![](./media/router-1.png)
+![](../media/router-1.png)
 
 ## 正常渲染的情况
 
-![](./media/router-2.png)
+![](../media/router-2.png)
 
 ## 路由重定向的思路
-![](./media/router-3.png)
+![](../media/router-3.png)
 
 ## 代码
 
