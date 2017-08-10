@@ -1,5 +1,5 @@
 ## 笔记一
-## 网络请求
+## 网络请求与图片上传
 ### 前端使用fetch发起网络请求
 [fetch api](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch)
 目前fetch只支持现代浏览器,如果需要在还不支持的浏览器中使用需要使用fetch  polyfill
@@ -166,6 +166,122 @@ router.post('/api/upload', async(ctx, next) => {
 		}
 	})
 
+```
+
+## 如何在前端上传预览并上传
+
+通过fromData与FileReader进行图片预览并上传,数据保存在fromData中,通过FileReader将图片转化成base64进行预览。
+
+
+```js
+constructor(props){
+  super(props);
+  let data = new FormData();
+  this.state = {
+	formData:data,
+}
+```
+
+```js
+//ui控件来自 react-bootstrap
+<Modal show={this.state.showModal} onHide={()=>this._closeModal()}>
+<Modal.Header closeButton>
+<Modal.Title>上传头像</Modal.Title>
+</Modal.Header><Modal.Body>
+<FieldGroup
+id="upload"
+type="file"
+label="File"
+onChange={(event)=>this._change(event.target.value)}/>
+<img src="" alt="" className="previewAvater" id="preview"/>
+</Modal.Body>
+<Modal.Footer>
+<Button onClick={()=>this._confirmAvater()}>确定</Button>
+<Button onClick={()=>this._closeModal()}>取消</Button>
+</Modal.Footer>
+</Modal>
+
+```
+
+```js
+//util function 
+_change(){
+			/*直接操作原生dom对象*/
+      let pic = document.getElementById("preview"),
+			   file = document.getElementById("upload");
+
+      let valid =/(.jpg|.png|.gif|.jpeg)$/.test(file.value);
+
+     // gif在IE浏览器暂时无法显示
+     if(!valid){
+         alert("图片的格式必须为png或者jpg或者jpeg格式！");
+         return;
+     }
+    this._html5Reader(file);
+}
+_html5Reader(file){
+			console.log(file)
+			 var file = file.files[0];
+     var reader = new FileReader();
+     reader.readAsDataURL(file);
+     reader.onload = function(e){
+         var pic = document.getElementById("preview");
+         pic.src=this.result;
+     }
+ }
+  _confirmAvater(){
+    /*直接操作原生dom对象*/
+		let picSrc = document.getElementById("preview").src;
+		if(picSrc==""){
+			  alert("图片不能为空！");
+		}else{
+			let formData= this.state.formData;
+			formData.append('pic',picSrc)
+		}
+		//关闭Modal
+		this._closeModal()
+	}
+```
+
+```js
+//注册函数负责让register函数提交表单
+async _register(){
+//检查数据有效性
+let formData= this.state.formData;
+					 formData.append("account",account);
+					 formData.append("username",username);
+					 formData.append("password",password);
+					 formData.append("gender",gender);
+					 formData.append("bio",bio);
+					 let result = await register(formData);
+
+}
+```
+
+```js
+/*register真正提交表单的函数,不需要设置
+Content-Type': 'application/x-www-form-urlencoded'
+不然反而会提交失败!!!
+*/
+export const register = async(formData)=>{
+   let url = DOMAIN+'/api/signUp';
+   try{
+     var result = await fetch(url,{
+       method: 'POST',
+   body:formData
+   })
+   }catch(e){
+     console.log(e);
+   }
+   if(result){
+     return result.json();
+   }else{
+     return {
+      code:-2,
+      message:"未知错误"
+     }
+   }
+ }
 ```
 
 

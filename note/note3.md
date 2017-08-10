@@ -1,10 +1,83 @@
-# 持续化的问题
+# SPA路由重定向与数据持续化
+
+## 路由重定向
+
+### 使用前端路由的情况
+  
+![](../media/router-1.png)
+
+### 正常渲染的情况
+
+![](../media/router-2.png)
+
+### 路由重定向的思路
+![](../media/router-3.png)
+
+### 代码
+
+#### koa2
+
+处理所有服务器重定向问题都通过 '/?' + url
+
+```
+app.use(async(ctx, next) => {
+	await next();
+	//保证附带cookie
+	if(!ctx.session){
+		ctx.session.flag = 1
+	}
+	if (ctx.response.status == 404) {
+		ctx.response.redirect('/?' + ctx.request.url);
+	}
+})
+```
+#### 重定向控件
+
+```
+const RedirectFromServer = ({match})=>{
+  //deal the sever redirect
+  let url = window.location.search;
+  return url.substring(1)?<Redirect to={{
+    pathname: url.substring(1),
+    state: { from: '/' }
+  }}/>:<NoMatch/>
+}
+```
+
+```
+ <Switch>
+             <Route exact path="/index" component={Index}/>
+             <Route path="/login" component={Login}/>
+             <Route path="/loginOut" component={Login}/>
+             <Route path="/register" component={Register}/>
+             <Route path="/user" component={UserIndex}/>
+             <Route path="/article" component={ArticleDetail}/>
+             <PrivateRoute path="/edit/article"
+               component={EditArticle}
+               auth={auth}
+             />
+             <PrivateRoute
+               path="/personal/index"
+               component={AccessArticles}
+               auth={auth}
+             />
+             <PrivateRoute
+               path="/postArticle"
+               component={PostArticle}
+               auth={auth}
+             />
+             <Route  path="/" component={RedirectFromServer}/>
+           </Switch>
+```
+
+
+## 持续化的问题
 
 
 
-## 前端部分
+### 前端部分
 在进行spa中如何保存用户的登录状态以及一些不需要频繁更新的数据，通过redux-persist进行解决。
-### redux-persist是什么？😳
+#### redux-persist是什么？😳
 redux-persist是一个redux中间件,可以将redux的数据持续化保存。那么redux原来的数据保存在哪？redux原来的数据是保存在内存中，所以当你关闭当前页面，redux内的数据就会销毁。通过redux-persist将数据保存在localStorage/sessionStorage.... 中,所以在重新打开该页面的时候(已经缓存了)就可以直接加载上次退出该页面时候的状态。
 
 ---
@@ -14,7 +87,7 @@ redux-persist是一个redux中间件,可以将redux的数据持续化保存。�
 目前想到的解决方案只有两个。。一个替换使用token进行校验用户身份,token也存储在localstorage中。另外一个就在请求里面判断~请求没有附带该cookie就是没有权限~ 直接在请求里加个状态进行判断。
 最好的办法还是后者，在后台需要登录操作的api里加上中间件判断用户状态,没有则返回401,前端请求得到401的时候说明状态过期需要重新登录~  
 
-### redux-persist用法
+#### redux-persist用法
 
 ```
 import {compose, applyMiddleware, createStore} from 'redux'
@@ -34,7 +107,7 @@ const store = createStore(
 persistStore(store)
 ```
 
-其他用法
+#### 其他用法
 
 ```
 //加载redux-detool
@@ -48,12 +121,12 @@ export default store;
 ```
 
 
-## 后端session持续化
+### 后端session持续化
 
 session持续化的意义
 session保存在内存中,保存本来就是不稳定的,在重启的时候可能丢失,内存存储的数据过大加重服务器负担。
 
-### koa2
+#### koa2
  
 ```
 const session = require('koa2-session-store');

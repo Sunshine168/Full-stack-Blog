@@ -14,7 +14,7 @@
 ### [网络请求](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note1.md)
 ### [koa2路由](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note2.md)
 
-### [数据持续化](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note3.md)
+### [SPA路由重定向和数据持续化](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note3.md)
 
-### [spa路由重定向的问题](https://github.com/Sunshine168/Full-stack-Blog/blob/master/note/note4.md)
+
 
