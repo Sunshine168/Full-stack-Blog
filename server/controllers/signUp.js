@@ -5,7 +5,8 @@ const formidable = require("formidable");
 const uuidV4 = require('uuid/v4');
 const path = require('path');
 let UserModel = require('../models/users');
-const DEFAUL_AVATAR =  "/avater/spinner.gif"
+const DEFAUL_AVATAR = "/avater/spinner.gif"
+
 function formidablePromise(req, opts) {
 	return new Promise(function(resolve, reject) {
 		var form = new formidable.IncomingForm(opts)
@@ -32,22 +33,22 @@ module.exports = {
 	'POST /api/signUp': async(ctx, next) => {
 		//初始化变量
 		let formidableResult,
-		avater=DEFAUL_AVATAR,
-		currentUser,
-		code = 1,
-		message = "注册成功",
-		fileName,
-		dataBuffer,
-		base64Data;
-		try {
-			formidableResult = await formidablePromise(ctx.req),
-			avater=DEFAUL_AVATAR,
+			avater = DEFAUL_AVATAR,
 			currentUser,
 			code = 1,
 			message = "注册成功",
 			fileName,
 			dataBuffer,
 			base64Data;
+		try {
+			formidableResult = await formidablePromise(ctx.req),
+				avater = DEFAUL_AVATAR,
+				currentUser,
+				code = 1,
+				message = "注册成功",
+				fileName,
+				dataBuffer,
+				base64Data;
 			//从fromdata中取出数据
 			let {
 				account,
@@ -57,18 +58,21 @@ module.exports = {
 				password,
 				pic
 			} = formidableResult.fields;
-			if(pic){
+			if (pic) {
 				//有上传头像...
-       //正则替换base64
-				 base64Data = pic.replace(/^data:image\/\w+;base64,/, "");
+				//正则替换base64
+				base64Data = pic.replace(/^data:image\/\w+;base64,/, "");
 				//转换为数据流
-				 dataBuffer = new Buffer(base64Data, 'base64');
+				dataBuffer = new Buffer(base64Data, 'base64');
 				//生成文件名
-				  fileName = uuidV4().replace(/-/g, "");
-				  //生成绝对路径
-				   avatarPath = path.resolve(__dirname, "../"),
-					//组合出本地存储图片的路径
-					avater = path.join(avatarPath, `upload/avater/${fileName}.png`);
+				fileName = uuidV4().replace(/-/g, "");
+				//生成绝对路径
+				avatarPath = path.resolve(__dirname, "../");
+				//组合出本地存储图片的路径
+				avater = path.join(avatarPath, `upload/avater/${fileName}.png`);
+				//组合出存储到数据库的路径
+				avatarPath = `/avater/${fileName}.png`
+
 			}
 
 			password = crypto.createHash('md5').update(password).digest('hex');
@@ -78,14 +82,14 @@ module.exports = {
 				password: password,
 				gender: gender,
 				bio: bio,
-				avatar: avater
+				avatar: avatarPath
 			};
 
 			//默认头像用户不需要生成头像
-			if(avater == DEFAUL_AVATAR){
-				 result = await UserModel.create(user)
-				 currentUser = result.ops[0];
-			}else{
+			if (avater == DEFAUL_AVATAR) {
+				result = await UserModel.create(user)
+				currentUser = result.ops[0];
+			} else {
 				result = await Promise.all([fs.writeFile(avater, dataBuffer), UserModel.create(user)])
 				currentUser = result[1].ops[0];
 			}
@@ -101,11 +105,11 @@ module.exports = {
 				code = -2;
 				message = e.message
 			}
-     if(avater != DEFAUL_AVATAR){
-			 let deletePath = path.resolve(__dirname, "../", avater);
- 			//注册失败删除头像
- 			await fs.unlink(deletePath);
-		 }
+			if (avater != DEFAUL_AVATAR) {
+				let deletePath = path.resolve(__dirname, "../", avater);
+				//注册失败删除头像
+				await fs.unlink(deletePath);
+			}
 		}
 		ctx.response.body = {
 			"code": code,
