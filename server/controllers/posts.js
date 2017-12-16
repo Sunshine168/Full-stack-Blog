@@ -154,7 +154,7 @@ module.exports = {
 			    code = 1,
 					message = "创建成功",
 					author = ctx.request.body.user_id||ctx.session.user._id,
-					content = ctx.request.body.content;
+					content= ctx.request.body.comment
 					let comment = {
 						author:author,
 						postId:postId,
