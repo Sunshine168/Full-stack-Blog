@@ -8,7 +8,7 @@ import progress from '../reducer/progress';
 import postArticle from '../reducer/postArticle'
 import loadArticle from '../reducer/loadArticle'
 import {persistStore, autoRehydrate} from 'redux-persist'
-import Cookie from 'js-cookie'
+
 const reducer = combineReducers({
   login,
   comment,
@@ -18,6 +18,7 @@ const reducer = combineReducers({
   postArticle,
   loadArticle
 })
+
 //加载redux-detool
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer,{},composeEnhancers(applyMiddleware(thunk),autoRehydrate()))
