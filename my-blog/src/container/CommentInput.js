@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => {
     },
     addComment: (comment, user, sucCb) => {
       return addCommentFetch(comment).then(result => {
-        const { code, data } = result;
+        const { code } = result;
         if (code == 1) {
           dispatch(
             showFlashMessage({

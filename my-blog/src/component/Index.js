@@ -27,8 +27,8 @@ componentDidMount(){
     return(
       <div className="menu-container" id="menu-container">
         <BubbleBG
-          width = {this.state.containerWidth}
-          height = {500}
+          width={this.state.containerWidth}
+          height={500}
         />
         <div className="top" >
           <div className="top_context">

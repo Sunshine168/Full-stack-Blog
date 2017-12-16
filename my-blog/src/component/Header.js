@@ -123,7 +123,7 @@ render(){
      <div>
        <NavbarInstance
 				 user={user}
-				 dropDownEvent= {(key)=>this.dropDownHandler(key)}
+				 dropDownEvent={(key)=>this.dropDownHandler(key)}
 			 />
 
        <NavHeader

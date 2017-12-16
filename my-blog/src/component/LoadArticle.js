@@ -30,7 +30,7 @@ export  default class LoadArticle extends Component {
           articleId={article._id}
           currentUser={currentUser}
           visit={article.pv}
-          time = {article.created_at}
+          time={article.created_at}
           commentsCount={0}
         />
       </section>
@@ -40,7 +40,7 @@ export  default class LoadArticle extends Component {
         header="留言"
       >
         <CommentList
-          currentUser= {currentUser}
+          currentUser={currentUser}
         />
         <CommentInput/>
       </Panel>
