@@ -1,13 +1,11 @@
-const checkLogin = require("../middlewares/check").checkLogin;
 const PostModel = require("../models/posts");
 const UserModel = require("../models/users");
 const CommentModel = require("../models/comments");
+
 module.exports = {
   // GET /posts 所有用户或者特定用户的文章页
   //   eg: GET /api/posts?author=xxx
-  "GET /api/posts": async (ctx, next) => {
-    // await checkLogin(ctx, next);
-    //  let flashMessage = ctx.flash.get();
+  "GET /api/posts": async (ctx) => {
     let author = ctx.request.query.author,
       code = 1;
     try {
@@ -28,8 +26,8 @@ module.exports = {
     };
   },
   // POST /posts 发表一篇文章
-  "POST /api/posts": async (ctx, next) => {
-    // await checkLogin(ctx, next);
+  "POST /api/posts": async (ctx) => {
+    // await checkLogin(ctx);
     let { article, user_id } = ctx.request.body;
     let author = user_id || ctx.session.user._id,
       //  flashMessage = ctx.flash.get(),
@@ -55,7 +53,7 @@ module.exports = {
     };
   },
   // GET /api/posts/:postId 单独一篇的文章页
-  "GET /api/posts/:postId": async (ctx, next) => {
+  "GET /api/posts/:postId": async (ctx) => {
     // ctx.response.body = ctx.flash.get();
     let code = 1,
       { postId } = ctx.params,
@@ -93,7 +91,7 @@ module.exports = {
     }
   },
   // GET /api/posts/edit/:postId 单独一篇的文章页
-  "GET /api/posts/edit/:postId": async (ctx, next) => {
+  "GET /api/posts/edit/:postId": async (ctx) => {
     // ctx.response.body = ctx.flash.get();
     let code = 1;
     let { postId } = ctx.params;
@@ -111,7 +109,7 @@ module.exports = {
     };
   },
   // POST /posts/:postId/edit 更新一篇文章
-  "POST /api/posts/:postId/edit": async (ctx, next) => {
+  "POST /api/posts/:postId/edit": async (ctx) => {
     let postId = ctx.params.postId,
       author = ctx.request.body.user_id || ctx.session.user._id,
       { title, context } = ctx.request.body,
@@ -125,7 +123,6 @@ module.exports = {
     } catch (e) {
       message = e.message;
       code = -1;
-      console.log(e);
     }
     ctx.response.body = {
       code,
@@ -133,7 +130,7 @@ module.exports = {
     };
   },
   // GET /posts/:postId/remove 删除一篇文章
-  "GET /api/posts/:postId/remove": async (ctx, next) => {
+  "GET /api/posts/:postId/remove": async (ctx) => {
     let { postId } = ctx.params,
       author = ctx.query.user_id || ctx.session.user._id,
       code = 1,
@@ -150,7 +147,7 @@ module.exports = {
     };
   },
   // POST /posts/:postId/comment 创建一条留言
-  "POST /api/posts/:postId/comment": async (ctx, next) => {
+  "POST /api/posts/:postId/comment": async (ctx) => {
     let postId = ctx.params.postId,
       code = 1,
       message = "创建成功",
@@ -162,7 +159,7 @@ module.exports = {
       content: content
     };
     try {
-      var result = await CommentModel.create(comment);
+       await CommentModel.create(comment);
     } catch (e) {
       (code = -1), (message = e);
     }
@@ -173,9 +170,8 @@ module.exports = {
     };
   },
   // GET /posts/:postId/comment/:commentId/remove 删除一条留言
-  "GET /posts/:postId/comment/:commentId/remove": async (ctx, next) => {
-    let postId = ctx.params.postId,
-      commentId = ctx.params.commentId,
+  "GET /posts/:postId/comment/:commentId/remove": async (ctx) => {
+      let commentId = ctx.params.commentId,
       code = 1,
       message = "删除成功",
       author = ctx.query.user_id || ctx.session.user._id;
