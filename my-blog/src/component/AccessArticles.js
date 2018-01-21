@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ArtilceList from "../component/ArticleList";
+import ArticleList from "../component/ArticleList";
 /*
  控制文章列表的加载
  */
@@ -20,12 +20,7 @@ export default class AccessArticles extends Component {
       currentUser: null
     };
   }
-  _avaterHandle() {
-    var myPicture = document.getElementById("avater");
-    if (myPicture.src == "avatar") {
-      myPicture.src = "/avatar/loading.gif";
-    }
-  }
+
   componentDidMount() {
     (async function() {
       /*两种入口,一种入口是通过查看某个用户直接url跳转,另外一种是登录后跳转首页(参数里传递登录的用户id)*/
@@ -70,7 +65,7 @@ export default class AccessArticles extends Component {
           />
           <h3>{user ? user.name : "loading"}</h3>
         </div>
-        <ArtilceList articles={articles} currentUser={currentUser} />
+        <ArticleList articles={articles} currentUser={currentUser} />
       </div>
     );
   }

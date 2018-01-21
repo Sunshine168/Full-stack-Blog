@@ -26,7 +26,6 @@ const mapDispatchToProps = (dispatch, getState) => {
       return fetchPost(articleId).then(result => {
         const { code, data } = result;
         //通过结果码以及结果判断是否本文章作者
-        if (code == 1) {
           const { post, current, comments } = data;
           dispatch(initLoadArticle(post));
           //判断用户状态以及是否本文章用户
@@ -34,10 +33,6 @@ const mapDispatchToProps = (dispatch, getState) => {
             dispatch(setCurrent(current));
           }
           dispatch(initComments(comments));
-        } else {
-          //文章不存在
-          this.showFlashMessage(fetchArticleFail("文章不存在"));
-        }
       });
     }
   };

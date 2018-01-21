@@ -14,17 +14,19 @@ export default class CommentList extends Component {
 		let {comments,currentUser,deleteComment,showFlashMessage} = this.props;
    return (
 		 <ListGroup>
-			 {comments.map((comment,index)=>(
-				 <ListGroupItem key={comment._id}>
-					 <Comment
-						 index={index}
-						 comment={comment}
-						 currentUser={currentUser}
-						 deleteComment={deleteComment}
-						 showFlashMessage={showFlashMessage}
-					 />
-				 </ListGroupItem>
-			 )
+			 {comments.map((comment,index)=>{
+				 return (
+					<ListGroupItem key={comment._id}>
+					<Comment
+						index={index}
+						comment={comment}
+						currentUser={currentUser}
+						deleteComment={deleteComment}
+						showFlashMessage={showFlashMessage}
+					/>
+				</ListGroupItem>
+				)
+			 }
 			 )}
 		 </ListGroup>
 	 )

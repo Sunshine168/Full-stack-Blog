@@ -29,18 +29,16 @@ evenKey
 			 isRedirect:false
 		 }
 	 }
-	async controlHandle(eventKey){
-		 let {articleId,index,deleteArticle}= this.props,
-		 result;
+    controlHandle(eventKey){
+		 let {articleId,index,deleteArticle}= this.props
 		 if(eventKey == "2"){
-			 result = await deleteArticle({
+			 deleteArticle({
  				postId:articleId,
- 				user_id:this.props.currentUser,
+				user_id:this.props.currentUser,
+				sucCb:()=>{
+					this.setState({isRedirect:true})
+				} 
  		  })
-			if(result){
-				//redirect
-				this.setState({isRedirect:true})
-			}
 		 }
 	 }
 	 render(){

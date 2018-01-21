@@ -11,3 +11,6 @@ server/build
 # the mac problem
 .DS_Store
 .DS_Store?
+
+# upload 
+server/upload

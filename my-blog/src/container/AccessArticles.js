@@ -19,24 +19,19 @@ const mapDispatchToProps = dispatch => {
   return {
     initArticles: id => {
       dispatch(startProgress());
-      return fetchPosts(id).then(result => {
+      return fetchPosts(id).then(res => {
         dispatch(finishProgress());
-        const { code, data, message } = result;
-        if (code === 1) {
+        const { data } = res;
+        if(data){
           dispatch(
             initArticles({
               articles: data.posts,
               author: data.user
             })
           );
-        } else {
-          dispatch(showFlashMessage(failurePost(message)));
         }
       });
     },
-    showFlashMessage: message => {
-      dispatch(showFlashMessage(message));
-    }
   };
 };
 

@@ -4,11 +4,9 @@ import React, {
 import {Button} from 'react-bootstrap';
 import {deleteComment} from '../service/fetch';
 import {Redirect} from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 export default class Comment extends Component {
-	/*
-并不理想组件之间耦合性太高了
-感觉组件应该显示和操作分开
-	 */
 	constructor(args){
 		super(args)
 		this.state = {
@@ -22,21 +20,16 @@ export default class Comment extends Component {
 				commentId:comment._id,
 				user_id:current
 		})
-	   if(result.code===1){
-				this.props.showFlashMessage({
-					msgType:"success",
-					msg:"评论删除成功",
-				})
+		   if(result.data){
 				this.props.deleteComment(index)
-		 }else{
-			 this.props.showFlashMessage({
-				 msgType:"danger",
-				 msg:"评论删除失败",
-			 })
-		 }
+        toast.success("删除成功",{
+					position:toast.position.TOP_RIGHT,
+				})
+			 }
  }
 	render(){
 		let {author,created_at,content}= this.props.comment;
+		console.log(this.props.comment)
 		return(
 					<div className="comment_wrap">
 						<img src="" className="author_logo" alt="avater"/>

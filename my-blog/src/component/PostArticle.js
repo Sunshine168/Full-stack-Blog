@@ -6,9 +6,9 @@ import {
   Button,
   HelpBlock
 } from "react-bootstrap";
-import ArticleFoot from "./ArticleFoot";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
+import Markdown from "react-markdown";
 /*
 mode 1 代表发表文章
 mode 2 代表编辑文章
@@ -164,27 +164,37 @@ export default class PostArticle extends Component {
               help={this.state.titleHelp}
               onBlur={event => this._checkTitle(event.target.value)}
             />
+
             <FormGroup
               controlId="formControlsTextarea"
               validationState={this.state.contextValid}
             >
-              <ControlLabel>内容</ControlLabel>
-              <FormControl
-                componentClass="textarea"
-                placeholder="textarea"
-                onChange={event =>
-                  this.setState({ context: event.target.value })
-                }
-                onBlur={event => this._checkContext(event.target.value)}
-                style={{ height: 200 }}
-                value={context}
-              />
-              {this.state.contextHelp && (
-                <HelpBlock>{this.state.contextHelp}</HelpBlock>
-              )}
+              <div className="article_markdown_wrapper">
+                <ControlLabel>内容</ControlLabel>
+                <div className="article_markdown_panel">
+                  <FormControl
+                    componentClass="textarea"
+                    placeholder="textarea"
+                    className="article_markdown_input"
+                    onChange={event =>
+                      this.setState({ context: event.target.value })
+                    }
+                    onBlur={event => this._checkContext(event.target.value)}
+                    style={{ height: 200 }}
+                    value={context}
+                  />
+                  <Markdown
+                    className="article_markdown_result"
+                    source={this.state.context}
+                  />
+                </div>
+                {this.state.contextHelp && (
+                  <HelpBlock>{this.state.contextHelp}</HelpBlock>
+                )}
+              </div>
             </FormGroup>
           </section>
-          {this.state.mode == 1 ? (
+          {this.state.mode === 1 ? (
             <Button
               disabled={posting == "loading"}
               componentClass="foot_btn"

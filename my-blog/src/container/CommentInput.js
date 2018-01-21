@@ -1,4 +1,6 @@
 import { connect } from "react-redux";
+import { toast } from 'react-toastify';
+
 import CommentInput from "../component/CommentInput";
 import { showFlashMessage } from "../reducer/flashMessage";
 import { addComment } from "../reducer/comment";
@@ -18,23 +20,11 @@ const mapDispatchToProps = dispatch => {
     },
     addComment: (comment, user, sucCb) => {
       return addCommentFetch(comment).then(result => {
-        const { code } = result;
-        if (code == 1) {
-          dispatch(
-            showFlashMessage({
-              msgType: "success",
-              msg: "评论发表成功"
-            })
-          );
+        const { data } = result;
+        if (data) {
           sucCb();
-          dispatch(addComment(result.comment));
-        } else {
-          dispatch(
-            showFlashMessage({
-              msgType: "danger",
-              msg: "评论发表失败"
-            })
-          );
+          toast.success("发表评论成功",{position:toast.position.TOP_RIGHT})
+          dispatch(addComment(data.comment));
         }
       });
     }

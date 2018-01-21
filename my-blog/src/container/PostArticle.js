@@ -6,11 +6,9 @@ import {
   initEditArticle,
   postArticleStarted,
   postArticleSuccess,
-  postArticleFailure,
-  successPost,
-  failurePost
 } from "../reducer/postArticle";
 import { addPost, fetchEditPost, updatePost } from "../service/fetch";
+import { toast } from 'react-toastify';
 
 const mapStateToProps = state => {
   return {
@@ -23,25 +21,21 @@ const mapDispatchToProps = dispatch => {
   return {
     initEditArticle:articleId => {
       return fetchEditPost(articleId).then(result => {
-        const {code,data} = result
-        if (code === 1) {
+        const {data} = result
+        if (data) {
           let post = data.post;
           dispatch(initEditArticle(post));
-        } else {
-          dispatch(showFlashMessage(failurePost("文章不存在")));
-        }
+        } 
       });
     },
     addArticle: (article, sucCb) => {
       return addPost(article).then(result => {
-        if (result.code === 1) {
+        const {data} = result
+        if (data) {
           dispatch(postArticleSuccess(result.post));
-          dispatch(showFlashMessage(successPost("发表文章成功")));
+          toast("发表文章成功");
           sucCb();
-        } else {
-          dispatch(showFlashMessage(failurePost("发表文章失败")));
-          dispatch(postArticleFailure(result.message));
-        }
+        } 
       });
     },
     startPostArticle: () => {
@@ -49,11 +43,10 @@ const mapDispatchToProps = dispatch => {
     },
     updateArticle: (params, sucCb) => {
       return updatePost(params).then(result => {
-        if (result.code == 1) {
-          dispatch(showFlashMessage(successPost("更新文章成功")));
+        const {data} = result
+        if (data) {
+          toast("文章更新成功")
           sucCb();
-        } else {
-          dispatch(postArticleFailure("更新文章失败稍后再试"));
         }
       });
     },

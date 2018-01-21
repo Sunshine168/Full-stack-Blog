@@ -5,36 +5,35 @@ const CommentModel = require("../models/comments");
 module.exports = {
   // GET /posts 所有用户或者特定用户的文章页
   //   eg: GET /api/posts?author=xxx
-  "GET /api/posts": async (ctx) => {
+  "GET /api/posts": async ctx => {
     let author = ctx.request.query.author,
-      code = 1;
+      resCode = 200,
+      message;
     try {
       var posts = await PostModel.getPosts(author),
         user = await UserModel.getUserById(author);
     } catch (e) {
-      var message = e;
-      code = -1;
+      resCode = 500;
+      message = "用户不存在";
     }
     if (!user) {
-      code = -1;
+      resCode = -1;
     }
     ctx.response.body = {
-      code,
+      resCode,
       message,
       posts,
       user
     };
   },
   // POST /posts 发表一篇文章
-  "POST /api/posts": async (ctx) => {
-    // await checkLogin(ctx);
-    let { article, user_id } = ctx.request.body;
-    let author = user_id || ctx.session.user._id,
-      //  flashMessage = ctx.flash.get(),
-      code = 1,
+  "POST /api/posts": async ctx => {
+    const { article, user_id } = ctx.request.body;
+    const author_id = user_id || ctx.session.user._id;
+    let resCode = 200,
       message = "成功发表";
     let postModel = {
-      author: author,
+      author: author_id,
       title: article.title,
       content: article.context,
       pv: 0
@@ -43,19 +42,19 @@ module.exports = {
       var result = await PostModel.create(postModel),
         post = result.ops[0];
     } catch (e) {
-      code = -1;
+      resCode = 500;
       message = "发表失败";
     }
     ctx.response.body = {
-      code: code,
-      message: message,
-      post: post
+      resCode,
+      message,
+      post
     };
   },
   // GET /api/posts/:postId 单独一篇的文章页
-  "GET /api/posts/:postId": async (ctx) => {
-    // ctx.response.body = ctx.flash.get();
-    let code = 1,
+  "GET /api/posts/:postId": async ctx => {
+    let resCode = 200,
+      message = "",
       { postId } = ctx.params,
       user = ctx.session.user;
     try {
@@ -70,30 +69,36 @@ module.exports = {
         throw new Error("不能找到该文章");
       }
     } catch (e) {
-      code = -1;
+      resCode = 500;
+      message = "文章不存在";
     }
-    if (user) {
-      //比对
-      if (user._id == post.author._id) {
+    if (resCode === 500) {
+      ctx.response.body = {
+        resCode,
+        message
+      };
+    } else {
+      if (user && user._id === post.author) {
         ctx.response.body = {
-          code: code,
-          post: post,
+          resCode,
+          post,
           current: user._id,
-          comments: comments
+          comments
+        };
+      } else {
+        ctx.response.body = {
+          resCode,
+          post,
+          comments,
+          message
         };
       }
-    } else {
-      ctx.response.body = {
-        code,
-        post,
-        comments
-      };
     }
   },
-  // GET /api/posts/edit/:postId 单独一篇的文章页
-  "GET /api/posts/edit/:postId": async (ctx) => {
-    // ctx.response.body = ctx.flash.get();
-    let code = 1;
+  // GET /api/posts/edit/:postId  编辑文章
+  "GET /api/posts/edit/:postId": async ctx => {
+    let resCode = 200,
+      message = "";
     let { postId } = ctx.params;
     try {
       var post = await PostModel.getRawPostById(postId); // 获取原生文章信息
@@ -101,19 +106,21 @@ module.exports = {
         throw new Error("不能找到该文章");
       }
     } catch (e) {
-      code = -1;
+      resCode = 500;
+      message = "文章不存在";
     }
     ctx.response.body = {
-      code,
-      post
+      resCode,
+      post,
+      message
     };
   },
   // POST /posts/:postId/edit 更新一篇文章
-  "POST /api/posts/:postId/edit": async (ctx) => {
+  "POST /api/posts/:postId/edit": async ctx => {
     let postId = ctx.params.postId,
       author = ctx.request.body.user_id || ctx.session.user._id,
       { title, context } = ctx.request.body,
-      code = 1,
+      resCode = 200,
       message = "修改成功";
     try {
       await PostModel.updatePostById(postId, author, {
@@ -121,35 +128,38 @@ module.exports = {
         content: context
       });
     } catch (e) {
-      message = e.message;
-      code = -1;
+      message = "更新失败";
+      resCode = 500;
     }
     ctx.response.body = {
-      code,
+      resCode,
       message
     };
   },
   // GET /posts/:postId/remove 删除一篇文章
-  "GET /api/posts/:postId/remove": async (ctx) => {
+  "GET /api/posts/:postId/remove": async ctx => {
     let { postId } = ctx.params,
-      author = ctx.query.user_id || ctx.session.user._id,
-      code = 1,
+      author = ctx.session.user._id,
+      resCode = 200,
       message = "删除成功";
     try {
+      if(!postId || !author){
+        throw new Error('文章不存在')
+      }
       await PostModel.delPostById(postId, author);
     } catch (e) {
-      message = e.message;
-      code = 1;
+      message = "删除失败";
+      resCode = 500;
     }
     ctx.response.body = {
-      code,
+      resCode,
       message
     };
   },
   // POST /posts/:postId/comment 创建一条留言
-  "POST /api/posts/:postId/comment": async (ctx) => {
+  "POST /api/posts/:postId/comment": async ctx => {
     let postId = ctx.params.postId,
-      code = 1,
+      resCode = 200,
       message = "创建成功",
       author = ctx.request.body.user_id || ctx.session.user._id,
       content = ctx.request.body.comment;
@@ -159,30 +169,31 @@ module.exports = {
       content: content
     };
     try {
-       await CommentModel.create(comment);
+      await CommentModel.create(comment);
     } catch (e) {
-      (code = -1), (message = e);
+      resCode = 500;
+      message = "创建失败";
     }
     ctx.response.body = {
-      code,
+      resCode,
       message,
       comment
     };
   },
   // GET /posts/:postId/comment/:commentId/remove 删除一条留言
-  "GET /posts/:postId/comment/:commentId/remove": async (ctx) => {
-      let commentId = ctx.params.commentId,
-      code = 1,
+  "GET /posts/:postId/comment/:commentId/remove": async ctx => {
+    let commentId = ctx.params.commentId,
+      resCode = 200,
       message = "删除成功",
       author = ctx.query.user_id || ctx.session.user._id;
     try {
       await CommentModel.delCommentById(commentId, author);
     } catch (e) {
-      code = -1;
-      message = e;
+      resCode = 500;
+      message = "删除失败";
     }
     ctx.response.body = {
-      code,
+      resCode,
       message
     };
   }

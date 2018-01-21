@@ -21,6 +21,7 @@ export default class LoginInput extends Component {
       loading: false
     };
   }
+
   _signIn() {
     //检查数据有效性
     let { account, password, accountValid, pwdValid } = this.state,
@@ -34,6 +35,7 @@ export default class LoginInput extends Component {
       this.props.loginIn({ account, password });
     }
   }
+
   _checkAccount(value) {
     /*重设一次*/
     this.setState({
@@ -51,6 +53,7 @@ export default class LoginInput extends Component {
       });
     }
   }
+
   _checkPassword(value) {
     /*重设一次*/
     this.setState({
@@ -70,7 +73,6 @@ export default class LoginInput extends Component {
   }
   render() {
     let { user, location } = this.props;
-
     if (user) {
       return (
         <Redirect

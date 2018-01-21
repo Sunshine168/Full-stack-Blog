@@ -38,11 +38,12 @@
   margin-left: 30px;
   display: inline-block;
   vertical-align: top;
-  width: 500px;
   border:2px solid #c6c6c6;
   box-shadow: 10px 10px 5px #888888;
   margin-bottom: 40px;
+  min-height: 800px;
   border-radius: 15px;
+  min-width: 800px;
 }
 .foot_left{
   display: inline-block;
@@ -64,4 +65,26 @@ foot_btn{
   max-height: 100px;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.article_markdown_wrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+.article_markdown_panel{
+  display: flex;
+  flex-direction: row;
+  min-height: 700px;
+}
+
+.article_markdown_input {
+  flex:1;
+  min-height: 700px;
+
+}
+.article_markdown_result{
+  flex:1;
+  margin-left: 15px;
+  border: 1px solid #333;
 }

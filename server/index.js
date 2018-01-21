@@ -40,10 +40,6 @@ app.use(
     store: new MongoStore()
   })
 );
-// //通过koa-ejs中间件 也可以直接使用
-// app.use(views(path.join(__dirname, './views'), {
-//         extension: 'ejs'
-//     }))
 
 app.use(convert(server(path.join(__dirname, "/build/"))));
 app.use(convert(server(path.join(__dirname, "/upload/"))));

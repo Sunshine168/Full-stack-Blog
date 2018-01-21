@@ -1,4 +1,5 @@
-export const DOMAIN = "";
+import { toast } from 'react-toastify';
+
 const CREDENTIALS = process.env.ORIGIN ? "include" : "same-origin";
 
 export const get = async(url)=> {
@@ -12,8 +13,13 @@ export const get = async(url)=> {
       credentials: CREDENTIALS
     });
     const data = await result.json()
+    if(data.resCode === 500){
+      toast.error(data.message,{
+        position:toast.POSITION.TOP_RIGHT
+      })
+      throw new Error(data.message)
+    }
     return {
-      code:1,
       data,
     };
   } catch (e) {
@@ -36,7 +42,15 @@ export const post = async(url,body)=>{
       credentials: CREDENTIALS
     });
     const data = await result.json()
-    return data
+    if(data.resCode === 500){
+      toast.error(data.message,{
+        position:toast.POSITION.TOP_RIGHT
+      })
+      throw new Error(data.message)
+    }
+    return {
+      data,
+    };
   } catch (e) {
     return {
       code: -2,
@@ -55,8 +69,13 @@ export const formPost = async(url,formData)=>{
       body: formData
     });
     const data = await result.json()
+    if(data.resCode === 500){
+      toast.error(data.message,{
+        position:toast.POSITION.TOP_RIGHT
+      })
+      throw new Error(data.message)
+    }
     return {
-      code:1,
       data,
     };
   } catch (e) {
