@@ -1,6 +1,7 @@
 const PostModel = require("../models/posts");
 const UserModel = require("../models/users");
 const CommentModel = require("../models/comments");
+const authCheck = require("../middlewares/check").auth;
 
 module.exports = {
   // GET /posts 所有用户或者特定用户的文章页
@@ -28,6 +29,11 @@ module.exports = {
   },
   // POST /posts 发表一篇文章
   "POST /api/posts": async ctx => {
+    const test = await authCheck(ctx)
+    console.log(test)
+    if (!test) {
+      return;
+    }
     const { article, user_id } = ctx.request.body;
     const author_id = user_id || ctx.session.user._id;
     let resCode = 200,
@@ -56,7 +62,7 @@ module.exports = {
     let resCode = 200,
       message = "",
       { postId } = ctx.params,
-      user = ctx.session.user;
+      { user } = ctx.session;
     try {
       var result = await Promise.all([
         PostModel.getPostById(postId), // 获取文章信息
@@ -97,6 +103,9 @@ module.exports = {
   },
   // GET /api/posts/edit/:postId  编辑文章
   "GET /api/posts/edit/:postId": async ctx => {
+    if (!authCheck(ctx)) {
+      return;
+    }
     let resCode = 200,
       message = "";
     let { postId } = ctx.params;
@@ -117,6 +126,9 @@ module.exports = {
   },
   // POST /posts/:postId/edit 更新一篇文章
   "POST /api/posts/:postId/edit": async ctx => {
+    if (!authCheck(ctx)) {
+      return;
+    }
     let postId = ctx.params.postId,
       author = ctx.request.body.user_id || ctx.session.user._id,
       { title, context } = ctx.request.body,
@@ -143,8 +155,8 @@ module.exports = {
       resCode = 200,
       message = "删除成功";
     try {
-      if(!postId || !author){
-        throw new Error('文章不存在')
+      if (!postId || !author) {
+        throw new Error("文章不存在");
       }
       await PostModel.delPostById(postId, author);
     } catch (e) {
@@ -158,6 +170,9 @@ module.exports = {
   },
   // POST /posts/:postId/comment 创建一条留言
   "POST /api/posts/:postId/comment": async ctx => {
+    if (!authCheck(ctx)) {
+      return;
+    }
     let postId = ctx.params.postId,
       resCode = 200,
       message = "创建成功",
@@ -182,6 +197,9 @@ module.exports = {
   },
   // GET /posts/:postId/comment/:commentId/remove 删除一条留言
   "GET /posts/:postId/comment/:commentId/remove": async ctx => {
+    if (!authCheck(ctx)) {
+      return;
+    }
     let commentId = ctx.params.commentId,
       resCode = 200,
       message = "删除成功",

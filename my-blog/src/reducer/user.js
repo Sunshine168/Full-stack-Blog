@@ -13,15 +13,6 @@ const LOGIN_OUT = 'LOGIN_OUT';
 
 
 
-
-/*
-action stauts
- */
-
-  const LOADING = 'loading'
-  const SUCCESS = 'success'
-  const FAILURE = 'failure'
-
 //reducer for LOGIN
  const login = (state,action)=>{
   if(!state){

@@ -1,122 +1,44 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch
-} from "react-router-dom";
 import { StyleRoot } from "radium";
-import { connect } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { Provider } from "react-redux";
+import { push } from 'react-router-redux'
 
-import logo from "./logo.svg";
-import Header from "./container/Header";
-import Login from "./container/Login";
-import Register from "./container/Register";
-import AccessArticles from "./container/AccessArticles";
-import PostArticle from "./container/PostArticle";
-import AccessArticle from "./container/AccessArticle";
-import NoMatch from "./component/NoMatch";
-import ProgressBars from "./container/ProgressBars";
-import Index from "./component/Index";
-import "./css/common.css";
+import configureStore from "./store/store";
+import AppRouter from "./router";
+import emitter from './util/event-emitter'
+import { loginOut } from './reducer/user'
 
-//auth 处理需要登录的路由
-const PrivateRoute = ({ component: Component, auth, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        auth.user ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: props.location }
-            }}
-          />
-        )
-      }
-    />
-  );
-};
-
-//用户主页
-const UserIndex = ({ match }) => (
-  <Route path={`${match.url}/:userId`} component={AccessArticles} />
-);
-//编辑文章
-const EditArticle = ({ match }) => (
-  <Route path={`${match.url}/:articleId`} component={PostArticle} />
-);
-//查看文章页面
-const ArticleDetail = ({ match }) => (
-  <Route path={`${match.url}/:articleId`} component={AccessArticle} />
-);
-const mapStateToProps = state => {
-  return {
-    login: state.login
-  };
-};
-/*
-处理服务器重定向问题与404
- */
-const RedirectFromServer = ({ match }) => {
-  //deal the sever redirect
-  let url = window.location.search;
-  return url.substring(1) ? (
-    <Redirect
-      to={{
-        pathname: url.substring(1),
-        state: { from: "/" }
-      }}
-    />
-  ) : (
-    <NoMatch />
-  );
-};
-class App extends Component {
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      store:configureStore(()=>{
+        this.setState({
+          loading:false,
+        },()=>{
+          let loading = document.getElementById('loading');
+          loading.style.display="none";
+        })
+      }),
+    };
+  }
+  componentDidMount = () =>{
+    emitter.on('USER_INVALID',()=>{
+      this.state.store.dispatch(loginOut())
+      this.state.store.dispatch(push('/login'))
+    })
+  }
   render() {
-    let auth = this.props.login;
+    if (this.state.loading) {
+      return null;
+    }
     return (
       <StyleRoot>
-        <Router>
-          <div>
-            <ProgressBars />
-            <div className="container">
-              <Header />
-              <Switch>
-                <Route exact path="/index" component={Index} />
-                <Route path="/login" component={Login} />
-                <Route path="/loginOut" component={Login} />
-                <Route path="/register" component={Register} />
-                <Route path="/user" component={UserIndex} />
-                <Route path="/article" component={ArticleDetail} />
-                <PrivateRoute
-                  path="/edit/article"
-                  component={EditArticle}
-                  auth={auth}
-                />
-                <PrivateRoute
-                  path="/personal/index"
-                  component={AccessArticles}
-                  auth={auth}
-                />
-                <PrivateRoute
-                  path="/postArticle"
-                  component={PostArticle}
-                  auth={auth}
-                />
-                <Route path="/" component={RedirectFromServer} />
-              </Switch>
-            </div>
-            <ToastContainer />
-          </div>
-        </Router>
+        <Provider store={this.state.store}>
+          <AppRouter />
+        </Provider>
       </StyleRoot>
     );
   }
 }
-
-export default connect(mapStateToProps)(App);

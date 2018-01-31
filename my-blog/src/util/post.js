@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-
+import emitter from './event-emitter'
 const CREDENTIALS = process.env.ORIGIN ? "include" : "same-origin";
 
 export const get = async(url)=> {
@@ -17,6 +17,10 @@ export const get = async(url)=> {
       toast.error(data.message,{
         position:toast.POSITION.TOP_RIGHT
       })
+      if(data.resCode === 401){
+        emitter.emit('USER_INVALID')
+        return;
+      }
       throw new Error(data.message)
     }
     return {
@@ -46,6 +50,10 @@ export const post = async(url,body)=>{
       toast.error(data.message,{
         position:toast.POSITION.TOP_RIGHT
       })
+      
+    }
+    if(data.resCode === 401){
+      emitter.emit('USER_INVALID')
       throw new Error(data.message)
     }
     return {

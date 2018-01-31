@@ -1,4 +1,3 @@
-const checkNotLogin = require("../middlewares/check").checkNotLogin;
 const crypto = require("crypto");
 
 let UserModel = require("../models/users");
@@ -8,8 +7,7 @@ module.exports = {
     await ctx.render("home/login", {});
   },
   //登录api
-  "POST /api/signIn": async (ctx, next) => {
-    await checkNotLogin(ctx, next);
+  "POST /api/signIn": async (ctx) => {
     let resCode = 200,
       message = "登录成功",
       { account, password } = ctx.request.body,
