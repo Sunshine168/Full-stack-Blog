@@ -1,8 +1,8 @@
-import { toast } from 'react-toastify';
-import emitter from './event-emitter'
+import { toast } from "react-toastify";
+import emitter from "./event-emitter";
 const CREDENTIALS = process.env.ORIGIN ? "include" : "same-origin";
 
-export const get = async(url)=> {
+export const get = async url => {
   try {
     var result = await fetch(url, {
       method: "GET",
@@ -12,29 +12,29 @@ export const get = async(url)=> {
       },
       credentials: CREDENTIALS
     });
-    const data = await result.json()
-    if(data.resCode === 500){
-      toast.error(data.message,{
-        position:toast.POSITION.TOP_RIGHT
-      })
-      if(data.resCode === 401){
-        emitter.emit('USER_INVALID')
+    const data = await result.json();
+    if (data.resCode === 500) {
+      toast.error(data.message, {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      if (data.resCode === 401) {
+        emitter.emit("USER_INVALID");
         return;
       }
-      throw new Error(data.message)
+      throw new Error(data.message);
     }
     return {
-      data,
+      data
     };
   } catch (e) {
     return {
       code: -2,
-      message: e.message,
+      message: e.message
     };
   }
 };
 
-export const post = async(url,body)=>{
+export const post = async (url, body) => {
   try {
     var result = await fetch(url, {
       method: "POST",
@@ -45,46 +45,44 @@ export const post = async(url,body)=>{
       body: JSON.stringify(body),
       credentials: CREDENTIALS
     });
-    const data = await result.json()
-    if(data.resCode === 500){
-      toast.error(data.message,{
-        position:toast.POSITION.TOP_RIGHT
-      })
-      
-    }
-    if(data.resCode === 401){
-      emitter.emit('USER_INVALID')
-      throw new Error(data.message)
+    const data = await result.json();
+    if (data.resCode !== 200) {
+      if (data.resCode === 401) {
+        emitter.emit("USER_INVALID");
+      }
+      toast.error(data.message, {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      throw new Error(data.message);
     }
     return {
-      data,
+      data
     };
   } catch (e) {
     return {
-      code: -2,
-      message: "未知错误"
+      message: e.message,
     };
   }
-}
+};
 
-export const formPost = async(url,formData)=>{
+export const formPost = async (url, formData) => {
   try {
     var result = await fetch(url, {
       method: "POST",
-           headers: {
-               'Content-Type': 'application/x-www-form-urlencoded'
-       },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
       body: formData
     });
-    const data = await result.json()
-    if(data.resCode === 500){
-      toast.error(data.message,{
-        position:toast.POSITION.TOP_RIGHT
-      })
-      throw new Error(data.message)
+    const data = await result.json();
+    if (data.resCode === 500) {
+      toast.error(data.message, {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      throw new Error(data.message);
     }
     return {
-      data,
+      data
     };
   } catch (e) {
     return {
@@ -92,4 +90,4 @@ export const formPost = async(url,formData)=>{
       message: "未知错误"
     };
   }
-}
+};

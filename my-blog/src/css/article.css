@@ -3,6 +3,12 @@
   font-size: 24px;
   margin-top: 0;
 }
+.article_foot{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  align-items: center;
+} 
 .article_foot a{
   color:#999;
   text-decoration: none;
@@ -25,6 +31,7 @@
 }
 .article_context{
   padding: 5px;
+  overflow: hidden;
 }
 .author_logo{
   margin: 0 auto;
@@ -35,22 +42,14 @@
 .article_wrap{
   text-align: left;
   padding: 5px;
-  margin-left: 30px;
   display: inline-block;
   vertical-align: top;
   border:2px solid #c6c6c6;
   box-shadow: 10px 10px 5px #888888;
   margin-bottom: 40px;
-  min-height: 800px;
   border-radius: 15px;
-  min-width: 800px;
-}
-.foot_left{
-  display: inline-block;
-}
-.foot_right{
-  display: inline-block;
-  float: right;
+  width: 500px;
+
 }
 .foot_dropDown.btn.btn-link{
   color:#999;
@@ -87,4 +86,8 @@ foot_btn{
   flex:1;
   margin-left: 15px;
   border: 1px solid #333;
+}
+
+.article_editing_wrap{
+
 }

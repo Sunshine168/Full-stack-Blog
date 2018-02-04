@@ -151,7 +151,7 @@ export default class PostArticle extends Component {
     return (
       <div className="article_container">
         <img className="author_logo" />
-        <div className="article_wrap">
+        <div className="article_editing_wrap">
           <section className="article_context">
             <FieldGroup
               id="formControlsText"
