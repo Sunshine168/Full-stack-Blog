@@ -43,7 +43,7 @@ const NavbarInstance = (props)=>{
                    </Navbar.Brand>
 
 									 <Navbar.Brand>
-										 <Link to="/index">
+										 <Link to="/">
 											 <span className="cursorPoint">主页</span>
 										 </Link>
 									 </Navbar.Brand>

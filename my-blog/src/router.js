@@ -59,23 +59,7 @@ const mapStateToProps = state => {
     login: state.login
   };
 };
-/*
-处理服务器重定向问题与404
- */
-const RedirectFromServer = ({ match }) => {
-  //deal the sever redirect
-  let url = window.location.search;
-  return url.substring(1) ? (
-    <Redirect
-      to={{
-        pathname: url.substring(1),
-        state: { from: "/" }
-      }}
-    />
-  ) : (
-    <NoMatch />
-  );
-};
+
 class AppRouter extends Component {
   render() {
     let auth = this.props.login;
@@ -86,7 +70,7 @@ class AppRouter extends Component {
             <div className="container">
               <Header />
               <Switch>
-                <Route exact path="/index" component={Index} />
+                <Route exact path="/" component={Index} />
                 <Route path="/login" component={Login} />
                 <Route path="/loginOut" component={Login} />
                 <Route path="/register" component={Register} />
@@ -107,7 +91,6 @@ class AppRouter extends Component {
                   component={PostArticle}
                   auth={auth}
                 />
-                <Route path="/" component={RedirectFromServer} />
               </Switch>
             </div>
             <ToastContainer />
