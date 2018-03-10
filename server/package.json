@@ -4,7 +4,8 @@
   "description": "koa2 blog",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bin/www"
   },
   "dependencies": {
     "async-file": "^2.0.2",
@@ -17,19 +18,20 @@
     "ejs": "^2.5.6",
     "formidable": "^1.1.1",
     "fs": "^0.0.1-security",
-    "koa": "2.0.0",
+    "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-convert": "^1.2.0",
     "koa-ejs": "^4.0.0",
     "koa-logger-winston": "^0.0.2",
+    "koa-onerror": "^4.0.0",
     "koa-route": "^2.4.2",
     "koa-router": "7.0.0",
     "koa-session": "^5.0.0",
     "koa-session-mongo": "^1.1.0",
     "koa-session-store": "^2.0.0",
     "koa-static": "^3.0.0",
-    "koa2-cors": "^2.0.3",
     "koa2-formidable": "^1.0.0",
+    "koa2-history-api-fallback": "^0.0.5",
     "koa2-session-mongolass": "^1.0.1",
     "koa2-session-store": "^1.0.3",
     "marked": "^0.3.6",
@@ -52,5 +54,8 @@
   },
   "engines": {
     "node": ">=8.0.0"
-  }
+  },
+  "eslintIgnore": [
+    "www"
+  ]
 }

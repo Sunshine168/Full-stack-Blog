@@ -8,23 +8,18 @@ const path = require("path");
 const render = require("koa-ejs");
 const server = require("koa-static");
 const config = require("config-lite");
-const cors = require("koa2-cors");
+const historyFallback = require("koa2-history-api-fallback");
 const koaWinston = require("./middlewares/koa-winston");
+const onerror = require("koa-onerror");
 
 const app = new Koa();
-// const isProduction = (process.env.NODE_ENV || 'production') === 'production';
-const log = require("./logs/log");
-const corsMode = process.argv[2] == "-c" ? true : false;
 
-if (corsMode) {
-  app.use(
-    cors({
-      /*前后端分离时候 运行跨域访问用作 调试*/
-      origin: config.cors,
-      credentials: true
-    })
-  );
-}
+// error handler
+onerror(app);
+
+const isProduction = (process.env.NODE_ENV || "production") === "production";
+
+const log = require("./logs/log");
 
 app.use(bodyParser());
 app.keys = [config.session.secret];
@@ -43,32 +38,15 @@ app.use(
 
 app.use(convert(server(path.join(__dirname, "/build/"))));
 app.use(convert(server(path.join(__dirname, "/upload/"))));
+
+app.use(historyFallback)
+
 render(app, {
   root: path.join(__dirname, "/build/"),
   layout: false,
   viewExt: "html",
-  cache: false,
-  debug: true
-});
-
-app.use(async (ctx, next) => {
-  try {
-    await next();
-  } catch (err) {
-    ctx.status = err.status || 500;
-    ctx.body = err.message;
-    ctx.app.emit("error", err, ctx);
-  }
-});
-app.use(async (ctx, next) => {
-  await next();
-  //保证附带cookie
-  if (!ctx.session) {
-    ctx.session.flag = 1;
-  }
-  if (ctx.response.status == 404) {
-    ctx.response.redirect("/?" + ctx.request.url);
-  }
+  cache: isProduction ? true : false,
+  debug: isProduction ? false : true
 });
 
 // // 正常请求的日志
@@ -78,4 +56,9 @@ app.use(controller());
 //错误请求的日志
 app.use(koaWinston(log.errorloger));
 
-app.listen(config.port);
+// error-handling
+app.on("error", (err, ctx) => {
+  console.error("server error", err, ctx);
+});
+
+module.exports = app;
