@@ -4,16 +4,16 @@
  * Module dependencies.
  */
 
-var app = require("../app");
 var debug = require("debug")("demo:server");
 var http = require("http");
-
+var config = require("config-lite");
+var app = require("../app");
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || "3000");
+var port = normalizePort(config.port || process.env.PORT || "3000");
 // app.set('port', port);
 
 /**
@@ -83,5 +83,6 @@ function onError(error) {
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  console.log(`app run in ${port}`);
   debug("Listening on " + bind);
 }
