@@ -31,49 +31,8 @@ node publish  //发布到server目录中
 cd ..
 cd server/
 npm install //or yarn install
-node index //默认3305端口
-//open localhost:3305/
-```
-
-## 调试配置
-
-
-### 前后端分离配置(默认不需要配置)
-
-(需要整体运行一下项目产生一下cookies)
-#### 前端修改
-进入myblog目录进入config的env文件里修改
-
-```
- 'ORIGIN':'http://localhost:3005'
-//修改一下本地主机
-```
-#### 后端修改
-进入server目录下
-
-```
-config/default.js//默认配置文件
-```
-修改cors,修改成前端运行的域名,默认指向3000端口
-
-```
-node index -c
-```
-
-### 前后端分离方案
-
-#### 前端使用proxy做代理转发
-
-```
- //在package.json中加入proxy字段,并更换域名即可
-"proxy":"http://localhost:3005"
-```
-
-#### 后端无需改动
-
-
-```
-node index //启动即可
+npm run start or yarn start //默认3000端口
+//open localhost:3000/
 ```
 
 ## 总体任务
